@@ -95,7 +95,7 @@ export default function SignUp(){
         encryptedPassword: values.encryptedPassword,
         gender: values.gender
       })
-      console.log(values.name, values.email, values.encryptedPassword, values.gender);
+      //console.log(values.name, values.email, values.encryptedPassword, values.gender);
       setValues({
         name: "",
         email: "",

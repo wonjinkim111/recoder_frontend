@@ -36,10 +36,45 @@ import { Link as RouterLink } from 'react-router-dom';
 
 export default function SignIn(){
     const classes = useStyles();
+
+    const isEmail = email => {
+      const emailRegex = /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+    
+      return emailRegex.test(email);
+    };
+    const isPwd = pass => {
+      const pwdRegex = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
+      
+      return pwdRegex.test(pass);
+     }
+  
+    const onTextValidation = () => {
+      let emailError = "";
+      let pwdError = "";
+  
+      if(!isEmail(values.email))emailError = "email 형식이 아닙니다.";
+      if(!isPwd(values.encryptedPassword))pwdError = "비밀번호는 최소 6자에서 20자사이, 영문과 숫자를 혼합하여 주세요."
+  
+      setError({
+        emailError, pwdError
+      })
+  
+      if(emailError || pwdError)return false;
+      return true;
+    }
+
     const [values, setValues] = React.useState({
       email: '',
       encryptedPassword: ''
     });
+    const [error, setError] = React.useState({
+      emailError: '',
+      pwdError: ''
+    })
+    // const [users, setUsers] = React.useState({
+    //   id: '',
+    //   token: ''
+    // })
 
     const handleChangeForm = e => {
       setValues({...values, [e.target.name]: e.target.value});
@@ -47,12 +82,27 @@ export default function SignIn(){
 
     const handleSubmit=(e)=>{
       e.preventDefault();
-      console.log(values.email, values.encryptedPassword);
+      const valid = onTextValidation();
+
+    if(!valid)console.error("invalid");
+    
+    else{
+      //id랑 token 받아오는거 해야함
       const url = '/users-service/recoder/login';
       axios.post(url, {
         email: values.email,
         encryptedPassword: values.encryptedPassword
       })
+      // .then(response => response.data)
+      // .then((data)=>{
+      //   setUsers({id, token})
+      //}) 
+      console.log(values.email, values.encryptedPassword);
+      setValues({
+        email: "",
+        encryptedPassword: ""
+      })
+    }
     }
 
     return(
@@ -79,6 +129,9 @@ export default function SignIn(){
             value={values.email}
             onChange={handleChangeForm}
           />
+          <div style={{ color: "red", fontSize: "12px" }}>
+                {error.emailError}
+          </div>
           <TextField
             variant="outlined"
             margin="normal"
@@ -92,6 +145,9 @@ export default function SignIn(){
             value={values.encryptedPassword}
                 onChange={handleChangeForm}
           />
+          <div style={{ color: "red", fontSize: "12px" }}>
+                {error.pwdError}
+          </div>
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
