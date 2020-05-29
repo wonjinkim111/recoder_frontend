@@ -11,6 +11,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from 'axios';
+import { Link as RouterLink } from 'react-router-dom';
 
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -36,7 +38,7 @@ export default function SignIn(){
     const classes = useStyles();
     const [values, setValues] = React.useState({
       email: '',
-      encrypted_password: ''
+      encryptedPassword: ''
     });
 
     const handleChangeForm = e => {
@@ -45,7 +47,12 @@ export default function SignIn(){
 
     const handleSubmit=(e)=>{
       e.preventDefault();
-      console.log(values.email, values.encrypted_password);
+      console.log(values.email, values.encryptedPassword);
+      const url = '/users-service/recoder/login';
+      axios.post(url, {
+        email: values.email,
+        encryptedPassword: values.encryptedPassword
+      })
     }
 
     return(
@@ -77,12 +84,12 @@ export default function SignIn(){
             margin="normal"
             required
             fullWidth
-            name="encrypted_password"
+            name="encryptedPassword"
             label="Password"
             type="password"
             id="password"
             autoComplete="current-password"
-            value={values.encrypted_password}
+            value={values.encryptedPassword}
                 onChange={handleChangeForm}
           />
           <FormControlLabel
@@ -99,13 +106,8 @@ export default function SignIn(){
             Sign In
           </Button>
           <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link variant="body2" component={RouterLink} to="/signup">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

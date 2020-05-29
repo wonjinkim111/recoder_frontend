@@ -3,8 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -14,7 +12,7 @@ import Container from '@material-ui/core/Container';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Select } from '@material-ui/core';
 import axios from 'axios';
-//const API_URL = '/user/create';
+import { Link as RouterLink } from 'react-router-dom';
 
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -38,12 +36,45 @@ import axios from 'axios';
 
 export default function SignUp(){
 
+  const isEmail = email => {
+    const emailRegex = /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+  
+    return emailRegex.test(email);
+  };
+  const isPwd = pass => {
+    const pwdRegex = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
+    
+    return pwdRegex.test(pass);
+   }
+
+  const onTextValidation = () => {
+    let emailError = "";
+    let pwdError = "";
+    let nameError = "";
+
+    if(!isEmail(values.email))emailError = "email 형식이 아닙니다.";
+    if(!isPwd(values.encryptedPassword))pwdError = "비밀번호는 최소 6자에서 20자사이, 영문과 숫자를 혼합하여 주세요."
+    if(values.name.length == 0)nameError="이름을 입력해주세요.";
+
+    setError({
+      emailError, pwdError, nameError
+    })
+
+    if(emailError || pwdError || nameError)return false;
+    return true;
+  }
+
   const classes = useStyles();
+  const [error, setError] = React.useState({
+    emailError: '',
+    pwdError: '',
+    nameError: ''
+  })
   const [values, setValues] = React.useState({
     name: '',
     email: '',
-    encrypted_password: '',
-    gender: ''
+    encryptedPassword: '',
+    gender: 0
   });
 
   const handleChangeForm = e => {
@@ -52,20 +83,27 @@ export default function SignUp(){
 
   const handleSubmit=(e)=>{
     e.preventDefault();
-    const url = '/recoder/users';
-    axios.post(url, {
-      name: values.name,
-      email: values.email,
-      encrypted_password: values.encrypted_password,
-      gender: values.gender
-    })
-    console.log(values.name, values.email, values.encrypted_password, values.gender);
-    setValues({
-      name: "",
-      email: "",
-      encrypted_password: "",
-      gender: ""
-    })
+    const valid = onTextValidation();
+
+    if(!valid)console.error("invalid");
+
+    else{
+      const url = '/users-service/recoder/users';
+      axios.post(url, {
+        name: values.name,
+        email: values.email,
+        encryptedPassword: values.encryptedPassword,
+        gender: values.gender
+      })
+      console.log(values.name, values.email, values.encryptedPassword, values.gender);
+      setValues({
+        name: "",
+        email: "",
+        encryptedPassword: "",
+        gender: 0
+      })
+      alert("회원가입이 완료되었습니다.");
+    }
   }
 
   return (
@@ -92,20 +130,26 @@ export default function SignUp(){
                 value={values.email}
                 onChange={handleChangeForm}
               />
+              <div style={{ color: "red", fontSize: "12px" }}>
+                {error.emailError}
+              </div>
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
-                name="encrypted_password"
+                name="encryptedPassword"
                 label="Password"
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                value={values.encrypted_password}
+                value={values.encryptedPassword}
                 onChange={handleChangeForm}
               />
+              <div style={{ color: "red", fontSize: "12px" }}>
+              {error.pwdError}
+            </div>
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -119,6 +163,9 @@ export default function SignUp(){
                 value={values.name}
                 onChange={handleChangeForm}
               />
+              <div style={{ color: "red", fontSize: "12px" }}>
+              {error.nameError}
+            </div>
             </Grid>
             <Grid item xs={12} sm={6}>
                 <Select
@@ -134,15 +181,9 @@ export default function SignUp(){
                   id: 'gender'
                 }}
                 >
-                <MenuItem value="Female">여성</MenuItem>
-                <MenuItem value="Male">남성</MenuItem>
+                <MenuItem value="0">여성</MenuItem>
+                <MenuItem value="1">남성</MenuItem>
                 </Select>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
             </Grid>
           </Grid>
           <Button
@@ -156,7 +197,7 @@ export default function SignUp(){
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link variant="body2" component={RouterLink} to="/signin">
                 Already have an account? Sign in
               </Link>
             </Grid>
