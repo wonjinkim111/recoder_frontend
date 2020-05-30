@@ -14,7 +14,7 @@ const useStyles = theme => ({
         backgroundColor: theme.palette.background.paper,
       },
       gridList: {
-        width: 1000,
+        width: 800,
         height: 500,
       },
 })
@@ -38,12 +38,18 @@ class RoomList extends React.Component{
         const {classes} = this.props;
         console.log(this.state);
         //console.log(this.props);
+        // const roomItems = this.props.rooms.map(r=>{
+        //     return (
+        //         <RoomItem room={r}/>
+        //     )
+        // })
 
     return(
         <div className={classes.root}>
         <GridList className={classes.gridList}>
         <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
           <ListSubheader component="div">Room List</ListSubheader>
+            {/* {roomItems} */}
             <RoomItem room={this.state}/>
             <RoomItem room={this.state}/>
             <RoomItem room={this.state}/>
