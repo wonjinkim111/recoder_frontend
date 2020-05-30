@@ -35,6 +35,15 @@ const usestyles = makeStyles((theme)=>({
 
 export default function Main() {
     const classes = usestyles();
+    const [values, setValues] = React.useState({
+        mentorNickname: '멘토1',
+        roomName: 'room1',
+        roomInfo: '멘토입니다.',
+        roomIsPrivate: 1,
+        roomMax: 3,
+        roomPicture : '../images/room.jpg',
+        roomLanguage : 1
+      });
 
         return(
             <ProductHeroLayout backgroundClassName={classes.background}>               
@@ -63,7 +72,19 @@ export default function Main() {
                     className={classes.button}>
                 <Link 
                     className={classes.rightLink}
-                    component={RouterLink} to="/mentee"
+                    component={RouterLink} 
+                    to={{
+                    pathname : `/roomlist`,
+                    state : {
+                        nickname : values.mentorNickname,
+                        name: values.roomName,
+                        info : values.roomInfo,
+                        private : values.roomIsPrivate,
+                        max : values.roomMax,
+                        picture : values.roomPicture,
+                        language : values.roomLanguage
+                    }
+                }}
                     underline="none">
                     Mentee
                 </Link>

@@ -4,6 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Link from '@material-ui/core/Link';
 import clsx from 'clsx';
+import {Link as RouterLink} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,6 +40,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ToolbarAfter() {
   const classes = useStyles();
+  const [users, setUsers] = React.useState({
+    name: 'user1',
+    email: 'user1@email.com',
+    gender: 0,
+    regDate: '2020-05-30 00:00:00'
+  })
+
+  // componentWillMount = () => {
+  //   if(users.gender==0)
+  //   setUsers({...users, gender:'여성'})
+  //   else
+  //   setUsers({...users, gender:'남성'})
+  // }
 
   return (
     <div className={classes.root}>
@@ -49,7 +63,7 @@ export default function ToolbarAfter() {
             underline="none"
             color="inherit"
             className={classes.title}
-            href="/recoder/"
+            component={RouterLink} to="/"
           >
             {'Re:coder'}
           </Link>
@@ -59,7 +73,16 @@ export default function ToolbarAfter() {
               variant="h6"
               underline="none"
               className={classes.rightLink}
-              href="/recoder/user/"
+              component={RouterLink} 
+              to= {{
+                pathname : "/profile",
+                state : {
+                  username: users.name,
+                  useremail: users.email,
+                  usergender: users.gender,
+                  userregdate: users.regDate
+                }
+              }}
             >
               {'Profile'}
             </Link>
@@ -67,7 +90,7 @@ export default function ToolbarAfter() {
               variant="h6"
               underline="none"
               className={clsx(classes.rightLink, classes.linkSecondary)}
-              href="/recoder/user/create"
+              component={RouterLink} to="/"
             >
               {'LogOut'}
             </Link>
