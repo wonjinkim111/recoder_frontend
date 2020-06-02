@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
-import { Link as RouterLink } from 'react-router-dom';
+import { withRouter, Link as RouterLink } from 'react-router-dom';
 
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -34,7 +34,15 @@ import { Link as RouterLink } from 'react-router-dom';
     },
   }));
 
-export default function SignIn(){
+export default function SignIn(props){
+
+  const [users] = React.useState({
+    name: 'user1',
+    email: 'user1@email.com',
+    gender: 0,
+    regDate: '2020-05-30 00:00:00'
+  })
+
     const classes = useStyles();
 
     const isEmail = email => {
@@ -102,6 +110,11 @@ export default function SignIn(){
         email: "",
         encryptedPassword: ""
       })
+
+      props.history.push({
+        pathname: '/',
+        state: {users}
+      });
     }
     }
 

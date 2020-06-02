@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   iconsWrapper: {
-    height: 30,
+    height: 20,
   },
   icons: {
     display: 'flex',

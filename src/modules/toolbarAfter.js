@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ToolbarAfter() {
   const classes = useStyles();
-  const [users, setUsers] = React.useState({
+  const [users] = React.useState({
     name: 'user1',
     email: 'user1@email.com',
     gender: 0,

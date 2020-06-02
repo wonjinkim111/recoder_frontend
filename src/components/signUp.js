@@ -54,7 +54,7 @@ export default function SignUp(){
 
     if(!isEmail(values.email))emailError = "email 형식이 아닙니다.";
     if(!isPwd(values.encryptedPassword))pwdError = "비밀번호는 최소 6자에서 20자사이, 영문과 숫자를 혼합하여 주세요."
-    if(values.name.length == 0)nameError="이름을 입력해주세요.";
+    if(values.name.length === 0)nameError="이름을 입력해주세요.";
 
     setError({
       emailError, pwdError, nameError

@@ -25,13 +25,14 @@ class RoomItem extends React.Component {
     render(){
         const {classes} = this.props;
         //console.log("룸아이템에서", this.props.room);
+
     return (
         <Card className={classes.root}>
             <CardActionArea>
                 <CardMedia
                     className={classes.media}
                     image = {require('../images/room.jpg')}
-                    // image={require`('${this.props.room.picture}')`}
+                    // image = {require(this.props.room.picture)}
                     title="room image" />
                 <Button size="large" color="primary">
                         {this.props.room.nickname}

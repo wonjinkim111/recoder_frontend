@@ -2,20 +2,21 @@ import React from 'react';
 import RoomItem from './RoomItem';
 import GridList from '@material-ui/core/GridList';
 import {withStyles} from '@material-ui/core/styles';
-import GridListTile from '@material-ui/core/GridListTile';
+import Grid from '@material-ui/core/Grid';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = theme => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'space-around',
-        overflow: 'hidden',
+        overflow: 'scroll',
         backgroundColor: theme.palette.background.paper,
       },
       gridList: {
-        width: 800,
-        height: 500,
+        width: `${window.innerWidth}`,
+        height: `${window.innerHeight}`,
       },
 })
 
@@ -23,39 +24,39 @@ class RoomList extends React.Component{
     constructor(props){
         super(props);
 
-        this.state={
-            nickname: this.props.location.state.nickname,
-            name : this.props.location.state.name,
-            info: this.props.location.state.info,
-            private: this.props.location.state.private,
-            max : this.props.location.state.max,
-            picture: this.props.location.state.picture,
-            language: this.props.location.state.language
-        }
+        // this.state={
+        //     nickname: this.props.location.state.nickname,
+        //     name : this.props.location.state.name,
+        //     info: this.props.location.state.info,
+        //     private: this.props.location.state.private,
+        //     max : this.props.location.state.max,
+        //     picture: this.props.location.state.picture,
+        //     language: this.props.location.state.language
+        // }
+        //this.state={this.props.location.state.values}
     }
     
     render(){
         const {classes} = this.props;
-        console.log(this.state);
-        //console.log(this.props);
-        // const roomItems = this.props.rooms.map(r=>{
-        //     return (
-        //         <RoomItem room={r}/>
-        //     )
-        // })
+        console.log(this.props.location.state.values);
+        const roomItems = this.props.location.state.values.map((r,i)=>{
+            return (
+                <Grid item>
+                <RoomItem room={r} key={i}/>
+                </Grid>
+            )
+        })
 
     return(
         <div className={classes.root}>
-        <GridList className={classes.gridList}>
-        <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-          <ListSubheader component="div">Room List</ListSubheader>
-            {/* {roomItems} */}
-            <RoomItem room={this.state}/>
-            <RoomItem room={this.state}/>
-            <RoomItem room={this.state}/>
-            <RoomItem room={this.state}/>
-            <RoomItem room={this.state}/>
-            </GridListTile>
+            
+            {/* <Typography aligh="center" variant="h5" gutterBottom={true}><br/>Room list</Typography> */}
+        <GridList className={classes.gridList} cellHeight={'auto'} cols={3}> 
+        {/* <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}> */}
+        <ListSubheader component="div">Room List</ListSubheader>
+
+        {roomItems}
+        
         </GridList>
         </div>
     )
