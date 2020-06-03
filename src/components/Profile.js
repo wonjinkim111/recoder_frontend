@@ -6,23 +6,7 @@ import Avatar from '@material-ui/core/Avatar';
 class Profile extends React.Component{
     constructor(props){
         super(props);
-
-        // this.state = {
-        //     gender:''
-        // }
     }
-    
-//     componentWillMount = () => {
-//     if(this.props.locations.state.usergender==0)
-//     this.setState({
-//         gender:'여성'
-//     })
-//     else
-//     this.setState({
-//         gender:'남성'
-//     })
-//   }
-
     render(){
 
         return(

@@ -35,28 +35,7 @@ const usestyles = makeStyles((theme)=>({
 
 export default function Main(props) {
     const classes = usestyles();
-    // const [values, setValues] = React.useState({
-    //     mentorNickname: '멘토1',
-    //     roomName: 'room1',
-    //     roomInfo: '멘토입니다.',
-    //     roomIsPrivate: 1,
-    //     roomMax: 3,
-    //     roomPicture : '../images/room.jpg',
-    //     roomLanguage : 1
-    //   });
-    
-    //   const room = {
-    //       nickname: '',
-    //       name: '',
-    //       info: '',
-    //       isPrivate: '',
-    //       max: '',
-    //       picture: '',
-    //       language: ''
-    //   }
-
-    //   const [user] = React.useState(props.location.state);
-    //   console.log(user);
+    //console.log(props.location.state.user);
 
       const rooms = [
         {
@@ -128,7 +107,7 @@ export default function Main(props) {
                     component={RouterLink} 
                     to={{
                         pathname: "/user/mentor",
-                        state: {props}
+                        state: {user : props.location.state}
                     }}
                     underline="none">
                     Mentor

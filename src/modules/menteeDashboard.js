@@ -5,12 +5,11 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
+import RecentActorsIcon from '@material-ui/icons/RecentActors';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import ForumIcon from '@material-ui/icons/Forum';
-import AssessmentIcon from '@material-ui/icons/Assessment';
 import SettingsIcon from '@material-ui/icons/Settings';
-import PeopleIcon from '@material-ui/icons/People';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,26 +42,18 @@ export default function MentorDashBoard(props){
 
     <ListItem button>
       <ListItemIcon>
-        <PeopleIcon />
+        <RecentActorsIcon />
       </ListItemIcon>
-      <ListItemText primary="Mentees"/>
+      <ListItemText primary="Participating"/>
     </ListItem>
 
     <ListItem button>
       <ListItemIcon>
-        <ForumIcon />
+        <ThumbUpAltIcon />
       </ListItemIcon>
-      <ListItemText primary="Code List" />
+      <ListItemText primary="Reviews" />
     </ListItem>
 
-
-    <ListItem button>
-      <ListItemIcon>
-        <AssessmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Metrics" />
-    </ListItem>
-    
     <ListItem button>
       <ListItemIcon>
         <SettingsIcon />

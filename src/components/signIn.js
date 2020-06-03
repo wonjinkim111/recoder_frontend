@@ -36,12 +36,15 @@ import { withRouter, Link as RouterLink } from 'react-router-dom';
 
 export default function SignIn(props){
 
-  const [users] = React.useState({
+  const [user] = React.useState({
     name: 'user1',
     email: 'user1@email.com',
     gender: 0,
     regDate: '2020-05-30 00:00:00'
   })
+
+  //localstorage에 추가 근데 함수안에 들어가면 안됨
+  localStorage.setItem('user', JSON.stringify(user))
 
     const classes = useStyles();
 
@@ -113,7 +116,7 @@ export default function SignIn(props){
 
       props.history.push({
         pathname: '/',
-        state: {users}
+        state: {user}
       });
     }
     }
