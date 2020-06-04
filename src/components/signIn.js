@@ -106,18 +106,19 @@ export default function SignIn(props){
       setValues({...values, [e.target.name]: e.target.value});
     }
 
-    // React.useEffect(() =>{
-    //   console.log('실행effect');
-    //   if(user.id!=''){
-    //     localStorage.setItem('user', JSON.stringify(user))
-    //   }
-    //   return () => {
-    //     props.history.push({
-    //       pathname: '/',
-    //       state: {user}
-    //     });
-    //   }
-    // },[user])
+    React.useEffect(() =>{
+      console.log('실행effect');
+      if(user.id!=''){
+        localStorage.setItem('user', JSON.stringify(user))
+        window.location.reload();
+      }
+      return () => {
+        props.history.push({
+          pathname: '/',
+          state: {user}
+        });
+      }
+    },[user])
 
 
     const handleSubmit=(e)=>{
@@ -130,27 +131,22 @@ export default function SignIn(props){
     
       //id랑 token 받아오는거 해야함
       const url = 'http://59.29.224.144:10000/recoder/login';
-      axios.post(url, {
-        email: values.email,
-        encryptedPassword: values.encryptedPassword
-      })
-       .then(response => console.log(response.headers)) 
-       .then((data)=>{
-         setUser({id :data.userId, token :data.token})})
-        .catch(error => {
-          console.log(error);
-        })
+      // axios.post(url, {
+      //   email: values.email,
+      //   encryptedPassword: values.encryptedPassword
+      // })
+      //  .then(response => console.log(response.headers)) 
+      //  .then((data)=>{
+      //    setUser({id :data.userId, token :data.token})})
+      //   .catch(error => {
+      //     console.log(error);
+      //   })
       
       if(values.email == test.email && values.encryptedPassword == test.encryptedPassword){
         //console.log(JSON.parse(localStorage.getItem('user')))
          setUser({id: test.id,
              token: test.token
-         }, () => console.log(user));
-        //   //console.log(test.id)
-
-        localStorage.setItem('user', JSON.stringify(user))
-        // //localstorage로 저장되게끔 수정
-
+         })  
       }
 
       //이메일 또는 비밀번호 잘못 입력했을때

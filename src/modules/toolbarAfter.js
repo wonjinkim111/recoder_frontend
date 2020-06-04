@@ -47,6 +47,11 @@ export default function ToolbarAfter() {
     regDate: '2020-05-30 00:00:00'
   })
 
+  const handleClick = () => {
+    localStorage.clear();
+    window.location.reload();
+  }
+
   // componentWillMount = () => {
   //   if(users.gender==0)
   //   setUsers({...users, gender:'여성'})
@@ -90,7 +95,7 @@ export default function ToolbarAfter() {
               variant="h6"
               underline="none"
               className={clsx(classes.rightLink, classes.linkSecondary)}
-              onClick={e=>{localStorage.clear()}}
+              onClick={handleClick}
               component={RouterLink} to="/"
             >
               {'LogOut'}

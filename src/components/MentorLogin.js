@@ -7,8 +7,8 @@ import Button from '@material-ui/core/Button';
 export default function MentorLogin(){
     return(
         <Container maxWidth="sm">
-            <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '70vh' }} >
-             <Button>멘토생성하려면 클릭!</Button> 
+            <Typography component="div" style={{height: '70vh' }} >
+             <Button variant="contained" color="secondary">멘토생성하려면 클릭!</Button> 
             </Typography>
         </Container>
     )
