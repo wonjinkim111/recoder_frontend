@@ -48,7 +48,6 @@ class App extends React.Component {
   return (
     <React.Fragment>
       <Router>
-      {/* {this.state.test} */}
     {/* <ToolbarAfter/> */}
     {this.data ? <ToolbarAfter/> : <ToolbarBefore/>}
     <div className='main'>
