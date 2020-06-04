@@ -14,23 +14,43 @@ import RoomList from './components/Room_list';
 import Profile from './components/Profile';
 import './index.css'
 
-
 class App extends React.Component {
+  data;
   constructor(props){
     super(props);
 
     this.state={
       rooms:[],
-      selectedRoom: null
+      selectedRoom: null,
+      // test:'',
+      user:{
+        id:'',
+        token:''
+      },
     }
   }
+  // componentWillMount(){
+  //   this.data = JSON.parse(localStorage.getItem('user'))
+  //   console.log('componentwillmount',this.data);
+  //   // this.setState({test: (JSON.parse(localStorage.getItem('user')) === null)?<ToolbarBefore/>:<ToolbarAfter/>})
+  //   if(localStorage.getItem('user')){
+  //     this.setState({user: this.data})
+  //   }
+  //   if(this.data)
+  //   console.log(this.data);
+  // }
 
+  
   render(){
+    this.data = JSON.parse(localStorage.getItem('user'))
+    //if(localStorage.getItem('user'))this.setState({user:this.data})
+
   return (
     <React.Fragment>
       <Router>
-    <ToolbarBefore/>
+      {/* {this.state.test} */}
     {/* <ToolbarAfter/> */}
+    {this.data ? <ToolbarAfter/> : <ToolbarBefore/>}
     <div className='main'>
       <Route exact path="/" component={Main}/>
       <Route path="/signin" component={SignIn}/>
@@ -44,6 +64,7 @@ class App extends React.Component {
     <FootBar/>
     </Router>
     </React.Fragment>
+
   );
 }
 }

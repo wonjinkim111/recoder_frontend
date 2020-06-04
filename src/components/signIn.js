@@ -34,17 +34,25 @@ import { withRouter, Link as RouterLink } from 'react-router-dom';
     },
   }));
 
+
 export default function SignIn(props){
 
   const [user1] = React.useState({
-    name: 'user1',
+    name: 'user',
     email: 'user1@email.com',
     gender: 0,
     regDate: '2020-05-30 00:00:00'
   })
 
+
+
+  const [success_login, setSuccess_login] = React.useState({
+    id:'1',
+    token:'1'
+  })
+
   //localstorage에 추가 근데 함수안에 들어가면 안됨
-  localStorage.setItem('user', JSON.stringify(user1))
+  //localStorage.setItem('user', JSON.stringify(user1))
 
     const classes = useStyles();
 
@@ -89,46 +97,80 @@ export default function SignIn(props){
       token: ''
     })
 
+    const [test] = React.useState({
+      name: 'test',
+      id: 'test',
+      token: 'testtoken',
+      email: 'test@codeReview.com',
+      encryptedPassword: 'test1234',
+      gender: 0,
+      regDate: '2020-05-30 00:00:00'
+    })
+
     const handleChangeForm = e => {
+     
       setValues({...values, [e.target.name]: e.target.value});
     }
 
+    React.useEffect(() =>{
+      console.log('실행effect');
+      if(user.id!=''){
+        localStorage.setItem('user', JSON.stringify(user))
+      }
+      return () => {
+        props.history.push({
+          pathname: '/',
+          state: {user}
+        });
+      }
+    },[user])
+
+
     const handleSubmit=(e)=>{
-      e.preventDefault();
-      const valid = onTextValidation();
+      //e.preventDefault();
+      const valid = onTextValidation();   
 
     if(!valid)console.error("invalid");
     
     else{
+    
       //id랑 token 받아오는거 해야함
-      const url = '/users-service/recoder/login';
-      axios.post(url, {
-        email: values.email,
-        encryptedPassword: values.encryptedPassword
-      })
-      //  .then(response => response.data)
-      //  .then((data)=>{
-      //    setUser({data.id, data.token})
-        .then(response => {
-          console.log(response)})
-        .catch(error => {
-          console.log(error);
-        })
+      // const url = '/users-service/recoder/login';
+      // axios.post(url, {
+      //   email: values.email,
+      //   encryptedPassword: values.encryptedPassword
+      // })
+      // //  .then(response => response.data)
+      // //  .then((data)=>{
+      // //    setUser({data.id, data.token})
+      //   .then(response => {
+      //     console.log(response)})
+      //   .catch(error => {
+      //     console.log(error);
+      //   })
+      
+      if(values.email ==test.email && values.encryptedPassword == test.encryptedPassword){
+        //console.log(JSON.parse(localStorage.getItem('user')))
+         setUser({id: test.id,
+             token: test.token
+         })
+        //   //console.log(test.id)
+
+        // localStorage.setItem('user', JSON.stringify(user))
+        // //localstorage로 저장되게끔 수정
+
+      }
 
       //로그인 후 폼 초기화
-      console.log(values.email, values.encryptedPassword);
-      setValues({
-        email: "",
-        encryptedPassword: ""
-      })
+      localStorage.setItem('user', JSON.stringify(user))
+      //console.log(values.email, values.encryptedPassword);
 
-      //localstorage로 저장되게끔 수정
-      props.history.push({
-        pathname: '/',
-        state: {user}
-      });
+        // props.history.push({
+        //     pathname: '/',
+        //     state: {user}
+        //   });
     }
-  }
+  } // handleSubmit 끝
 
     return(
          <Container component="main" maxWidth="xs">

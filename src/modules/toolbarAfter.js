@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ToolbarAfter() {
   const classes = useStyles();
   const [users] = React.useState({
-    name: 'user1',
+    name: 'user111',
     email: 'user1@email.com',
     gender: 0,
     regDate: '2020-05-30 00:00:00'
@@ -90,6 +90,7 @@ export default function ToolbarAfter() {
               variant="h6"
               underline="none"
               className={clsx(classes.rightLink, classes.linkSecondary)}
+              onClick={e=>{localStorage.clear()}}
               component={RouterLink} to="/"
             >
               {'LogOut'}
