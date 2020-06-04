@@ -1,15 +1,15 @@
 import React from 'react';
-import '../index.css';
-import MentorDashBoard from '../modules/mentorDashboard';
+import Container from '@material-ui/core/Container';
+// import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
-function MentorLogin(props){
-    //console.log(props);
+export default function MentorLogin(){
     return(
-        <div className='horizontal'>
-        <MentorDashBoard user={props.location.state.user.user}/>
-        <h1>Mentor Login 화면 입니다~! </h1>
-        </div>
+        <Container maxWidth="sm">
+            <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '70vh' }} >
+             <Button>멘토생성하려면 클릭!</Button> 
+            </Typography>
+        </Container>
     )
 }
-
-export default MentorLogin;

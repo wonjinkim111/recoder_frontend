@@ -7,8 +7,9 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Main from './components/main'
 import SignIn from './components/signIn'
 import SignUp from './components/signUp'
+import Mentor from './components/Mentor';
 import MentorLogin from './components/MentorLogin';
-import MenteeLogin from './components/MenteeLogin';
+import Mentee from './components/Mentee';
 import RoomList from './components/Room_list';
 import Profile from './components/Profile';
 import './index.css'
@@ -34,8 +35,9 @@ class App extends React.Component {
       <Route exact path="/" component={Main}/>
       <Route path="/signin" component={SignIn}/>
       <Route path="/signup" component={SignUp}/>
+      {/* <Route path="/user/mentor" component={Mentor}/> */}
       <Route path="/user/mentor" component={MentorLogin}/>
-      <Route path="/mentee" component={MenteeLogin}/>
+      <Route path="/mentee" component={Mentee}/>
       <Route path="/roomlist" component={RoomList}/>
       <Route path="/profile" component={Profile}/>
     </div>

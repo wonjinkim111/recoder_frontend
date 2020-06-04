@@ -36,7 +36,7 @@ import { withRouter, Link as RouterLink } from 'react-router-dom';
 
 export default function SignIn(props){
 
-  const [user] = React.useState({
+  const [user1] = React.useState({
     name: 'user1',
     email: 'user1@email.com',
     gender: 0,
@@ -44,10 +44,11 @@ export default function SignIn(props){
   })
 
   //localstorage에 추가 근데 함수안에 들어가면 안됨
-  localStorage.setItem('user', JSON.stringify(user))
+  localStorage.setItem('user', JSON.stringify(user1))
 
     const classes = useStyles();
 
+    //validation check
     const isEmail = email => {
       const emailRegex = /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
     
@@ -82,10 +83,11 @@ export default function SignIn(props){
       emailError: '',
       pwdError: ''
     })
-    // const [users, setUsers] = React.useState({
-    //   id: '',
-    //   token: ''
-    // })
+
+    const [user, setUser] = React.useState({
+      id: '',
+      token: ''
+    })
 
     const handleChangeForm = e => {
       setValues({...values, [e.target.name]: e.target.value});
@@ -104,22 +106,29 @@ export default function SignIn(props){
         email: values.email,
         encryptedPassword: values.encryptedPassword
       })
-      // .then(response => response.data)
-      // .then((data)=>{
-      //   setUsers({id, token})
-      //}) 
+      //  .then(response => response.data)
+      //  .then((data)=>{
+      //    setUser({data.id, data.token})
+        .then(response => {
+          console.log(response)})
+        .catch(error => {
+          console.log(error);
+        })
+
+      //로그인 후 폼 초기화
       console.log(values.email, values.encryptedPassword);
       setValues({
         email: "",
         encryptedPassword: ""
       })
 
+      //localstorage로 저장되게끔 수정
       props.history.push({
         pathname: '/',
         state: {user}
       });
     }
-    }
+  }
 
     return(
          <Container component="main" maxWidth="xs">
