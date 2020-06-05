@@ -24,22 +24,60 @@ class RoomList extends React.Component{
     constructor(props){
         super(props);
 
-        // this.state={
-        //     nickname: this.props.location.state.nickname,
-        //     name : this.props.location.state.name,
-        //     info: this.props.location.state.info,
-        //     private: this.props.location.state.private,
-        //     max : this.props.location.state.max,
-        //     picture: this.props.location.state.picture,
-        //     language: this.props.location.state.language
-        // }
-        //this.state={this.props.location.state.values}
+        this.state={
+            rooms : [
+                {
+                    nickname: '멘토1',
+                    name: 'room1',
+                    info: '멘토입니다.',
+                    isPrivate: 1,
+                    max: 2,
+                    picture: '../images/room.jpg',
+                    language: 1
+                },
+                {
+                    nickname: '멘토2',
+                    name: 'room2',
+                    info: '멘토야이ㅑ이',
+                    isPrivate: 1,
+                    max: 3,
+                    picture: '../images/room.jpg',
+                    language: 1
+                },
+                {
+                    nickname: '멘토3',
+                    name: 'room3',
+                    info: '나는고수',
+                    isPrivate: 1,
+                    max: 4,
+                    picture: '../images/room2.jpg',
+                    language: 1
+                },
+                {
+                    nickname: '멘토4',
+                    name: 'room4',
+                    info: '메렁메렁',
+                    isPrivate: 1,
+                    max: 3,
+                    picture: '../images/room.jpg',
+                    language: 1
+                },
+                {
+                    nickname: '멘토5',
+                    name: 'room5',
+                    info: '제발',
+                    isPrivate: 0,
+                    max: 6,
+                    picture: '../images/room2.jpg',
+                    language: 1
+                },
+              ]
+        }
     }
     
     render(){
         const {classes} = this.props;
-        console.log(this.props.location.state.values);
-        const roomItems = this.props.location.state.values.map((r,i)=>{
+            const roomItems= this.state.rooms.map((r,i)=>{
             return (
                 <Grid item>
                 <RoomItem room={r} key={i}/>
