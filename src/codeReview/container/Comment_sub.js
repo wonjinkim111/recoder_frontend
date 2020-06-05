@@ -31,17 +31,12 @@ export default class Comment_sub extends Component {
     render() {
         return (
             <div>
-                {/* 댓글부분 모달 */}
-                {/* <div id="modal2">
+                                <div id="modal2">
                     <div className="modal_content">
-
-                            하이
-                   
+                                하이
                     </div>
                     <div className="modal_layer"></div>
-                </div>  */}
-                {/* 모달 끝 */}
-                {/*정말로 삭제? 모달*/}
+                </div>
                 <div id="modal3">
                     <div className="modal_content">
                                 
@@ -68,12 +63,7 @@ export default class Comment_sub extends Component {
                 <button type="button" className="modal_comment_open_btn"  onClick={this.handleSpreadContent}>댓글</button>
                 <button type="button" className="modal_comment_remove_btn" onClick={this.handleModal3Remove}>삭제</button>
                 </div>
-                <div id="modal2">
-                    <div className="modal_content">
-                                하이
-                    </div>
-                    <div className="modal_layer"></div>
-                </div>
+
             </div>
         )
     }

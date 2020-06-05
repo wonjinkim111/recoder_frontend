@@ -22,8 +22,6 @@ class App extends Component{
       modal_start:0,
       comment_flag:0,
       comment_tb:[
-      {cmt_id:'',review_id:'',parent_id:'',menteeCode:'mentee code', content:'이곳을 고쳐보세요',cmt_line_number:1,cmt_reg_date:''},
-      {cmt_id:'',review_id:'',parent_id:'',menteeCode:'int main(){  int i= 10;', content:'틀림',cmt_line_number:2,cmt_reg_date:''},
       {cmt_id:'',review_id:'',parent_id:'',menteeCode:'int main(){  int i= 10;', content:'test2',cmt_line_number:4,cmt_reg_date:''}
       ]
       
