@@ -55,7 +55,7 @@ export default function ToolbarBefore() {
             {'Re:coder'}
           </Link>
           <div className={classes.right}>
-            <Link component={RouterLink} to="/signin"
+            <Link component={RouterLink} to="/review"
               color="inherit"
               variant="h6"
               underline="none"

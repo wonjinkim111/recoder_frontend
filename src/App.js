@@ -12,6 +12,7 @@ import MentorLogin from './components/MentorLogin';
 import Mentee from './components/Mentee';
 import RoomList from './components/Room_list';
 import Profile from './components/Profile';
+import Review from './codeReview/index';
 import './index.css'
 
 class App extends React.Component {
@@ -59,6 +60,7 @@ class App extends React.Component {
       <Route path="/mentee" component={Mentee}/>
       <Route path="/roomlist" component={RoomList}/>
       <Route path="/profile" component={Profile}/>
+      <Route path="/review" component={Review}/>
     </div>
     <FootBar/>
     </Router>
