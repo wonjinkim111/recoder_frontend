@@ -11,6 +11,7 @@ import MentorLogin from './components/MentorLogin';
 import MenteeLogin from './components/MenteeLogin';
 import RoomList from './components/Room_list';
 import Profile from './components/Profile';
+import Review from './codeReview/index';
 import './index.css'
 
 
@@ -38,6 +39,7 @@ class App extends React.Component {
       <Route path="/mentee" component={MenteeLogin}/>
       <Route path="/roomlist" component={RoomList}/>
       <Route path="/profile" component={Profile}/>
+      <Route path="/review" component={Review}/>
     </div>
     <FootBar/>
     </Router>

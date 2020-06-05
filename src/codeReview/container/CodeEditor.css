@@ -1,0 +1,17 @@
+.selectButton{
+    width:5vw;
+    height:5.2vh;
+    font-size: 20px;
+}
+
+.selectButton2{
+    width:5vw;
+    height:5.2vh;
+    font-size: 20px;
+    float: right;
+}
+.selectButton3{
+    float: right;
+    height: 5.1vh;
+
+}
