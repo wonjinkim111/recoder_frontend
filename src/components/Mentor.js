@@ -3,7 +3,7 @@ import '../index.css';
 import MentorDashBoard from '../modules/mentorDashboard';
 
 function MentorLogin(props){
-    //console.log(props);
+    //console.log(propsw);
     return(
         <div className='horizontal'>
         <MentorDashBoard user={props.location.state.user.user}/>

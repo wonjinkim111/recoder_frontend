@@ -40,7 +40,7 @@ export default function Main(props) {
         return(
             <ProductHeroLayout backgroundClassName={classes.background}>               
                 <img style={{ display: 'none' }} src={Background} alt="mainpage" />
-                <Typography color="inherit" align="center" variant="h2" marked="center">
+                <Typography color="inherit" align="center" variant="h2" marked="center" className={classes.h2}>
                     누구나 멘토가 될 수 있다!
                 </Typography>
                 <span><h2>_____</h2></span>

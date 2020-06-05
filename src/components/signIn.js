@@ -102,23 +102,23 @@ export default function SignIn(props){
     })
 
     const handleChangeForm = e => {
-     
       setValues({...values, [e.target.name]: e.target.value});
     }
 
-    React.useEffect(() =>{
-      console.log('실행effect');
-      if(user.id!=''){
-        localStorage.setItem('user', JSON.stringify(user))
-        window.location.reload();
-      }
-      return () => {
-        props.history.push({
-          pathname: '/',
-          state: {user}
-        });
-      }
-    },[user])
+    // React.useEffect(() =>{
+    //   console.log('실행effect');
+    //   if(user.id!==''){
+    //     localStorage.setItem('user', JSON.stringify(user))
+    //     //window.location.reload();
+        
+    //   return () => {
+    //     props.history.push({
+    //       pathname: '/',
+    //       state: {user}
+    //     });
+    //   }
+    // }
+    // },[user])
 
 
     const handleSubmit=(e)=>{
@@ -142,11 +142,15 @@ export default function SignIn(props){
       //     console.log(error);
       //   })
       
-      if(values.email == test.email && values.encryptedPassword == test.encryptedPassword){
-        //console.log(JSON.parse(localStorage.getItem('user')))
-         setUser({id: test.id,
-             token: test.token
-         })  
+      if(values.email === test.email && values.encryptedPassword === test.encryptedPassword){
+ 
+         localStorage.setItem('user', JSON.stringify({id:test.id,
+                                                      token: test.token}));
+        props.history.push({
+          pathname: '/'
+        });
+
+        window.location.reload();
       }
 
       //이메일 또는 비밀번호 잘못 입력했을때
@@ -154,14 +158,6 @@ export default function SignIn(props){
         console.log('틀림');
       }
 
-      //로그인 후 폼 초기화
-      //localStorage.setItem('user', JSON.stringify(user))
-      //console.log(values.email, values.encryptedPassword);
-
-        // props.history.push({
-        //     pathname: '/',
-        //     state: {user}
-        //   });
     }
   } // handleSubmit 끝
 

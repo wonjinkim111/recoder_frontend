@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: theme.spacing(5),
     marginBottom: theme.spacing(5),
-    display: 'flex',
+    display: 'flex'
   },
   iconsWrapper: {
     height: 20,
@@ -52,7 +52,7 @@ export default function FootBar() {
       <Container className={classes.container}>
         <Grid container spacing={5}>
           <Grid item xs={6} sm={4} md={3}>
-            
+          <Copyright />
           </Grid>
           <Grid item xs={6} sm={8} md={4}>
             <Typography variant="h6" marked="left" gutterBottom>
@@ -71,16 +71,12 @@ export default function FootBar() {
                 junguk Go <br/>
             </Link>
             Back-end : 
-            <Link href="https://github.com/nangzz" rel="team" title="gangmina">
-            &nbsp; mina Gang
+            <Link href="https://github.com/nangzz" rel="team" title="kangmina">
+            &nbsp; mina Kang
             </Link>
           </Grid>
           <Grid item>
-                <Copyright />
-              </Grid>
-
-          <Grid item>
-            <Typography variant="caption">
+          <Typography variant="caption">
               {'Icons made by '}
               <Link href="https://www.freepik.com" rel="sponsored" title="Freepik">
                 Freepik
@@ -99,7 +95,7 @@ export default function FootBar() {
                 CC 3.0 BY
               </Link>
             </Typography>
-          </Grid>
+              </Grid>
         </Grid>
       </Container>
     </Typography>
