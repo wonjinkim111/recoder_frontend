@@ -130,34 +130,25 @@ export default function SignIn(props){
     else{
     
       //id랑 token 받아오는거 해야함
-      const url = 'http://59.29.224.144:10000/recoder/login';
-      // axios.post(url, {
-      //   email: values.email,
-      //   encryptedPassword: values.encryptedPassword
-      // })
-      //  .then(response => console.log(response.headers)) 
-      //  .then((data)=>{
-      //    setUser({id :data.userId, token :data.token})})
-      //   .catch(error => {
-      //     console.log(error);
-      //   })
-      
-      if(values.email === test.email && values.encryptedPassword === test.encryptedPassword){
+      const url = 'http://59.29.224.144:10000/users/login';
+      axios.post(url, {
+        email: values.email,
+        encryptedPassword: values.encryptedPassword
+      })
+       .then(response =>{console.log(response.headers)
  
-         localStorage.setItem('user', JSON.stringify({id:test.id,
-                                                      token: test.token}));
+        localStorage.setItem('user', JSON.stringify({id:response.headers.userid,token: response.headers.token}))
         props.history.push({
           pathname: '/'
         });
-
-        window.location.reload();
+      
       }
-
-      //이메일 또는 비밀번호 잘못 입력했을때
-      else{
-        console.log('틀림');
-      }
-
+        ) 
+        .catch(error => {
+          alert("틀렸습니다.")
+          setValues({email:'', encryptedPassword:''});
+        })
+      
     }
   } // handleSubmit 끝
 

@@ -38,15 +38,22 @@ export default function MentorLogin(){
             mentorNickname: '',
             introduction: ''
         })
-        alert('추가되었습니다.');
         setOpen(false);
     //axios에서 받아서 하기
-    // const userId = localStorage.getItem('user').id;
-    // const url = `http://59.29.224.144:10000/recoder/mentor/${userId}`;
-    //   axios.post(url, {
-    //     mentorNickname : mentor.mentorNickname,
-    //     introduction : mentor.introduction
-    //   })
+    const userId = JSON.parse(localStorage.getItem('user'));
+    const url = `http://59.29.224.144:10000/users/mentor/${userId.id}`;
+      axios.post(url, {
+        mentorNickname : mentor.mentorNickname,
+        introduction : mentor.introduction
+      })
+      .then(response =>{
+          console.log(response.headers);
+          alert('추가되었습니다.');
+      }
+        ) 
+        .catch(error => {
+          alert("error")
+        })
     //응답받아서 정상이면 멘토추가되었으니 페이지 변경하기
 
     }
