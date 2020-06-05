@@ -38,7 +38,8 @@ export default function MentorDashBoard(props){
     <ListItemAvatar>
         <Avatar />
     </ListItemAvatar>
-    <ListItemText primary={`${props.user.name} 님`}/>
+    {/* <ListItemText primary={`${props.user.name} 님`}/> */}
+    <ListItemText primary='user 님'/>
     </ListItem>
 
     <ListItem button>

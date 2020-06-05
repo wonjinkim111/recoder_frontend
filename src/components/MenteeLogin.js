@@ -41,7 +41,7 @@ export default function MentorLogin(props){
         setOpen(false);
     //axios에서 받아서 하기
     const userId = JSON.parse(localStorage.getItem('user'));
-    const url = `http://59.29.224.144:10000/users/mentor/${userId.id}`;
+    const url = `http://59.29.224.144:10000/users/mentee${userId.id}`;
       axios.post(url, {
         mentorNickname : mentor.mentorNickname,
         introduction : mentor.introduction
@@ -69,9 +69,9 @@ export default function MentorLogin(props){
     return(
         <Container >
             <Typography component="div" style={{borderRadius: '40px', border: '2px solid purple', margin: '10vh', backgroundColor: 'lavender', padding:'20vh'}} >
-             <Button style={{position:"relative", left: "36%",}}variant="contained" color="secondary" onClick={clickOpen}>멘토생성하려면 클릭!</Button>
+             <Button style={{position:"relative", left: "36%",}}variant="contained" color="secondary" onClick={clickOpen}>멘티생성하려면 클릭!</Button>
              <Dialog open={open} onClose={clickClose}>
-                <DialogTitle>멘토 추가</DialogTitle>
+                <DialogTitle>멘티 추가</DialogTitle>
                 <DialogContent>
                 <TextField 
                     label="닉네임" 
@@ -82,18 +82,6 @@ export default function MentorLogin(props){
                     value={mentor.mentorNickname} 
                     error={mentor.mentorNickname === ""} 
                     helperText={mentor.mentorNickname === "" ? '닉네임을 입력해주세요!' : ' '} 
-                    onChange={handleChangeForm}/>
-                <TextField 
-                    label="멘토 정보" 
-                    margin="normal" 
-                    fullWidth 
-                    multiline 
-                    rows={3} 
-                    variant="outlined" 
-                    name="introduction" 
-                    value={mentor.introduction}
-                    error={mentor.introduction === ""} 
-                    helperText={mentor.introduction === "" ? '정보를 입력해주세요' : ' '} 
                     onChange={handleChangeForm}/>
                 </DialogContent>
                 <DialogActions>

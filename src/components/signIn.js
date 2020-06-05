@@ -37,17 +37,6 @@ import { withRouter, Link as RouterLink } from 'react-router-dom';
 
 export default function SignIn(props){
 
-  const [user1] = React.useState({
-    name: 'user123',
-    email: 'user@email.com',
-    gender: 0,
-    regDate: '2020-05-30 00:00:00'
-  })
-
-
-  //localstorage에 추가 근데 함수안에 들어가면 안됨
-  //localStorage.setItem('user', JSON.stringify(user1))
-
     const classes = useStyles();
 
     //validation check
@@ -86,11 +75,12 @@ export default function SignIn(props){
       pwdError: ''
     })
 
-    const [user, setUser] = React.useState({
-      id: '',
-      token: ''
-    })
+    // const [user, setUser] = React.useState({
+    //   id: '',
+    //   token: ''
+    // })
 
+    //axios없을때 테스트용
     const [test] = React.useState({
       name: 'test',
       id: 'test',
@@ -129,7 +119,7 @@ export default function SignIn(props){
     
     else{
     
-      //id랑 token 받아오는거 해야함
+      //id, token, mentorid, menteeid 받아옴
       const url = 'http://59.29.224.144:10000/users/login';
       axios.post(url, {
         email: values.email,
@@ -137,7 +127,7 @@ export default function SignIn(props){
       })
        .then(response =>{console.log(response.headers)
  
-        localStorage.setItem('user', JSON.stringify({id:response.headers.userid,token: response.headers.token}))
+        localStorage.setItem('user', JSON.stringify({id:response.headers.userid,token: response.headers.token, mentorid: response.headers.mentorid, menteeid: response.headers.menteeid}))
         props.history.push({
           pathname: '/'
         });

@@ -36,7 +36,22 @@ const usestyles = makeStyles((theme)=>({
 
 export default function Main(props) {
     const classes = usestyles();
+    
+    const [url, setUrl]=React.useState('');
 
+    React.useEffect(() => {
+        props.history.push({
+            pathname: url
+        })
+    },[url])
+
+    const handleonClick = () => {
+     const userData = JSON.parse(localStorage.getItem('user'));
+     if(userData === null) setUrl('/signin');
+     else if(userData.mentorid === "0") setUrl('/user/mentor');
+     else if(userData.mentorid !== "0") setUrl('/mentor/roomlist');
+    }
+     
         return(
             <ProductHeroLayout backgroundClassName={classes.background}>               
                 <img style={{ display: 'none' }} src={Background} alt="mainpage" />
@@ -49,14 +64,12 @@ export default function Main(props) {
                     color="secondary"
                     variant="contained"
                     size="large"
-                    className={classes.button}>
+                    className={classes.button}
+                    onClick={handleonClick}>
                     <Link
                     className={classes.rightLink}
                     component={RouterLink} 
-                    to={{
-                        pathname: "/user/mentor",
-                        state: {user : props.location.state}
-                    }}
+                    // to={`${url}`}
                     underline="none">
                     Mentor
                 </Link>

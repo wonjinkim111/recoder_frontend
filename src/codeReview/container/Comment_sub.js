@@ -1,5 +1,6 @@
-import React, { Component } from '../../../node_modules/react'
+import React, { Component } from 'react'
 import './Comment_sub.css';
+import { nominalTypeHack } from 'prop-types';
 export default class Comment_sub extends Component {
 
 
@@ -64,15 +65,13 @@ export default class Comment_sub extends Component {
                     {this.props.content}
                 </span>
                 <br/><br/>
-              
-                <button type="button" className="modal_comment_open_btn"  onClick={this.handleSpreadContent}>댓글</button>
-                <button type="button" className="modal_comment_remove_btn" onClick={this.handleModal3Remove}>삭제</button>
-                </div>
                 <div id="modal2">
                     <div className="modal_content">
                                 하이
                     </div>
-                    <div className="modal_layer"></div>
+                </div>
+                <button type="button" className="modal_comment_open_btn"  onClick={this.handleSpreadContent}>댓글</button>
+                <button type="button" className="modal_comment_remove_btn" onClick={this.handleModal3Remove}>삭제</button>
                 </div>
             </div>
         )

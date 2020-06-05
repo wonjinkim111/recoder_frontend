@@ -5,7 +5,7 @@ import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Typography from '@material-ui/core/Typography';
-
+import axios from 'axios';
 const useStyles = theme => ({
     root: {
         display: 'flex',
@@ -43,44 +43,33 @@ class RoomList extends React.Component{
                     max: 3,
                     picture: '../images/room.jpg',
                     language: 1
-                },
-                {
-                    nickname: '멘토3',
-                    name: 'room3',
-                    info: '나는고수',
-                    isPrivate: 1,
-                    max: 4,
-                    picture: '../images/room2.jpg',
-                    language: 1
-                },
-                {
-                    nickname: '멘토4',
-                    name: 'room4',
-                    info: '메렁메렁',
-                    isPrivate: 1,
-                    max: 3,
-                    picture: '../images/room.jpg',
-                    language: 1
-                },
-                {
-                    nickname: '멘토5',
-                    name: 'room5',
-                    info: '제발',
-                    isPrivate: 0,
-                    max: 6,
-                    picture: '../images/room2.jpg',
-                    language: 1
-                },
+                }
               ]
         }
     }
     
+    componentDidMount(){
+        const url = 'http://59.29.224.144:20000/recoder/room';
+        axios.get(url)
+         .then(response =>{console.log(response)
+            this.setState({
+                rooms : response.data
+            })
+
+        }) 
+          .catch(error => {
+            alert("error")
+          })
+    }
+
+
+
     render(){
         const {classes} = this.props;
-            const roomItems= this.state.rooms.map((r,i)=>{
+            const roomItems= this.state.rooms.map((r,roomId)=>{
             return (
                 <Grid item>
-                <RoomItem room={r} key={i}/>
+                <RoomItem room={r} key={roomId}/>
                 </Grid>
             )
         })
@@ -94,6 +83,7 @@ class RoomList extends React.Component{
         <ListSubheader component="div">Room List</ListSubheader>
 
         {roomItems}
+        
         
         </GridList>
         </div>

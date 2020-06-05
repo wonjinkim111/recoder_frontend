@@ -6,7 +6,7 @@ function MentorLogin(props){
     //console.log(propsw);
     return(
         <div className='horizontal'>
-        <MentorDashBoard user={props.location.state.user.user}/>
+        <MentorDashBoard/>
         <h1>Mentor Login 화면 입니다~! </h1>
         </div>
     )

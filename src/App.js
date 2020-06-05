@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ToolbarBefore from './modules/toolbarBefore';
 import ToolbarAfter from './modules/toolbarAfter';
-import MentorDashboard from './modules/mentorDashboard';
 import FootBar from './modules/footbar';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Main from './components/main'
@@ -9,11 +8,14 @@ import SignIn from './components/signIn'
 import SignUp from './components/signUp'
 import Mentor from './components/Mentor';
 import MentorLogin from './components/MentorLogin';
+import MenteeLogin from './components/MenteeLogin';
+import MentorRoomList from './components/MentorRoomList';
 import Mentee from './components/Mentee';
 import RoomList from './components/Room_list';
 import Profile from './components/Profile';
 import Review from './codeReview/index';
-import './index.css'
+import NotFound from './components/NotFound';
+import './index.css';
 
 class App extends React.Component {
   data;
@@ -21,6 +23,7 @@ class App extends React.Component {
     super(props);
 
     this.state={
+      login_flag: false,
       rooms:[],
       selectedRoom: null,
       // test:'',
@@ -30,17 +33,6 @@ class App extends React.Component {
       },
     }
   }
-  // componentWillMount(){
-  //   this.data = JSON.parse(localStorage.getItem('user'))
-  //   console.log('componentwillmount',this.data);
-  //   // this.setState({test: (JSON.parse(localStorage.getItem('user')) === null)?<ToolbarBefore/>:<ToolbarAfter/>})
-  //   if(localStorage.getItem('user')){
-  //     this.setState({user: this.data})
-  //   }
-  //   if(this.data)
-  //   console.log(this.data);
-  // }
-
   
   render(){
     this.data = JSON.parse(localStorage.getItem('user'))
@@ -55,12 +47,15 @@ class App extends React.Component {
       <Route exact path="/" component={Main}/>
       <Route path="/signin" component={SignIn}/>
       <Route path="/signup" component={SignUp}/>
-      {/* <Route path="/user/mentor" component={Mentor}/> */}
+      <Route path="/mentordashboard" component={Mentor}/>
       <Route path="/user/mentor" component={MentorLogin}/>
+      <Route path="/user/mentee" component={MenteeLogin}/>
+      <Route path="/mentor/roomlist" component={MentorRoomList}/>
       <Route path="/mentee" component={Mentee}/>
       <Route path="/roomlist" component={RoomList}/>
       <Route path="/profile" component={Profile}/>
       <Route path="/review" component={Review}/>
+      {/* <Route component={NotFound}/> */}
     </div>
     <FootBar/>
     </Router>

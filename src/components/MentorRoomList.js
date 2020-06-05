@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function MentorLogin(props){
+export default function MentorLogin(){
     const classes = useStyles();
 
     const [open, setOpen]=React.useState(false);
@@ -49,9 +49,6 @@ export default function MentorLogin(props){
       .then(response =>{
           console.log(response.headers);
           alert('추가되었습니다.');
-          props.history.push({
-            pathname: '/mentor/roomlist'
-          });
       }
         ) 
         .catch(error => {
@@ -68,10 +65,10 @@ export default function MentorLogin(props){
 
     return(
         <Container >
-            <Typography component="div" style={{borderRadius: '40px', border: '2px solid purple', margin: '10vh', backgroundColor: 'lavender', padding:'20vh'}} >
-             <Button style={{position:"relative", left: "36%",}}variant="contained" color="secondary" onClick={clickOpen}>멘토생성하려면 클릭!</Button>
+            {/* <Typography component="div" style={{borderRadius: '40px', border: '2px solid purple', margin: '10vh', backgroundColor: 'lavender', padding:'20vh'}} > */}
+             <Button style={{position:"relative", margin : "20px"}}variant="contained" color="primary" onClick={clickOpen}>방 생성하기</Button>
              <Dialog open={open} onClose={clickClose}>
-                <DialogTitle>멘토 추가</DialogTitle>
+                <DialogTitle>방 생성하기</DialogTitle>
                 <DialogContent>
                 <TextField 
                     label="닉네임" 
@@ -101,7 +98,7 @@ export default function MentorLogin(props){
                     <Button variant="outlined" color="primary" onClick={clickClose}>닫기</Button>
                 </DialogActions>
              </Dialog>
-            </Typography>
+            {/* </Typography> */}
         </Container>
     )
 }

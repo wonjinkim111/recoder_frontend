@@ -1,5 +1,6 @@
-import React, { Component } from '../../../node_modules/react'
+import React, { Component } from 'react'
 import Comment_sub from './Comment_sub';
+import '../index.css';
 export default class Comment extends Component {
 
     constructor(props) {
@@ -18,7 +19,7 @@ export default class Comment extends Component {
             <div >
 
                               
-                <div  style={{overflow:'auto', height:'44.5vh',radius: '1.3em'}}>
+                <div  style={{ height:"45vh",overflowY: 'scroll'}}>
                         {/* <div > &nbsp;&nbsp;&nbsp;{this.props.outputText.trim()} </div>   */}
                         <div style={{  ovpadding:10,fontSize:15}}>{this.props.comment_tb.map((comment, index) =>{ 
                                 return (<div>
