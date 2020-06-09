@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import MonacoEditor from './editor';
 import './CodeEditor.css';
+import { Link, Route, BrowserRouter as Router } from "react-router-dom"
+import axios from 'axios';
+
 class CodeEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -11,7 +14,7 @@ class CodeEditor extends React.Component {
       menteeCode:'mentee code\nint main(){  int i= 10;\n  printf("%d",i);\n return 0;\n}',
       theme: "vs-light",
       language:"java",
-      lineSelect: 'on',
+      lineSelect: 'off',
       options: {
         selectOnLineNumbers: true,
         roundedSelection: false,
@@ -22,22 +25,38 @@ class CodeEditor extends React.Component {
     };
   };
     //code 초기값 설정 componentDidMount로도 가능
-    componentDidMount(){
+    componentWillMount(){
       this.setState({ code: this.state.menteeCode,
         code_state:this.state.code_state
       });
 
 
-    // axios.get("http://localhost:8083/codeReview/user?ID=12345")
-    //     .then(function (response) {
-    //       console.log(response);
-    //     })
-    //     // 응답(실패)
-    //     .catch(function (error) {
-    //       console.log(error);
-    //     })
-    }
+      // const reviewId = document.location.href.split("?");
+      // const url = `http://59.29.224.144:30000/codereview/${reviewId}`;
+      // axios.get(url)
+      // .then(response =>{console.log(response)
+      //   this.setState({
 
+      //   })
+      // })
+    
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    const url = `http://59.29.224.144:30000/codereview/76`;
+    axios.get(url)
+    .then(response =>{console.log(response)
+        this.setState({
+            mentorRoom : response.data,
+            menteeCode : response.data.reviewCode,
+            mentorCode : response.data.reviewCode,
+
+        })
+
+    }) 
+      .catch(error => {
+        // alert("error")
+        console.log(error);
+      })
+}
 
     onChange = (newValue, number, flag) => {
       this.props.handleOutputText(newValue,number,flag); //텍스트값 받음
@@ -49,6 +68,7 @@ class CodeEditor extends React.Component {
       console.log("editorDidMount", editor, editor.getValue(), editor.getModel());
       this.editor = editor;
 
+      
     };
   
     handleCompile = () => { //실행 버튼 클릭 했을 때
@@ -164,7 +184,7 @@ class CodeEditor extends React.Component {
             width="54vw"
             language={language}
             //defaultValue={lineSelect}
-            value={code}
+            value={this.state.menteeCode}
             code_state={code_state}
             options={options}
             onChange={this.onChange}

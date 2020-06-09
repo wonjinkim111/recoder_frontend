@@ -49,13 +49,13 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MentorRoomList() {
+export default function MenteeReviewList() {
   const classes = useStyles();
 
   const [mentorRoom, setMentorRoom] = React.useState({});
 
   const handleEnter = e => {
-    // window.location.href=`/mentordashboard?mentorRoomid=${e.target.}`;
+    
   }
 
 
@@ -80,15 +80,14 @@ export default function MentorRoomList() {
 
   return (
     <Container>
-    <RoomCreate style={{position:"relative", left:"50vw"}}/>
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>No.</StyledTableCell>
-            <StyledTableCell align="center">이름</StyledTableCell>
-            <StyledTableCell align="center">인원</StyledTableCell>
-            <StyledTableCell align="center">입장</StyledTableCell>
+            <StyledTableCell align="center">제목</StyledTableCell>
+            <StyledTableCell align="center">멘토</StyledTableCell>
+            <StyledTableCell align="center">커멘트</StyledTableCell>
             
 
           </TableRow>
@@ -97,7 +96,7 @@ export default function MentorRoomList() {
           {rows.map((row,index) => (
             <StyledTableRow key={row.name}>
               <StyledTableCell component="th" scope="row">
-                {row.name} or
+                {row.name} 
               </StyledTableCell>
               <StyledTableCell align="center">{row.calories}</StyledTableCell>
               <StyledTableCell align="center">{row.fat}</StyledTableCell>

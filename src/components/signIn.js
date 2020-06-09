@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
 import { withRouter, Link as RouterLink } from 'react-router-dom';
+import RoomCreate from './RoomCreate';
 
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -126,14 +127,8 @@ export default function SignIn(props){
         encryptedPassword: values.encryptedPassword
       })
        .then(response =>{console.log(response.headers)
- 
         sessionStorage.setItem('user', JSON.stringify({id:response.headers.userid,token: response.headers.token, mentorid: response.headers.mentorid, menteeid: response.headers.menteeid}))
-        // props.history.push({
-        //   pathname: '/'
-        // });
-        window.location.href='/';
-      }
-        ) 
+        window.location.href='/';})
         .catch(error => {
           alert("틀렸습니다.")
           setValues({email:'', encryptedPassword:''});

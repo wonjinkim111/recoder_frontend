@@ -92,6 +92,9 @@ function (_React$Component) {
                 text: value
             }]);
         }
+
+  
+
       if (prevProps.language !== language) {
         monaco.editor.setModelLanguage(monaco.editor.getModels()[0], language);
       }
@@ -112,6 +115,7 @@ function (_React$Component) {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       this.destroyMonaco();
+
     }
   }, {
     key: "destroyMonaco",
@@ -138,6 +142,7 @@ function (_React$Component) {
           theme = _this$props2.theme,
           options = _this$props2.options,
           overrideServices = _this$props2.overrideServices;  
+          var range = new monaco.Range(0,1,5,1);
       if (this.containerElement) {
         // Before initializing monaco editor
         Object.assign(options, this.editorWillMount());
@@ -150,11 +155,12 @@ function (_React$Component) {
             enabled: false
           },
           language: language
-        }, options, {}, theme ? {
+        }, options, range ,{}, theme ? {
           theme: theme
         } : {}), overrideServices); // After initializing monaco editor
 
 
+        
           
          this.editor.onMouseDown(function (e) {
            console.log(e.target.element.parentNode)

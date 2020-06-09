@@ -158,3 +158,12 @@ height:10vh;
     resize: none;
     border: 1px solid skyblue;
 }
+
+
+/* 나가기버튼 */
+.exit{
+    width:5vw;
+    height:5.2vh;
+    font-size: 20px;
+    float: right;
+}
