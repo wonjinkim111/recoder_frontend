@@ -49,7 +49,7 @@ export default function ToolbarAfter() {
 
   const handleClick = () => {
     sessionStorage.clear();
-    window.location.reload();
+    window.location.href="/";
   }
 
   // componentWillMount = () => {
@@ -77,6 +77,7 @@ export default function ToolbarAfter() {
               color="inherit"
               variant="h6"
               underline="none"
+              style={{padding:"50px"}}
               className={classes.rightLink}
               component={RouterLink} 
               to= {{
@@ -96,7 +97,8 @@ export default function ToolbarAfter() {
               underline="none"
               className={clsx(classes.rightLink, classes.linkSecondary)}
               onClick={handleClick}
-              component={RouterLink} to="/"
+              style={{padding:"50px", cursor:"pointer"}}
+              // component={RouterLink} to="/"
             >
               {'LogOut'}
             </Link>

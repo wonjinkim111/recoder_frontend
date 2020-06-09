@@ -25,6 +25,7 @@ class MenteeItem extends React.Component{
     constructor(props){
         super(props);
         this.state={
+            language : '',
             open: false,
         }
     }
@@ -50,6 +51,13 @@ class MenteeItem extends React.Component{
             .catch(error => alert('오류발생'))
     }
 
+    componentDidMount(){
+        const reviewLanguage = this.props.mentee.reviewLanguage;
+        if(reviewLanguage === 0) this.setState({language:'Java'});
+        else if(reviewLanguage === 1) this.setState({language: 'C'});
+        else if(reviewLanguage === 2 )this.setState({language:'Cpp'});
+        else this.setState({language:'기타'});
+    }
     
     render(){
         const {classes} = this.props;
@@ -58,7 +66,7 @@ class MenteeItem extends React.Component{
                     <TableCell style={{height:"3vh"}}>{this.props.no+1}</TableCell>
                     <TableCell style={{height:"3vh"}}>{this.props.mentee.menteeNickname}</TableCell>
                     <TableCell style={{height:"3vh"}}>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{this.props.mentee.reviewCount}</TableCell>
-                    <TableCell style={{height:"3vh"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{this.props.mentee.language}</TableCell>
+                    <TableCell style={{height:"3vh"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{this.state.language}</TableCell>
                     <TableCell style={{height:"3vh"}}>
                        <Button
                         style={{backgroundColor:'#a80000', color:'white'}}

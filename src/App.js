@@ -10,7 +10,6 @@ import Mentor from './components/Mentor';
 import MentorLogin from './components/MentorLogin';
 import MenteeLogin from './components/MenteeLogin';
 import MentorRoomList from './components/MentorRoomList';
-
 import Mentee from './components/Mentee';
 import RoomList from './components/Room_list';
 import Profile from './components/Profile';
@@ -52,6 +51,7 @@ class App extends React.Component {
     {/* <ToolbarAfter/> */}
     {this.data ? <ToolbarAfter/> : <ToolbarBefore/>}
     <div className='main'>
+    
       <Route exact path="/" component={Main}/>
       <Route path="/signin" component={SignIn}/>
       <Route path="/signup" component={SignUp}/>
@@ -69,7 +69,7 @@ class App extends React.Component {
       <Route path="/reviewreq" component={ReviewReq}/>
       <Route path="/roomCreate" component={RoomCreate}/>
       <Route path="/reviewlist" component={MenteeReviewList}/>
-      <Route path="/roomreviewlist" component={RoomReviewList}/>
+      {/* <Route path="/roomreviewlist" component={RoomReviewList}/> */}
       {/* <Route component={NotFound}/> */}
     </div>
     <div style={{position:"absolute", height:"30%",width:"100vw",bottom:"-30%" }}>

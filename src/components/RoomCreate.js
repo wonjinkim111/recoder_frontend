@@ -31,6 +31,7 @@ display: 'none'
 
 });
 
+//안쓰는듯
 const useStyles = makeStyles((theme) => ({
     paper: {
       marginTop: theme.spacing(8),
@@ -70,10 +71,7 @@ const useStyles = makeStyles((theme) => ({
   })((props) => <Checkbox color="default" {...props} />);
 
 
-
 class RoomCreate extends React.Component {
-
-
 
 constructor(props) {
 
@@ -88,9 +86,7 @@ this.state = {
   roomName: '',
   roomInfo: '',
   roomMax:5,
-  roomLanguage:"java",
   openRoomMax: false,
-  openRoomLanguage: false,
 
 }
 
@@ -107,12 +103,6 @@ handleCloseRoomMax = e => {
 };
 handleOpenRoomMax = e => {
     this.setState({openRoomMax : true});
-};
-handleCloseRoomLanguage = e => {
-    this.setState({openRoomLanguage: false});
-};
-handleOpenRoomLanguage = e => {
-    this.setState({openRoomLanguage : true});
 };
 handleChangeForm = e => {
     this.setState({[e.target.name]: e.target.value});
@@ -134,29 +124,35 @@ handleSubmit=(e)=>{
   console.log("roomInfo: "+this.state.roomInfo)
   console.log("roomIsPrivate: "+this.state.roomIsPrivate)
   console.log("roomMax: "+this.state.roomMax)
-  console.log("roomLanguage: "+this.state.roomLanguage)
   console.log("file: "+this.state.file)
   
   const user = JSON.parse(sessionStorage.getItem('user'));
+  let form = new FormData();
+  form.append('roomName', this.state.roomName);
+  form.append('roomInfo', this.state.roomInfo);
+  form.append('roomIsPrivate', this.state.roomIsPrivate);
+  form.append('file',this.state.file);
+  form.append('roomMax',this.state.roomMax);
+  //form.append('roomLanguage',0);
+  
     const url = `http://59.29.224.144:20000/room/${user.mentorid}`;
-    axios.post(url, {
-      roomName: this.state.roomName,
-      roomInfo: this.state.roomInfo,
-      roomIsPrivate: this.state.roomIsPrivate,
-      roomPicture:this.state.file,
-      roomMax: this.state.roomMax
-      
-    })
-     .then(response =>{console.log(response.headers)
+    axios.post(url, form,{
+      headers: {
+        'Content-Type': 'multipart/form-data'}
+      })
+      // roomName: this.state.roomName,
+      // roomInfo: this.state.roomInfo,
+      // roomIsPrivate: this.state.roomIsPrivate,
+      // roomPicture:this.state.file,
+      // roomMax: this.state.roomMax 
+     .then(response =>{
+       console.log(response.headers)
         alert('추가되었습니다.');
-      this.props.history.push({
-        pathname: '/mentor/roomlist'
-        
-      });
-    
+      window.location.href=`/mentor/roomlist`;
     }
       ) 
       .catch(error => {
+        console.log(error);
         alert("다시 시도해 주십시오")
       //   setValues({roomName:'', roomInfo:''});
       })
@@ -182,14 +178,9 @@ handleValueChange(e) {
 }
 
 
-
-
-
 handleClickOpen() {
   this.setState({open: true});
 }
-
-
 
 handleClose() {
   this.setState({
@@ -199,8 +190,6 @@ handleClose() {
   })
 }
 
-
-
 render() {
 
 const { classes } = this.props;
@@ -209,7 +198,7 @@ return (
 
 <div>
 
-<Button variant="contained" color="primary" onClick={this.handleClickOpen}>
+<Button variant="contained" color="primary" onClick={this.handleClickOpen} style={{backgroundColor:"black",margin:'2vh'}}>
   방 생성하기
 </Button>
 
@@ -264,15 +253,6 @@ return (
                   onChange={this.handleChangeForm}
             />
 
-
-
-            {/* <FormControlLabel
-              
-              label="누구나 방에 참여 할 수 있습니다"
-              control={<Checkbox value="remember" color="primary" />}
-              values={values}
-            /> */}
-
   <InputLabel style={{position:"relative", left:"5%", bottom: "-15px"}}>누구나 방에 참여 할 수 있습니다 &nbsp;</InputLabel>
           <FormControlLabel
           style={{position:"relative",bottom:"15px",left:"0"}}
@@ -301,26 +281,7 @@ return (
             <MenuItem value={8}>8</MenuItem>
             <MenuItem value={9}>9</MenuItem>
             <MenuItem value={10}>10</MenuItem>
-          </Select> 
-          
-          {/* <InputLabel style={{position:"relative", bottom:""}} >언어 설정 &nbsp;</InputLabel>
-          
-          <Select
-            labelId="demo-controlled-open-select-label"
-            id=""
-            
-            style={{position:"relative",bottom:"25px",left:"85%"}}
-            open={this.state.openRoomLanguage}
-            name="roomLanguage"
-            onClose={this.handleCloseRoomLanguage}
-            onOpen={this.handleOpenRoomLanguage}
-            value={this.state.roomLanguage}
-            onChange={this.handleChangeForm}
-          >
-            <MenuItem value={"java"}>java</MenuItem>
-            <MenuItem value={"c"}>c</MenuItem>
-            <MenuItem value={"cpp"}>c++</MenuItem>
-          </Select> */}
+          </Select>
           
 
   </DialogContent>

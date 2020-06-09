@@ -45,44 +45,52 @@ const rows = [
 
 const useStyles = makeStyles({
   table: {
+    position:"relative",
     minWidth: 700,
+    width: "80vw",
+    left : "10vw",
+
+  },
+  container: {
+    maxHeight: 440,
   },
 });
 
 export default function MentorRoomList() {
   const classes = useStyles();
 
-  const [mentorRoom, setMentorRoom] = React.useState({});
+  const [mentorRoom, setMentorRoom] = React.useState([]);
 
   const handleEnter = e => {
-    // window.location.href=`/mentordashboard?mentorRoomid=${e.target.}`;
+    console.log(e.target.value)
+    window.location.href=`/mentordashboard?mentorRoomid=${e.target.value}`;
   }
 
+  useEffect(() => {
 
-//   useEffect(() => {
-
-//     const user = JSON.parse(sessionStorage.getItem('user'));
-//     const url = `http://59.29.224.144:20000/recoder/room/mentor/${user.mentorid}`;
-//     axios.get(url)
-//     .then(response =>{console.log(response)
-//         this.setState({
-//             mentorRoom : response.data
-//         })
-
-//     }) 
-//       .catch(error => {
-//         // alert("error")
-//         console.log(error);
-//       })
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    console.log(user);
+    const url = `http://59.29.224.144:20000/room/mentor/${user.mentorid}`;
+    axios.get(url)
+    .then(response =>{console.log(response)
+        setMentorRoom(response.data)
+        console.log(mentorRoom);
+    }) 
+      .catch(error => {
+        // alert("error")
+        console.log(error);
+      })
 
 
-//   }, []);
+  }, []);
 
   return (
     <Container>
-    <RoomCreate style={{position:"relative", left:"50vw"}}/>
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
+      <div style={{position:"relative", left:"80vw"}}>
+    <RoomCreate />
+    </div>
+    <TableContainer className={classes.container}>
+      <Table stickyHeader className={classes.table} aria-label="customized table" >
         <TableHead>
           <TableRow>
             <StyledTableCell>No.</StyledTableCell>
@@ -93,8 +101,8 @@ export default function MentorRoomList() {
 
           </TableRow>
         </TableHead>
-        <TableBody style={{width:"10ww"}}>
-          {rows.map((row,index) => (
+        <TableBody>
+          {/* {rows.map((row,index) => (
             <StyledTableRow key={row.name}>
               <StyledTableCell component="th" scope="row">
                 {row.name} or
@@ -108,19 +116,17 @@ export default function MentorRoomList() {
               </StyledTableCell>
   
             </StyledTableRow>
-          ))}
-        {/* {mentorRoom.map((list,index)=>(
+          ))} */}
+        {mentorRoom.map((list,index)=>(
                 <StyledTableRow key={list.roomId}>
-                    <StyledTableCell component="th" scope="row">{index+1} or {list.roomId}</StyledTableCell>
+                    <StyledTableCell component="th" scope="row">{index+1} {/*or {list.roomId}*/}</StyledTableCell>
                     <StyledTableCell align="center">{list.roomName}</StyledTableCell>
                     <StyledTableCell align="center">{list.roomMax}</StyledTableCell>
-                    <StyledTableCell align="center" value={}onClick={this.handleEnter}>
-                        <Link to={`/mentordashboard?roomId=${list.roomId}`}>
-                        <button>입장</button>
-                        </Link>
+                    <StyledTableCell align="center" >
+                        <button value={list.roomId} onClick={handleEnter}>입장</button>
                     </StyledTableCell>
                 </StyledTableRow>
-            ))} */}
+            ))}
         </TableBody>
       </Table>
     </TableContainer>

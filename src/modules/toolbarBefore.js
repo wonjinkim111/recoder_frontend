@@ -59,6 +59,7 @@ export default function ToolbarBefore() {
               color="inherit"
               variant="h6"
               underline="none"
+              style={{padding:"50px"}}
               className={classes.rightLink}
               rel="signIn"
             >
@@ -66,6 +67,7 @@ export default function ToolbarBefore() {
             </Link>
             <Link component={RouterLink} to="/signup"
               variant="h6"
+              style={{padding:"50px"}}
               underline="none"
               className={clsx(classes.rightLink, classes.linkSecondary)}
             >

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import List from '@material-ui/core/List';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
@@ -11,21 +11,40 @@ import ForumIcon from '@material-ui/icons/Forum';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import SettingsIcon from '@material-ui/icons/Settings';
 import PeopleIcon from '@material-ui/icons/People';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
-      maxWidth: 360,
+      maxWidth: 200,
       backgroundColor: theme.palette.background.paper,
     },
   }));
 
 export default function MentorDashBoard(props){
+  const [user, setUser] = React.useState([]);
+
+  useEffect(() => {
+    const userData = JSON.parse(sessionStorage.getItem('user'));
+    const url = `http://59.29.224.144:10000/users/${userData.id}`;
+    axios.get(url)
+    .then(response =>{
+      console.log(response);
+      setUser(response.data)
+    }) 
+      .catch(error => {
+        // alert("error")
+        console.log(error);
+      })
+
+
+  }, []);
+
     const classes = useStyles();
     // console.log(props);
     // console.log(props.user)
     const uesrData = sessionStorage.getItem('user');
-    
+
     return(
     // <div className={classes.root}>
     <List component="nav" subheader={
@@ -39,7 +58,7 @@ export default function MentorDashBoard(props){
     <ListItemAvatar>
         <Avatar />
     </ListItemAvatar>
-    <ListItemText primary='mentorNIckname 님'/>
+    <ListItemText primary= {`${user.mentorNickname}`}/>
     </ListItem>
 
     <ListItem button>

@@ -225,9 +225,9 @@ class MentorRoom extends React.Component {
                     <MenuItem value={9}>9</MenuItem>
                     <MenuItem value={10}>10</MenuItem>
                 </Select>
-                <div>
-                <Button className={classes.button} variant="contained" color="primary" onClick={this.handleModify}>수정하기</Button>
-                <Button className={classes.button} variant="contained" color="secondary" onClick={this.handleDelete}>삭제하기</Button>
+                <div style={{textAlign:'center'}}>
+                <Button style={{margin:'1vw'}} variant="contained" color="primary" onClick={this.handleModify}>수정하기</Button>
+                <Button style={{margin:'1vw'}} variant="contained" color="secondary" onClick={this.handleDelete}>삭제하기</Button>
                 </div>
                 </div>
                 </Container>
