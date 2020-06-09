@@ -48,7 +48,7 @@ export default function ToolbarAfter() {
   })
 
   const handleClick = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     window.location.reload();
   }
 

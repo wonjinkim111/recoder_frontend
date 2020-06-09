@@ -98,7 +98,7 @@ export default function SignIn(props){
     // React.useEffect(() =>{
     //   console.log('실행effect');
     //   if(user.id!==''){
-    //     localStorage.setItem('user', JSON.stringify(user))
+    //     sessionStorage.setItem('user', JSON.stringify(user))
     //     //window.location.reload();
         
     //   return () => {
@@ -127,11 +127,11 @@ export default function SignIn(props){
       })
        .then(response =>{console.log(response.headers)
  
-        localStorage.setItem('user', JSON.stringify({id:response.headers.userid,token: response.headers.token, mentorid: response.headers.mentorid, menteeid: response.headers.menteeid}))
-        props.history.push({
-          pathname: '/'
-        });
-      
+        sessionStorage.setItem('user', JSON.stringify({id:response.headers.userid,token: response.headers.token, mentorid: response.headers.mentorid, menteeid: response.headers.menteeid}))
+        // props.history.push({
+        //   pathname: '/'
+        // });
+        window.location.href='/';
       }
         ) 
         .catch(error => {

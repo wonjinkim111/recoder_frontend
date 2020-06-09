@@ -24,6 +24,7 @@ export default function MentorDashBoard(props){
     const classes = useStyles();
     // console.log(props);
     // console.log(props.user)
+    const uesrData = sessionStorage.getItem('user');
     
     return(
     // <div className={classes.root}>
@@ -38,8 +39,7 @@ export default function MentorDashBoard(props){
     <ListItemAvatar>
         <Avatar />
     </ListItemAvatar>
-    {/* <ListItemText primary={`${props.user.name} 님`}/> */}
-    <ListItemText primary='user 님'/>
+    <ListItemText primary='mentorNIckname 님'/>
     </ListItem>
 
     <ListItem button>

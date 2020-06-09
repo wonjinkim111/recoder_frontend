@@ -46,7 +46,7 @@ export default function Main(props) {
     },[url])
 
     const handleonClick = () => {
-     const userData = JSON.parse(localStorage.getItem('user'));
+     const userData = JSON.parse(sessionStorage.getItem('user'));
      if(userData === null) setUrl('/signin');
      else if(userData.mentorid === "0") setUrl('/user/mentor');
      else if(userData.mentorid !== "0") setUrl('/mentor/roomlist');

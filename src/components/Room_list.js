@@ -43,7 +43,8 @@ class RoomList extends React.Component{
                     max: 3,
                     picture: '../images/room.jpg',
                     language: 1
-                }
+                },
+                
               ]
         }
     }

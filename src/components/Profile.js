@@ -12,7 +12,7 @@ class Profile extends React.Component{
     }
 
     componentDidMount(){
-        const userData = JSON.parse(localStorage.getItem('user'));
+        const userData = JSON.parse(sessionStorage.getItem('user'));
         const url = `http://59.29.224.144:10000/users/${userData.id}`;
         axios.get(url)
          .then(response =>{console.log(response)
@@ -31,7 +31,8 @@ class Profile extends React.Component{
         var gender = (this.state.user.gender===0)? "여성":"남성"
         
         return(
-        <Container maxWidth="sm" >
+        <Container component="main" maxWidth="sm" >
+            <div style={{height:"10vh"}}></div>
         <div>
             <Avatar>
                 <FaceRoundedIcon color="primary" fontSize="large"/>

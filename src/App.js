@@ -14,6 +14,9 @@ import Mentee from './components/Mentee';
 import RoomList from './components/Room_list';
 import Profile from './components/Profile';
 import Review from './codeReview/index';
+import Item from './components/MenteeItem';
+import MenteeList from './components/MenteeList';
+import MentorRoom from './components/MentorRoom';
 import NotFound from './components/NotFound';
 import './index.css';
 
@@ -35,8 +38,8 @@ class App extends React.Component {
   }
   
   render(){
-    this.data = JSON.parse(localStorage.getItem('user'))
-    //if(localStorage.getItem('user'))this.setState({user:this.data})
+    this.data = JSON.parse(sessionStorage.getItem('user'))
+    //if(sessionStorage.getItem('user'))this.setState({user:this.data})
 
   return (
     <React.Fragment>
@@ -55,6 +58,9 @@ class App extends React.Component {
       <Route path="/roomlist" component={RoomList}/>
       <Route path="/profile" component={Profile}/>
       <Route path="/review" component={Review}/>
+      <Route path="/item" component={Item}/>
+      <Route path="/menteelist" component={MenteeList}/>
+      <Route path="/mentorRoom" component={MentorRoom}/>
       {/* <Route component={NotFound}/> */}
     </div>
     <FootBar/>
