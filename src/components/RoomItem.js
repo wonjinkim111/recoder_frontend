@@ -15,6 +15,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import ReviewReq from './reviewReq';
 
 const useStyles = theme => ({
     root: {
@@ -37,6 +38,7 @@ class RoomItem extends React.Component {
 
     clickOpen = () => {
         this.setState({open : true})
+        
         console.log(this.state.open)
       }
     clickClose = () => {
@@ -49,6 +51,7 @@ class RoomItem extends React.Component {
 
     return (
         <Card className={classes.root}>
+            
             <CardActionArea>
                 <CardMedia
                     className={classes.media}
@@ -58,10 +61,13 @@ class RoomItem extends React.Component {
                     
     <Button size="large" color="primary" onClick={this.clickOpen}>{this.props.room.mentorNickname}</Button>
                 <Dialog open={this.state.open} onClose={this.clickClose}>
+                
                 <Typography variant="body2" color="textSecondary" component="p">
                     {this.props.room.roomInfo}
                     </Typography>
+                    <ReviewReq></ReviewReq>
              </Dialog>
+             <ReviewReq></ReviewReq>
                 <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">
                         {this.props.room.roomName}

@@ -10,11 +10,16 @@ import Mentor from './components/Mentor';
 import MentorLogin from './components/MentorLogin';
 import MenteeLogin from './components/MenteeLogin';
 import MentorRoomList from './components/MentorRoomList';
+
 import Mentee from './components/Mentee';
 import RoomList from './components/Room_list';
 import Profile from './components/Profile';
 import Review from './codeReview/index';
 import NotFound from './components/NotFound';
+import RoomCreate from './components/RoomCreate';
+import MenteeReviewList from './components/MenteeReviewList';
+import RoomReviewList from './components/RoomReviewList';
+import ReviewReq from './components/reviewReq';
 import './index.css';
 
 class App extends React.Component {
@@ -55,9 +60,15 @@ class App extends React.Component {
       <Route path="/roomlist" component={RoomList}/>
       <Route path="/profile" component={Profile}/>
       <Route path="/review" component={Review}/>
+      <Route path="/reviewreq" component={ReviewReq}/>
+      <Route path="/roomCreate" component={RoomCreate}/>
+      <Route path="/reviewlist" component={MenteeReviewList}/>
+      <Route path="/roomreviewlist" component={RoomReviewList}/>
       {/* <Route component={NotFound}/> */}
     </div>
-    <FootBar/>
+    <div style={{position:"absolute", height:"30%",width:"100vw",bottom:"-30%" }}>
+    <FootBar />
+    </div>
     </Router>
     </React.Fragment>
 

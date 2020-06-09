@@ -31,6 +31,7 @@ class App extends Component{
   }
 
   componentWillMount(){
+    console.log("↵")
     document.getElementById('root').style.height="100%";
     document.getElementById('root').style.width="100%";
     setTimeout(()=>{
@@ -206,6 +207,9 @@ handleState = (state) =>{
     this.setState({flag:1});
   }
 
+  exit = ()=>{
+    window.location.href='/roomlist';
+  }
   
   render() {
   const {lineNumber, outputText, comment_tb, modal_start} = this.state; 
@@ -236,7 +240,11 @@ handleState = (state) =>{
 
 
         <div className = "review_mentee_content">
-        <div className="title"> ooo's code</div>
+        <div className="title"> ooo's code
+        <button className="exit" onClick={this.exit} type="button">
+              나가기
+            </button>
+            </div>
         <br/>
           고쳐주세요~~~
         </div>
