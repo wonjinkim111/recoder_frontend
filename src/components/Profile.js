@@ -9,7 +9,15 @@ class Profile extends React.Component{
     constructor(props){
         super(props);
 
-        this.state={user:[]}
+        this.state={user:[
+            // {
+            // name:'hersh',
+            // email:'hersh@yummy.com',
+            // gender:'여성',
+            // mentorNickname:'',
+            // menteeNickname:'mentee임당'
+            // }
+        ]}
     }
 
     componentDidMount(){
@@ -31,13 +39,13 @@ class Profile extends React.Component{
     getMentornickname = () => {
         const nickname = this.state.user.mentorNickname;
         if(nickname === null)return <Button>멘토생성</Button>;
-        else return nickname;
+        else return <h2>nickname</h2>;
     }
 
     getMenteenickname = () => {
         const nickname = this.state.user.menteeNickname;
         if(nickname === null)return <Button>멘티생성</Button>;
-        else return nickname;
+        else return <h2>nickname</h2>;
     }
 
     render(){
@@ -55,6 +63,11 @@ class Profile extends React.Component{
             <h2>성별 : {gender}</h2>
             <h2>멘토 닉네임 : {this.state.user.mentorNickname}</h2>
             <h2>멘티 닉네임 : {this.getMenteenickname}</h2>
+            {/* <h2>이름 : {this.state.user[0].name}</h2>
+            <h2>이메일 : {this.state.user[0].email}</h2>
+            <h2>성별 : {this.state.user[0].gender}</h2>
+            <h2>멘토 닉네임 : {this.getMentornickname} </h2>
+            <h2>멘티 닉네임 : {this.getMenteenickname} </h2> */}
          </div>
          </Container>
         )
