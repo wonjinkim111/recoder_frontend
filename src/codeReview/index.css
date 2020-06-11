@@ -108,13 +108,13 @@ height:10vh;
 
 .review_mentee_content{
     position: relative;
-    width:45.6vw;
+    width:45.8vw;
     height:38vh;
     left:0%;
     font-size: 15px;
     font-family: "나눔고딕";
     resize: none;
-    border: 1px solid grey;
+    border: 0px solid grey;
 }
 .review_editor{
     position: relative;
@@ -122,7 +122,7 @@ height:10vh;
     width:53vw;
     height:50vh;
     left: 45.7vw;
-    top: -38.3vh;
+    top: -38.1vh;
     border: 1px solid grey;
 }
 .review_comment{
@@ -163,7 +163,7 @@ height:10vh;
 /* 나가기버튼 */
 .exit{
     width:5vw;
-    height:5.2vh;
-    font-size: 20px;
+    height:5vh;
+    font-size: 1rem;
     float: right;
 }

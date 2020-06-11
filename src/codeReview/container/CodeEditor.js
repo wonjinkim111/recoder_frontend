@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import MonacoEditor from './editor';
 import './CodeEditor.css';
+import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { Link, Route, BrowserRouter as Router } from "react-router-dom"
 import axios from 'axios';
 
@@ -8,9 +9,11 @@ class CodeEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      mount_flag:1,
+      comment_tb:[],
       code_state : 'mentee',
       code: "// type your code... \n",
-      mentorCode: 'mentor code \n',
+      mentorCode: '',
       menteeCode:'mentee code\nint main(){  int i= 10;\n  printf("%d",i);\n return 0;\n}',
       theme: "vs-light",
       language:"java",
@@ -24,54 +27,48 @@ class CodeEditor extends React.Component {
       }
     };
   };
-    //code 초기값 설정 componentDidMount로도 가능
-    componentWillMount(){
-      this.setState({ code: this.state.menteeCode,
-        code_state:this.state.code_state
-      });
 
 
-      // const reviewId = document.location.href.split("?");
-      // const url = `http://59.29.224.144:30000/codereview/${reviewId}`;
-      // axios.get(url)
-      // .then(response =>{console.log(response)
-      //   this.setState({
-
-      //   })
-      // })
-    
-    const user = JSON.parse(sessionStorage.getItem('user'));
-    const url = `http://59.29.224.144:30000/codereview/76`;
-    axios.get(url)
-    .then(response =>{console.log(response)
-        this.setState({
-            mentorRoom : response.data,
-            menteeCode : response.data.reviewCode,
-            mentorCode : response.data.reviewCode,
-
-        })
-
-    }) 
-      .catch(error => {
-        // alert("error")
-        console.log(error);
-      })
-}
+editorDidMount = (editor) => {
+  this.editor = editor;
+  
+  this.editor.onMouseDown(e => {
+    if(this.state.code_state === 'mentee' && this.state.lineSelect === 'on'){  //멘티창에서 line선택기능이 on 일때만 커맨트 달 수 있음
+    //console.log(e.target.element.parentNode)
+    let line =e.target.position.lineNumber;
+    let text = this.editor.getModel().getLineContent(e.target.position.lineNumber);
+    this.props.handleLineColor(0);
+    this.props.handleOutputText(text,line,1);
+  }//if문 끝
+      
+   });//onMouse 끝
+  
+}//editormount 끝
 
     onChange = (newValue, number, flag) => {
       this.props.handleOutputText(newValue,number,flag); //텍스트값 받음
       //console.log("onChange", newValue); // eslint-disable-line no-console
     };
-  
-    editorDidMount = (editor) => {
-      // eslint-disable-next-line no-console
-      console.log("editorDidMount", editor, editor.getValue(), editor.getModel());
-      this.editor = editor;
 
-      
-    };
-  
+   //code 초기값 설정 componentDidMount로도 가능
+   componentWillMount(){
+    
+  const url = `http://59.29.224.144:30000/codereview/82`;
+ axios.get(url)
+     .then(response =>{
+      console.log(response.data);
+        this.setState({ code : response.data.reviewCode,
+          menteeCode : response.data.reviewCode,
+       data : response.data})
+     })
+     // 응답(실패)
+     .catch(function (error) {
+       console.log(error);
+     })
+ }
+
     handleCompile = () => { //실행 버튼 클릭 했을 때
+      console.log(this.props.comment_tb)
       console.log(this.editor.getValue().replace(/ /g,"")); //모든 공백 제거
       console.log(this.editor.getValue().replace(/\s/gi,""));//모든 공백 제거
       if (this.editor) {
@@ -104,8 +101,7 @@ class CodeEditor extends React.Component {
         options:{...prevState.options,
         readOnly: true}
       }))
-      //console.logconsole.log(document.getElementsByClassName("margin-view-overlays").firstChild);
-      //console.log(comment.firstChild.innerHTML);
+
       
     };
   
@@ -115,7 +111,6 @@ class CodeEditor extends React.Component {
                       code: this.state.mentorCode,
                       
       });
-      this.setState({code_state: 'mentor'})
 
       this.props.handleState('mentor');
       console.log(":" + this.state.code_state)
@@ -144,6 +139,32 @@ class CodeEditor extends React.Component {
 
     render() {
       const { code, theme, language, lineSelect, options, code_state } = this.state;
+
+      console.log(this.state.mount_flag)
+      if(this.state.mount_flag < 4){
+        
+      this.props.comment_tb.map((comment) =>{ 
+        console.log(comment.cmtLineNumber)
+        this.editor.deltaDecorations(
+          this.editor.getModel().getAllDecorations(),
+          [ 
+            {
+              range: new monaco.Range(comment.cmtLineNumber, 0, comment.cmtLineNumber, 0),
+              options: {
+                isWholeLine: true,
+                // linesDecorationsClassName: "myLineDecoration",
+                //inlineClassName: "myInlineDecoration"
+                className : "myLineDecoration",
+                //glyphMarginClassName: 'myLineDecoration'
+              }
+            },
+          ]
+        );//decoration 끝  
+        })
+        this.setState({mount_flag: this.state.mount_flag+1})
+      }
+
+
       return (
         <div>
           <div style={{height:'5vh',border:'1px solid grey'}}>
@@ -191,6 +212,7 @@ class CodeEditor extends React.Component {
             editorDidMount={this.editorDidMount}
             theme={theme}
             lineSelect={lineSelect}
+            comment_tb={this.props.comment_tb}
             modal_start={this.props.modal_start}
           />
         </div>

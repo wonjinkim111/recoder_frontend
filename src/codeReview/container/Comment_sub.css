@@ -94,9 +94,10 @@ border-radius: 0.2em;
   z-index:1;
 }
 
-#modal2 .modal_content {
+.modal_content {
   padding:20px 10px;
   background:#fff;
+  width: 100;
   border:1px solid #666;  
 }
 
@@ -177,3 +178,25 @@ padding-left: 5%;
 
 
 .btn01, .btn02{padding: 2px 4px 2px 4px; text-align: center; font-weight: 600; line-height: 1.4em; box-shadow: 1px 1px 2px #333; border-radius: 15px;} .btn01{background-color: #008DFF; color: #333;} .btn02{background-color: #FF3E00; color: #fff;} .example01{padding: 5px; text-align: center; border: 1px solid #008DFF;}
+
+.myInlineDecoration {
+background: lightgreen;  
+cursor: pointer;
+display: inline-block;
+}
+.myLineDecoration {
+background: lightgreen;  
+display: inline-block;
+}
+
+
+.modal_input{
+  position: absolute;
+  width:25.5vw;
+  height:40vh;   
+  font-size: 15px;
+  font-family: "나눔고딕";
+  resize: none;
+  border: 1px solid skyblue;
+  
+}
