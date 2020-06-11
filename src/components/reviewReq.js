@@ -192,10 +192,11 @@ handleClickOpen() {
     window.location.href='/signin';
    }
 
-  //  else if(user.menteeid ==0){
-  //   alert("멘티계정을 생성하세요")
-  //   window.location.href='/user/mentee';
-  //  }
+   else if(user.menteeid == 0){
+    alert("멘티계정을 생성하세요")
+    window.location.href='/user/mentee';
+   }
+
    else{
       this.setState({open: true});
    }
@@ -219,7 +220,7 @@ return (
 
 <div>
 
-<Button variant="contained" color="primary" onClick={this.handleClickOpen}>
+<Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
   리뷰신청
 </Button>
 

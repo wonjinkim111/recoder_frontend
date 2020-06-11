@@ -7,6 +7,12 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import Avatar from '@material-ui/core/Avatar';
+import StarIcon from '@material-ui/icons/Star';
+import StarHalfIcon from '@material-ui/icons/StarHalf';
 import ReviewReq from './reviewReq';
 
 const useStyles = theme => ({
@@ -16,6 +22,12 @@ const useStyles = theme => ({
     media: {
         height: 140,
     },
+    dialogPaper:{
+        minHeight: 200,
+        maxHeight: 200,
+        minWidth: 300,
+        maxHeight: 300
+    }
   });
 
 class RoomItem extends React.Component {
@@ -30,8 +42,6 @@ class RoomItem extends React.Component {
 
     clickOpen = () => {
         this.setState({open : true})
-        
-        console.log(this.state.open)
       }
     clickClose = () => {
         this.setState({open : false})
@@ -39,27 +49,44 @@ class RoomItem extends React.Component {
       
     render(){
         const {classes} = this.props;
-        //console.log("룸아이템에서", this.props.room);
 
     return (
         <Card className={classes.root}>
             
-            <CardActionArea>
+            <CardActionArea >
                 <CardMedia
                     className={classes.media}
                     image = {require('../images/room.jpg')}
                     // image = {require(this.props.room.picture)}
                     title="room image" />
                     
-    <Button size="large" color="primary" onClick={this.clickOpen}>{this.props.room.mentorNickname}</Button>
-                <Dialog open={this.state.open} onClose={this.clickClose}>
-                
+                <Button size="large" color="primary" onClick={this.clickOpen}>{this.props.room.mentorNickname}</Button>
+                <Dialog open={this.state.open} onClose={this.clickClose} classes={{paper:classes.dialogPaper}}>
+                <DialogTitle id="customized-dialog-title" style={{backgroundColor:"lightblue"}}>
+                    <div>
+                    <Avatar style={{float:'left', marginRight:'1vw'}}/>
+                    {this.props.room.mentorNickname}님
+                    </div>
+                    <div>
+                    <StarIcon/>
+                    <StarIcon/>
+                    <StarIcon/>
+                    <StarIcon/>
+                    <StarHalfIcon/>
+                    </div>
+                </DialogTitle>
+                <DialogContent dividers>
                 <Typography variant="body2" color="textSecondary" component="p">
                     {this.props.room.roomInfo}
                     </Typography>
-                    <ReviewReq></ReviewReq>
+                </DialogContent>
+                <DialogActions>
+                    <Button autoFocus onClick={this.clickClose} color="primary" style={{float:'left'}}>
+                        확인
+                    </Button>
+                    <ReviewReq/>
+                </DialogActions>
              </Dialog>
-             <ReviewReq></ReviewReq>
                 <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">
                         {this.props.room.roomName}
