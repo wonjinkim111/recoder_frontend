@@ -76,24 +76,23 @@ class RoomList extends React.Component{
                     roomMax: 7,
                     roomPicture: '../images/room.jpg'
                 },
-                
               ]
         }
     }
     
-    // componentDidMount(){
-    //     const url = 'http://59.29.224.144:20000/room';
-    //     axios.get(url)
-    //      .then(response =>{console.log(response)
-    //         this.setState({
-    //             rooms : response.data
-    //         })
+    componentDidMount(){
+        const url = 'http://59.29.224.144:20000/room';
+        axios.get(url)
+         .then(response =>{console.log(response)
+            this.setState({
+                rooms : response.data
+            })
 
-    //     }) 
-    //       .catch(error => {
-    //         alert(error);
-    //       })
-    // }
+        }) 
+          .catch(error => {
+            alert(error);
+          })
+    }
 
 
 
