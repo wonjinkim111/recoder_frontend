@@ -183,13 +183,15 @@ handleValueChange(e) {
 
 
 handleClickOpen() {
-  
+  console.log(this.props);
+  console.log('roomid' , this.props.roomid);
+  console.log('mentorid', this.props.mentorid);
    const user = JSON.parse(localStorage.getItem('user'));
    console.log(user);
    //console.log(user.menteeid);
    if(user === null){
     alert("로그인하세요")
-    window.location.href='/signin';
+    //window.location.href='/signin';
    }
 
    else if(user.menteeid == 0){
@@ -215,6 +217,8 @@ handleClose() {
 render() {
 
 const { classes } = this.props;
+console.log('props값' ,this.props);
+console.log('왜안찍혀');
 
 return (
 
