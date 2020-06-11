@@ -50,7 +50,7 @@ class RoomList extends React.Component{
     }
     
     componentDidMount(){
-        const url = 'http://59.29.224.144:20000/recoder/room';
+        const url = 'http://59.29.224.144:20000/room';
         axios.get(url)
          .then(response =>{console.log(response)
             this.setState({
@@ -59,7 +59,7 @@ class RoomList extends React.Component{
 
         }) 
           .catch(error => {
-            alert("error")
+            alert(error);
           })
     }
 

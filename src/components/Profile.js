@@ -54,7 +54,7 @@ class Profile extends React.Component{
             <h2>이메일 : {this.state.user.email}</h2>
             <h2>성별 : {gender}</h2>
             <h2>멘토 닉네임 : {this.state.user.mentorNickname}</h2>
-            <h2>멘티 닉네임 : {this.getMenteenickname}</h2>
+            <h2>멘티 닉네임 : {this.state.user.menteeNickname}</h2>
          </div>
          </Container>
         )

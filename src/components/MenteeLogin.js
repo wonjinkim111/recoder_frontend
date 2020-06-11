@@ -20,10 +20,7 @@ export default function MentorLogin(props){
     const classes = useStyles();
 
     const [open, setOpen]=React.useState(false);
-    const [mentor, setMentor] = React.useState({
-        mentorNickname : '',
-        introduction: ''
-    })
+    const [mentee, setMentee] = React.useState()
 
     const clickOpen = () => {
         setOpen(true);
@@ -33,24 +30,21 @@ export default function MentorLogin(props){
     }
     const formSubmit = e => {
         e.preventDefault();
-        if(mentor.mentorNickname === "" || mentor.introduction === "") return;
-        setMentor({
-            mentorNickname: '',
-            introduction: ''
-        })
+        if(mentee === "") return;
+        setMentee('')
         setOpen(false);
     //axios에서 받아서 하기
     const userId = JSON.parse(sessionStorage.getItem('user'));
-    const url = `http://59.29.224.144:10000/users/mentee${userId.id}`;
+    const url = `http://59.29.224.144:10000/users/mentee/${userId.id}`;
       axios.post(url, {
-        mentorNickname : mentor.mentorNickname,
-        introduction : mentor.introduction
+        menteeNickname : mentee
       })
       .then(response =>{
-          console.log(response.headers);
+        let userData = JSON.parse(sessionStorage.getItem('user'));
+        sessionStorage.setItem('user', JSON.stringify({id:userData.id, token:userData.token, mentorid: userData.mentorid, menteeid: response.data.menteeId}))
           alert('추가되었습니다.');
           props.history.push({
-            pathname: '/mentor/roomlist'
+            pathname: '/roomlist'
           });
       }
         ) 
@@ -62,7 +56,7 @@ export default function MentorLogin(props){
     }
     
     const handleChangeForm = e => {
-        setMentor({...mentor, [e.target.name]: e.target.value});
+        setMentee(e.target.value);
       }
 
 
@@ -78,10 +72,10 @@ export default function MentorLogin(props){
                     margin="normal" 
                     fullWidth 
                     autoFocus 
-                    name="mentorNickname" 
-                    value={mentor.mentorNickname} 
-                    error={mentor.mentorNickname === ""} 
-                    helperText={mentor.mentorNickname === "" ? '닉네임을 입력해주세요!' : ' '} 
+                    name="menteeNickname" 
+                    value={mentee} 
+                    error={mentee === ""} 
+                    helperText={mentee === "" ? '닉네임을 입력해주세요!' : ' '} 
                     onChange={handleChangeForm}/>
                 </DialogContent>
                 <DialogActions>

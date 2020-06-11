@@ -185,8 +185,9 @@ handleValueChange(e) {
 handleClickOpen() {
   
    const user = JSON.parse(localStorage.getItem('user'));
-   console.log(user.menteeid);
-   if(user ===null){
+   console.log(user);
+   //console.log(user.menteeid);
+   if(user === null){
     alert("로그인하세요")
     window.location.href='/signin';
    }
