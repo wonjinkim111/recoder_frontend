@@ -26,69 +26,69 @@ class RoomList extends React.Component{
 
         this.state={
             rooms : [
-                {
-                    mentorNickname: '멘토1',
-                    roomName: 'room1',
-                    roomInfo: '멘토입니다.',
-                    isPrivate: 1,
-                    max: 5,
-                    picture: '../images/room.jpg',
-                    language: 1
-                },
-                {
-                    mentorNickname: '멘토2',
-                    roomName: 'room2',
-                    roomInfo: '멘토야이ㅑ이',
-                    isPrivate: 1,
-                    max: 8,
-                    picture: '../images/room.jpg',
-                    language: 2
-                },
-                {
-                    mentorNickname: '멘토3',
-                    roomName: 'room3',
-                    roomInfo: '점잖은 멘토.',
-                    isPrivate: 1,
-                    max: 5,
-                    picture: '../images/room.jpg',
-                    language: 1
-                },
-                {
-                    mentorNickname: '멘토4',
-                    roomName: 'room4',
-                    roomInfo: '활발한 멘토',
-                    isPrivate: 1,
-                    max: 4,
-                    picture: '../images/room.jpg',
-                    language: 3
-                },
-                {
-                    mentorNickname: '멘토5',
-                    roomName: 'room5',
-                    roomInfo: '웃긴멘토',
-                    isPrivate: 1,
-                    max: 7,
-                    picture: '../images/room.jpg',
-                    language: 2
-                },
+                // {
+                //     mentorNickname: '멘토1',
+                //     roomName: 'room1',
+                //     roomInfo: '멘토입니다.',
+                //     isPrivate: 1,
+                //     max: 5,
+                //     picture: '../images/room.jpg',
+                //     language: 1
+                // },
+                // {
+                //     mentorNickname: '멘토2',
+                //     roomName: 'room2',
+                //     roomInfo: '멘토야이ㅑ이',
+                //     isPrivate: 1,
+                //     max: 8,
+                //     picture: '../images/room.jpg',
+                //     language: 2
+                // },
+                // {
+                //     mentorNickname: '멘토3',
+                //     roomName: 'room3',
+                //     roomInfo: '점잖은 멘토.',
+                //     isPrivate: 1,
+                //     max: 5,
+                //     picture: '../images/room.jpg',
+                //     language: 1
+                // },
+                // {
+                //     mentorNickname: '멘토4',
+                //     roomName: 'room4',
+                //     roomInfo: '활발한 멘토',
+                //     isPrivate: 1,
+                //     max: 4,
+                //     picture: '../images/room.jpg',
+                //     language: 3
+                // },
+                // {
+                //     mentorNickname: '멘토5',
+                //     roomName: 'room5',
+                //     roomInfo: '웃긴멘토',
+                //     isPrivate: 1,
+                //     max: 7,
+                //     picture: '../images/room.jpg',
+                //     language: 2
+                // },
                 
               ]
         }
     }
     
-    // componentDidMount(){
-    //     const url = 'http://59.29.224.144:20000/room';
-    //     axios.get(url)
-    //      .then(response =>{console.log(response)
-    //         this.setState({
-    //             rooms : response.data
-    //         })
+    componentDidMount(){
+        const url = 'http://59.29.224.144:20000/room';
+        axios.get(url)
+         .then(response =>{console.log(response)
+            this.setState({
+                rooms : response.data
+            })
 
-    //     }) 
-    //       .catch(error => {
-    //         alert(error);
-    //       })
-    // }
+        }) 
+          .catch(error => {
+            alert(error);
+          })
+    }
 
 
 

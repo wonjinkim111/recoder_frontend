@@ -90,7 +90,7 @@ class RoomItem extends React.Component {
                     <Button autoFocus onClick={this.clickClose} color="primary" style={{float:'left'}}>
                         확인
                     </Button>
-                    <ReviewReq/>
+                    <ReviewReq roomid={this.props.room.roomId} mentorid={this.props.room.mentorId}/>
                 </DialogActions>
              </Dialog>
                 <CardContent>

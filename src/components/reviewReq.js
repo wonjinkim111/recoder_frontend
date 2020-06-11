@@ -108,12 +108,12 @@ handleChangeForm = e => {
     this.setState({[e.target.name]: e.target.value});
 }
 handleChangeLanguage = e =>{
-  if(e.target.value =="java")
+  if(e.target.value ==="java")
     this.setState({[e.target.name]: 0});
-  else if(e.target.value =="c"){
+  else if(e.target.value ==="c"){
     this.setState({[e.target.name]: 1});
   }
-  else if(e.target.value =="cpp"){
+  else if(e.target.value ==="cpp"){
     this.setState({[e.target.name]: 2});
   }
   else{
@@ -132,24 +132,20 @@ handleSubmit=(e)=>{
 
   //if(!valid)console.error("invalid");
   
- // else{
-  console.log("reviewTitle: "+this.state.reviewTitle)
-  console.log("reviewContent: "+this.state.reviewContent)
-  console.log("reviewLanguage: "+1)
-  console.log("reviewCode: "+this.state.reviewCode)
-  // 
-  const user = JSON.parse(localStorage.getItem('user'));
+  // console.log("reviewTitle: "+this.state.reviewTitle)
+  // console.log("reviewContent: "+this.state.reviewContent)
+  // console.log("reviewLanguage: "+1)
+  // console.log("reviewCode: "+this.state.reviewCode)
+   
+  const user = JSON.parse(sessionStorage.getItem('user'));
     const url = 'http://59.29.224.144:30000/codereview';
     axios.post(url, {
-      roomId: 19,
+      roomId: this.props.roomid,
+      mentorId: this.props.mentorid,
       menteeId: user.menteeid,
-      mentorId: 2,
       reviewTitle: this.state.reviewTitle,
       reviewContent: this.state.reviewContent,
-      reviewLanguage: 1,
       reviewCode: this.state.reviewCode
-      
-
     })
      .then(response =>{console.log(response.data)
         alert('추가되었습니다.');
@@ -184,17 +180,21 @@ handleValueChange(e) {
 
 handleClickOpen() {
   
-   const user = JSON.parse(localStorage.getItem('user'));
+   const user = JSON.parse(sessionStorage.getItem('user'));
    console.log(user);
    //console.log(user.menteeid);
    if(user === null){
     alert("로그인하세요")
-    window.location.href='/signin';
+    //window.location.href='/signin';
    }
 
    else if(user.menteeid == 0){
     alert("멘티계정을 생성하세요")
     window.location.href='/user/mentee';
+   }
+
+   else if(user.mentorid == this.props.mentorid){
+     alert("자기 자신한테는 리뷰를 요청할 수 없습니다!")
    }
 
    else{
