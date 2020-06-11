@@ -1,7 +1,6 @@
-import React, { Component } from '../../../node_modules/react'
+import React, { Component } from 'react'
 import Comment_sub from './Comment_sub';
-import './Comment.css';
-
+import '../index.css';
 export default class Comment extends Component {
 
     constructor(props) {
@@ -20,12 +19,16 @@ export default class Comment extends Component {
             <div >
 
                               
-                <div className="box">
+                <div  style={{ height:"45vh",overflowY: 'scroll'}}>
+                        {/* <div > &nbsp;&nbsp;&nbsp;{this.props.outputText.trim()} </div>   */}
                         <div style={{  ovpadding:10,fontSize:15}}>{this.props.comment_tb.map((comment, index) =>{ 
+                                // console.log(comment.replys)
                                 return (<div>
-                                    <Comment_sub menteeCode={comment.menteeCode}
-                                                 cmt_line_number={comment.cmt_line_number} 
-                                                 content={comment.content} 
+                                    <Comment_sub menteeCode={comment.cmtCode}
+                                                 cmt_line_number={comment.cmtLineNumber} 
+                                                 content={comment.content}
+                                                 cmtId = {comment.cmtId}
+                                                 replys={comment.replys}
                                                  key={index}
                                                  handleRemove={this.props.handleRemove}
                                     />
