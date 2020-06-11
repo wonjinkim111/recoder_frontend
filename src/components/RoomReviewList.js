@@ -63,11 +63,10 @@ function createData(name, reviewTitle, reviewNickname) {
 }
 
 const rows = [
-  createData(1,'테스트방1', "159"),
-  createData(2,'테스트방2', "159"),
-  createData(3,"159", "200"),
-  createData(4,'테스트방4', "237"),
- 
+  createData(1,'도와주세요', "17"),
+  createData(2,'ㅠㅠ제발좀', "31"),
+  createData(3,"감사합니다~", "19"),
+  createData(4,'일주일째 못 풀고있어요..', "18"),
 ];
 
 
@@ -126,59 +125,59 @@ export default function RoomReviewList() {
     }
 
   return (
-    <Container>
-           
-        <Paper component="form" style={{position:"relative",minWidth:"300",float:"right"}}className={classes.root}>
+     <div>
+      {/* <div style={{ height: "10vh" }} /> */}
+      <Container>
+        <Paper component="form" style={{ position: "relative", minWidth: "300", float: "right" , marginTop:'3vh'}} className={classes.root}>
+          <InputBase
+            className={classes.input}
+            placeholder="리뷰검색"
+            inputProps={{ 'aria-label': '리뷰검색' }}
+            name="searchContent"
+            value={search.searchContent}
+            onChange={handleChangeSearch}
+          />
+          <IconButton type="submit" onClick={handleSearch} className={classes.iconButton} aria-label="search">
+            <SearchIcon style={{ height: "4vh" }} />
+          </IconButton>
 
-<InputBase
-  className={classes.input}
-  placeholder="리뷰검색"
-  inputProps={{ 'aria-label': '리뷰검색' }}
-  name="searchContent"
-  value={search.searchContent}
-  onChange={handleChangeSearch}
-/>
-<IconButton type="submit" onClick={handleSearch} className={classes.iconButton} aria-label="search">
-  <SearchIcon style={{height:"4vh"}} />
-</IconButton>
-
-</Paper>
+        </Paper>
 
 
-          <select style={{position:"relative",height:"6vh",width:"5vw",float:"right",right:"0.1vw",bottom:'-0vh',borderRadius: '0.3em'}}  name="searchTitle"  onChange={handleChangeSearch} >
-            <option value="title">제목</option>
-			<option value="mentee">멘티</option>
-		</select>
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>No.</StyledTableCell>
-            <StyledTableCell align="center">제목</StyledTableCell>
-            <StyledTableCell align="center">멘티</StyledTableCell>
-            <StyledTableCell align="center">입장</StyledTableCell>
-            
+        <select style={{ position: "relative", height: "6vh", width: "5vw", float: "right", right: "0.1vw", bottom: '-0vh', borderRadius: '0.3em', marginTop:'3vh' }} name="searchTitle" onChange={handleChangeSearch} >
+          <option value="title">제목</option>
+          <option value="mentee">멘티</option>
+        </select>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>No.</StyledTableCell>
+                <StyledTableCell align="center">제목</StyledTableCell>
+                <StyledTableCell align="center">멘티</StyledTableCell>
+                <StyledTableCell align="center">입장</StyledTableCell>
 
-          </TableRow>
-        </TableHead>
-        
-        <TableBody style={{width:"10ww"}}>
-          {testData1.map((row,index) => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
-                {row.name} 
-              </StyledTableCell>
-              <StyledTableCell align="center">{row.reviewTitle}</StyledTableCell>
-              <StyledTableCell align="center">{row.reviewNickname}</StyledTableCell>
-              <StyledTableCell align="center">
-                  <Link to={`/mentordashboard?roomId=${row.name}`}>
-                <Button value={row.name} onClick={handleEnter} variant="contained" color="primary" >입장</Button>
-                </Link>
-              </StyledTableCell>
-  
-            </StyledTableRow>
-          ))}
-        {/* {reviewList.map((list,index)=>(
+
+              </TableRow>
+            </TableHead>
+
+            <TableBody style={{ width: "10ww" }}>
+              {testData1.map((row, index) => (
+                <StyledTableRow key={row.name}>
+                  <StyledTableCell component="th" scope="row">
+                    {row.name}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">{row.reviewTitle}</StyledTableCell>
+                  <StyledTableCell align="center">{row.reviewNickname}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    <Link to={`/mentordashboard?roomId=${row.name}`}>
+                      <Button value={row.name} onClick={handleEnter} variant="contained" color="primary" >입장</Button>
+                    </Link>
+                  </StyledTableCell>
+
+                </StyledTableRow>
+              ))}
+              {/* {reviewList.map((list,index)=>(
                 <StyledTableRow key={list.roomId}>
                     <StyledTableCell component="th" scope="row">{index+1} or {list.roomId}</StyledTableCell>
                     <StyledTableCell align="center">{list.reviewTitle}</StyledTableCell>
@@ -190,9 +189,10 @@ export default function RoomReviewList() {
                     </StyledTableCell>
                 </StyledTableRow>
             ))} */}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    </Container>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Container>
+    </div>
   );
 }

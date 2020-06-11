@@ -7,16 +7,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import { withRouter, Link as RouterLink } from 'react-router-dom';
 import { green } from '@material-ui/core/colors';
-
-
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
@@ -24,11 +18,8 @@ import Select from '@material-ui/core/Select';
 const styles = theme => ({
 
 hidden: {
-
 display: 'none'
-
 }
-
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -70,15 +61,10 @@ const useStyles = makeStyles((theme) => ({
   })((props) => <Checkbox color="default" {...props} />);
 
 
-
 class ReviewReq extends React.Component {
 
-
-
 constructor(props) {
-
 super(props);
-
 this.state = {
 
   open: false,
@@ -96,7 +82,6 @@ this.state = {
   this.handleClose = this.handleClose.bind(this);
 
 }
-
 
 handleClosereviewLanguage = e => {
     this.setState({openreviewLanguage: false});
@@ -124,10 +109,10 @@ handleChange = (e) => {
     this.setState({ [e.target.name]: (e.target.checked)? 1:0 });
 };
 
-
-
 handleSubmit=(e)=>{
   e.preventDefault();
+  const user = JSON.parse(sessionStorage.getItem('user'));
+  window.location.href=`/menteedashboard?menteeid=${user.menteeid}`;
   //const valid = onTextValidation();   
 
   //if(!valid)console.error("invalid");
@@ -137,37 +122,33 @@ handleSubmit=(e)=>{
   // console.log("reviewLanguage: "+1)
   // console.log("reviewCode: "+this.state.reviewCode)
    
-  const user = JSON.parse(sessionStorage.getItem('user'));
-    const url = 'http://59.29.224.144:30000/codereview';
-    axios.post(url, {
-      roomId: this.props.roomid,
-      mentorId: this.props.mentorid,
-      menteeId: user.menteeid,
-      reviewTitle: this.state.reviewTitle,
-      reviewContent: this.state.reviewContent,
-      reviewCode: this.state.reviewCode
-    })
-     .then(response =>{console.log(response.data)
-        alert('추가되었습니다.');
+  // const user = JSON.parse(sessionStorage.getItem('user'));
+  //   const url = 'http://59.29.224.144:30000/codereview';
+  //   axios.post(url, {
+  //     roomId: this.props.roomid,
+  //     mentorId: this.props.mentorid,
+  //     menteeId: user.menteeid,
+  //     reviewTitle: this.state.reviewTitle,
+  //     reviewContent: this.state.reviewContent,
+  //     reviewCode: this.state.reviewCode
+  //   })
+  //    .then(response =>{console.log(response.data)
+  //       alert('추가되었습니다.');
+  //       window.location.href=`/menteedashboard?menteeid=${user.menteeid}`;
         
-      this.props.history.push({
-        pathname: '/mentor/roomlist'
-        
-      });
+      // this.props.history.push({
+      //   pathname: '/mentor/roomlist'
+      // });
     
-    }
-      ) 
-      .catch(error => {
-        alert("다시 시도해 주십시오")
-      //   setValues({reviewTitle:'', reviewContent:''});
-      })
+    // }
+    //   ) 
+    //   .catch(error => {
+    //     alert("다시 시도해 주십시오")
+    //   //   setValues({reviewTitle:'', reviewContent:''});
+    //   })
     
   
 } // handleSubmit 끝
-
-
-
-
 
 handleValueChange(e) {
   let nextState = {};
@@ -175,21 +156,18 @@ handleValueChange(e) {
   this.setState(nextState);
 }
 
-
-
-
 handleClickOpen() {
    const user = JSON.parse(sessionStorage.getItem('user'));
    console.log(user);
    //console.log(user.menteeid);
    if(user === null){
     alert("로그인하세요")
-    //window.location.href='/signin';
+    window.location.href='/signin';
    }
 
    else if(user.menteeid == 0){
     alert("멘티계정을 생성하세요")
-    window.location.href='/user/mentee';
+    window.location.href='/menteelogin';
    }
 
    else if(user.mentorid == this.props.mentorid){
@@ -201,15 +179,11 @@ handleClickOpen() {
    }
 }
 
-
-
 handleClose() {
   this.setState({
     open: false
   })
 }
-
-
 
 render() {
 
@@ -308,11 +282,8 @@ return (
 </Dialog>
 
 </div>
-
 )
-
 }
-
 }
 
 export default withStyles(styles)(ReviewReq)

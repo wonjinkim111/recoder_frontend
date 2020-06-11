@@ -17,10 +17,11 @@ const handleRouter = e =>{
         <Router>
         <div className='horizontal'>
         <MentorDashBoard/>
-        {/* <MenteeList></MenteeList> */}
-        <Route exact path={props.path} component={MenteeList}/>
+        {/* <Route exact path={props.path} component={MenteeList}/>
         <Route path={`${props.path}/roomreviewlist`} component={RoomReviewList}/>
-        <Route path={`${props.path}/setting`} component={MentorRoom}/>
+        <Route path={`${props.path}/setting`} component={MentorRoom}/> */}
+        {/* <Route exact path={props.path} component={RoomReviewList}/> */}
+        <Route exact path={props.path} component={MentorRoom}/> 
         </div>
         </Router>
  

@@ -33,41 +33,41 @@ class MenteeList extends React.Component{
         this.state={
             roomLanguage: '',
             mentees:[
-                // {
-                //     menteeId: "45",
-                //     roomId : "19",
-                //     menteeNickname: "마우스",
-                //     reviewCount: "3",
-                //     language: 1
-                // },
-                // {
-                //     menteeId: "47",
-                //     roomId : "19",
-                //     menteeNickname: "아메리카노",
-                //     reviewCount: "1",
-                //     language: 2
-                // },
+                {
+                    menteeId: "45",
+                    roomId : "19",
+                    menteeNickname: "마우스",
+                    reviewCount: "3",
+                    language: 1
+                },
+                {
+                    menteeId: "47",
+                    roomId : "19",
+                    menteeNickname: "아메리카노",
+                    reviewCount: "1",
+                    language: 2
+                },
                 
             ]
         }
     }
 
-    componentDidMount(){
-        //const roomId = this.props.roomid;
-        const getUrl = document.location.href.split("?");
-        const roomId = getUrl[1].split("=");
-        console.log(getUrl);
-        console.log(roomId);
-       //const url = `http://59.29.224.144:10000/users/mentor/mentees/19`;
-       const url = `http://59.29.224.144:10000/users/mentor/mentees/${roomId[1]}`;
-        axios.get(url)
-            .then(response=>{
-                console.log(response);
-                this.setState({mentees : response.data})
-            })
-            .catch(error => alert("error",error)
-            )
-    }
+    // componentDidMount(){
+    //     //const roomId = this.props.roomid;
+    //     const getUrl = document.location.href.split("?");
+    //     const roomId = getUrl[1].split("=");
+    //     console.log(getUrl);
+    //     console.log(roomId);
+    //    //const url = `http://59.29.224.144:10000/users/mentor/mentees/19`;
+    //    const url = `http://59.29.224.144:10000/users/mentor/mentees/${roomId[1]}`;
+    //     axios.get(url)
+    //         .then(response=>{
+    //             console.log(response);
+    //             this.setState({mentees : response.data})
+    //         })
+    //         .catch(error => alert("error",error)
+    //         )
+    // }
 
     render(){
         const {classes} = this.props;
@@ -79,7 +79,7 @@ class MenteeList extends React.Component{
 
         return(
             <div >
-                <div style={{height:"10vh"}}></div>
+                <div style={{height:"10vh"}}/>
             <TableContainer style={{position:"relative", height:"65vh",left:"5vw",width:"70vw"}}component={Paper}>
                 <Table>
                     <TableHead className={classes.head}>

@@ -3,6 +3,7 @@ import RoomItem from './RoomItem';
 import GridList from '@material-ui/core/GridList';
 import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import GridListTile from '@material-ui/core/GridListTile';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
@@ -15,7 +16,7 @@ const useStyles = theme => ({
         backgroundColor: theme.palette.background.paper,
       },
       gridList: {
-        width: `${window.innerWidth}`,
+        width: '80vw',
         height: `${window.innerHeight}`,
       },
 })
@@ -109,16 +110,16 @@ class RoomList extends React.Component{
 
     return(
         <div className={classes.root}>
-            
-            {/* <Typography aligh="center" variant="h5" gutterBottom={true}><br/>Room list</Typography> */}
-        <GridList className={classes.gridList} cellHeight={'auto'} cols={3}> 
-        {/* <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}> */}
-        <ListSubheader component="div">Room List</ListSubheader>
 
-        {roomItems}
-        
-        
-        </GridList>
+            {/* <Typography aligh="center" variant="h5" gutterBottom={true}><br/>Room list</Typography> */}
+            <GridList className={classes.gridList} cellHeight={'auto'} cols={3}>
+
+                <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }} />
+                <ListSubheader component="div">Room List</ListSubheader>
+                {roomItems}
+
+
+            </GridList>
         </div>
     )
 }

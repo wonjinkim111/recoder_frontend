@@ -57,20 +57,20 @@ class App extends React.Component {
       <Route path="/signup" component={SignUp}/>
       <Route path="/mentordashboard" component={Mentor}/>
       <Route path="/menteedashboard" component={Mentee}/>
-      <Route path="/user/mentor" component={MentorLogin}/>
-      <Route path="/user/mentee" component={MenteeLogin}/>
+      <Route path="/mentorlogin" component={MentorLogin}/>
+      <Route path="/menteelogin" component={MenteeLogin}/>
       <Route path="/mentor/roomlist" component={MentorRoomList}/>
       <Route path="/mentee" component={Mentee}/>
       <Route path="/roomlist" component={RoomList}/>
       <Route path="/profile" component={Profile}/>
       <Route path="/review" component={Review}/>
       <Route path="/item" component={Item}/>
-      <Route path="/menteelist" component={MenteeList}/>
+      {/* <Route path="/menteelist" component={MenteeList}/> */}
       <Route path="/mentorRoom" component={MentorRoom}/>
-      <Route path="/reviewreq" component={ReviewReq}/>
+      {/* <Route path="/reviewreq" component={ReviewReq}/> */}
       <Route path="/roomCreate" component={RoomCreate}/>
       <Route path="/reviewlist" component={MenteeReviewList}/>
-      {/* <Route path="/roomreviewlist" component={RoomReviewList}/> */}
+      <Route path="/roomreviewlist" component={RoomReviewList}/>
       {/* <Route component={NotFound}/> */}
     </div>
     <div style={{position:"absolute", height:"30%",width:"100vw",bottom:"-30%" }}>

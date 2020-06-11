@@ -198,7 +198,7 @@ return (
 
 <div>
 
-<Button variant="contained" color="primary" onClick={this.handleClickOpen} style={{backgroundColor:"black",margin:'2vh'}}>
+<Button variant="contained" color="primary" onClick={this.handleClickOpen} style={{backgroundColor:"black",margin:'3vh', float:'right', right:'10vw'}}>
   방 생성하기
 </Button>
 

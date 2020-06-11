@@ -1,8 +1,17 @@
 import React from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+import '../index.css';
+import MenteeDashBoard from '../modules/menteeDashboard';
+import MenteeReviewList from './MenteeReviewList2';
 
-function MenteeLogin(){
+function MenteeLogin(props){
     return(
-        <h1>Mentee Login 화면이에요!! </h1>
+        <Router>
+            <div className='horizontal'>
+            <MenteeDashBoard/>
+            <Route path={props.path} component={MenteeReviewList}/>
+            </div>
+        </Router>
     )
 }
 

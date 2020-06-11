@@ -38,9 +38,8 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 const rows = [
-  createData(1,'테스트방1', 159, ),
-  createData(2,'테스트방2', 237, ),
- 
+  createData(1,'테스트방1', 5, ),
+  createData(2,'테스트방2', 7, ), 
 ];
 
 const useStyles = makeStyles({
@@ -85,10 +84,11 @@ export default function MentorRoomList() {
   }, []);
 
   return (
-    <Container>
-      <div style={{position:"relative", left:"80vw"}}>
+    // <Container>
+    <div>
+      {/* <div style={{position:"relative", left:"80vw"}}> */}
     <RoomCreate />
-    </div>
+      {/* </div> */}
     <TableContainer className={classes.container}>
       <Table stickyHeader className={classes.table} aria-label="customized table" >
         <TableHead>
@@ -102,10 +102,10 @@ export default function MentorRoomList() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {/* {rows.map((row,index) => (
+          {rows.map((row,index) => (
             <StyledTableRow key={row.name}>
               <StyledTableCell component="th" scope="row">
-                {row.name} or
+                {row.name}
               </StyledTableCell>
               <StyledTableCell align="center">{row.calories}</StyledTableCell>
               <StyledTableCell align="center">{row.fat}</StyledTableCell>
@@ -116,7 +116,7 @@ export default function MentorRoomList() {
               </StyledTableCell>
   
             </StyledTableRow>
-          ))} */}
+          ))}
         {mentorRoom.map((list,index)=>(
                 <StyledTableRow key={list.roomId}>
                     <StyledTableCell component="th" scope="row">{index+1} {/*or {list.roomId}*/}</StyledTableCell>
@@ -130,6 +130,7 @@ export default function MentorRoomList() {
         </TableBody>
       </Table>
     </TableContainer>
-    </Container>
+    </div>
+    // </Container>
   );
 }

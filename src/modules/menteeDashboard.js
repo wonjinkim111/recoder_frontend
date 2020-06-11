@@ -14,7 +14,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
-      maxWidth: 360,
+      maxWidth: 200,
       backgroundColor: theme.palette.background.paper,
     },
   }));
@@ -28,7 +28,7 @@ export default function MentorDashBoard(props){
     // <div className={classes.root}>
     <List component="nav" subheader={
         <ListSubheader component="div" id="nested-list-subheader">
-          Mentor DashBoard
+          Mentee DashBoard
         </ListSubheader>}
         className={classes.root}
      >
@@ -37,7 +37,8 @@ export default function MentorDashBoard(props){
     <ListItemAvatar>
         <Avatar />
     </ListItemAvatar>
-    <ListItemText primary={`${props.user.name} 님`}/>
+    {/* <ListItemText primary={`${props.user.name} 님`}/> */}
+    <ListItemText primary='000님'/>
     </ListItem>
 
     <ListItem button>
