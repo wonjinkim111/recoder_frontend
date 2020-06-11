@@ -27,7 +27,11 @@ const useStyles = theme => ({
         maxHeight: 200,
         minWidth: 300,
         maxHeight: 300
-    }
+    },
+    large: {
+        width: theme.spacing(7),
+        height: theme.spacing(7),
+      },
   });
 
 class RoomItem extends React.Component {
@@ -64,15 +68,17 @@ class RoomItem extends React.Component {
                 <Dialog open={this.state.open} onClose={this.clickClose} classes={{paper:classes.dialogPaper}}>
                 <DialogTitle id="customized-dialog-title" style={{backgroundColor:"lightblue"}}>
                     <div>
-                    <Avatar style={{float:'left', marginRight:'1vw'}}/>
-                    {this.props.room.mentorNickname}님
+                    <Avatar className={classes.large} style={{float:'left', marginRight:'1vw',}}/>
                     </div>
                     <div>
+                    {this.props.room.mentorNickname}님
+                    <div style={{float:'down'}}>
                     <StarIcon/>
                     <StarIcon/>
                     <StarIcon/>
                     <StarIcon/>
                     <StarHalfIcon/>
+                    </div>
                     </div>
                 </DialogTitle>
                 <DialogContent dividers>
