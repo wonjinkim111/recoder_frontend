@@ -5,9 +5,11 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import GridList from '@material-ui/core/GridList';
 import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-
+import {css} from '@emotion/core';
+import {PulseLoader} from "react-spinners";
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
+
 const useStyles = theme => ({
     root: {
         display: 'flex',
@@ -27,6 +29,7 @@ class MenteeReviewList2 extends React.Component{
         super(props);
 
         this.state={
+            loading: true,
             reviews : [
                 // {
                 //     reviewId: 1,
@@ -58,6 +61,7 @@ class MenteeReviewList2 extends React.Component{
         axios.get(url)
          .then(response =>{console.log(response)
             this.setState({
+                loading: false,
                 reviews : response.data
             })
         }) 
@@ -81,16 +85,21 @@ class MenteeReviewList2 extends React.Component{
 
     return(
         <div className={classes.root}>
-            
-            {/* <Typography aligh="center" variant="h5" gutterBottom={true}><br/>Room list</Typography> */}
-        <GridList className={classes.gridList} cellHeight={'auto'} cols={3}> 
-        <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }} />
-                <ListSubheader component="div">Review List</ListSubheader>
 
-        {reviewItems}
-        
-        
-        </GridList>
+            {/* <Typography aligh="center" variant="h5" gutterBottom={true}><br/>Room list</Typography> */}
+            <GridList className={classes.gridList} cellHeight={'auto'} cols={3}>
+                <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }} />
+                <ListSubheader component="div">Review List</ListSubheader>
+                <PulseLoader
+                    width={100}
+                    size={20}
+                    color={"#6600FF"}
+                    loading={this.state.loading}
+                />
+                {reviewItems}
+
+
+            </GridList>
         </div>
     )
 }

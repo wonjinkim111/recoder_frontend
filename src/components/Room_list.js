@@ -7,7 +7,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Typography from '@material-ui/core/Typography';
 import {css} from '@emotion/core';
-import {SyncLoader} from "react-spinners";
+import {PulseLoader} from "react-spinners";
 import axios from 'axios';
 
 const useStyles = theme => ({
@@ -122,11 +122,14 @@ class RoomList extends React.Component{
                 <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }} />
                 <ListSubheader component="div">Room List</ListSubheader>
                 {/* {this.loading? <SyncLoader/> : {roomItems}} */}
-                <SyncLoader
-                    size={30}
+                
+                <PulseLoader
+                    width={100}
+                    size={20}
                     color={"#6600FF"}
                     loading={this.state.loading}
                 />
+            
                 {roomItems}
 
 
