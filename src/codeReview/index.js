@@ -134,7 +134,9 @@ handleSubmitModal = () =>{
   console.log(11111111111111111111111)
   ///console.log(this.state.text)
   const user = JSON.parse(sessionStorage.getItem('user'));
-  const url = `http://59.29.224.144:40000/comment/${this.props.match.params.id}`;
+  const url = 'http://59.29.224.144:40000/comment';
+  console.log(this.props.match.params.id);
+  console.log(this.state);
   axios.post(url, {
     reviewId : this.props.match.params.id,
     content : this.state.text,
@@ -145,10 +147,10 @@ handleSubmitModal = () =>{
    .then(response =>{console.log(response.data)
       console.log("됩니다유")
     //window.location.href="/review"
-  
   }
     ) 
     .catch(error => {
+      console.log(error);
       alert("다시 시도해 주십시오")
     })
 
@@ -191,6 +193,7 @@ handleState = (state) =>{
     this.setState({flag:1});
   }
 
+  //멘토인경우 멘티리뷰리스트로, 멘티인경우 멘티대쉬보드의 룸리스트로
   exit = ()=>{
     window.location.href='/roomlist';
   }

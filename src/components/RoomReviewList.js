@@ -118,6 +118,9 @@ export default function RoomReviewList(props) {
         setSearch({...search,[e.target.name] : e.target.value})
 
     }
+    const handleEnter = reviewId => {
+      window.location.href=`/review/${reviewId}`;
+    }
 
   return (
      <div>
@@ -172,15 +175,17 @@ export default function RoomReviewList(props) {
 
                 </StyledTableRow>
               ))} */}
-              {reviewList.map((list,index)=>(
+              {reviewList.map((list, index) => (
                 <StyledTableRow key={list.roomId}>
                   <StyledTableCell component="th" scope="row">{index + 1}</StyledTableCell>
                   <StyledTableCell align="center">{list.reviewTitle}</StyledTableCell>
                   <StyledTableCell align="center">{list.menteeNickname}</StyledTableCell>
                   <StyledTableCell align="center">
-                    <Link to={`/review/${list.reviewId}`}>
-                      <button>입장</button>
+                    <Button>
+                      <Link to={`/review/${list.reviewId}`}>
+                        입장
                     </Link>
+                    </Button>
                   </StyledTableCell>
                 </StyledTableRow>
               ))}

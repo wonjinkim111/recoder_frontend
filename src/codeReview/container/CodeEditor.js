@@ -13,9 +13,9 @@ class CodeEditor extends React.Component {
       mount_flag:1,
       comment_tb:[],
       code_state : 'mentee',
-      code: "// type your code... \n",
+      code: "",
       mentorCode: '',
-      menteeCode:'mentee code\nint main(){  int i= 10;\n  printf("%d",i);\n return 0;\n}',
+      menteeCode:'',
       theme: "vs-light",
       language:"java",
       lineSelect: 'off',
@@ -84,8 +84,10 @@ editorDidMount = (editor) => {
 
    //code 초기값 설정 componentDidMount로도 가능
    componentWillMount(){
+    const getUrl = document.location.href.split("/");
+    const len = getUrl.length;
     
-  const url = `http://59.29.224.144:30000/codereview/100`;
+  const url = `http://59.29.224.144:30000/codereview/${getUrl[len-1]}`;
  axios.get(url)
      .then(response =>{
       console.log(response.data);
@@ -219,8 +221,7 @@ componentDidMount(){
 
     render() {
       const { code, theme, language, lineSelect, options, code_state } = this.state;
-
-      console.log(this.state.mount_flag)
+      //console.log(this.state.mount_flag)
      
       // if(this.state.code_state ==="mentee"){
       
@@ -282,7 +283,7 @@ componentDidMount(){
           </div >
           <div id="mentorEditor" style={{display:"block", visibility:"hidden", zIndex:"-1"}}>
           <MonacoEditor
-            height="45vh"
+            height="40vh"
             width="53vw"
             language={language}
             //defaultValue={lineSelect}
@@ -298,9 +299,9 @@ componentDidMount(){
           />
           
           </div>
-          <div id="menteeEditor" style={{display:"block", position:"relative", top:"-45vh",zIndex:"1"}}>
+          <div id="menteeEditor" style={{display:"block", position:"relative", top:"-40vh",zIndex:"1"}}>
                     <MonacoEditor
-            height="45vh"
+            height="40vh"
             width="53vw"
             language={language}
             //defaultValue={lineSelect}

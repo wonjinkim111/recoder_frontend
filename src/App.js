@@ -16,6 +16,7 @@ import Profile from './components/Profile';
 import Review from './codeReview/index';
 import './index.css';
 import MenteeReviewList2 from './components/MenteeReviewList2';
+import NotFound from './components/NotFound';
 
 class App extends React.Component {
   data;
@@ -60,7 +61,7 @@ class App extends React.Component {
       <Route path="/review/:id" component={Review}/>
       {/* <Route component={NotFound}/> */}
     </div>
-    {/* <div style={{position:"absolute", height:"30%",width:"100vw",bottom:"-30%" }}> */}
+    {/* <div style={{position:"relative", height:"30%",width:"100vw",bottom:"-30%" }}> */}
     <FootBar />
     {/* </div> */}
     </Router>
