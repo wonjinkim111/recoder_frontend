@@ -4,7 +4,7 @@ import CodeEditor from "./container/CodeEditor";
 import Comment from './container/Comment';
 import './index.css';
 import axios from 'axios';
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import * as monaco from "monaco-editor";
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
@@ -205,7 +205,7 @@ handleState = (state) =>{
 
 
 
-<Dialog  open={this.state.open} onClose={this.handleClose}>
+<Dialog open={this.state.open} onClose={this.handleClose}>
 
 {/* <DialogTitle>댓글</DialogTitle> */}
 <DialogContent>
@@ -258,7 +258,8 @@ handleState = (state) =>{
                     handleTheme={this.handleTheme}/>
         </div>
 
-        <div className="review_comment">
+
+         <div className="review_comment">
           <div className="title"> &nbsp; Review</div>
         <Comment  handleRemove={this.handleRemove} 
                   lineNumber={lineNumber} 
@@ -268,7 +269,7 @@ handleState = (state) =>{
         <div className = "compile_result">
           <div className="title" > &nbsp; 실행 결과</div>
           <textarea className="compile_result_content" placeholder="실행 결과가 여기에 표시됩니다." readOnly></textarea> 
-        </div>
+        </div> 
         {/* </div> */}
       </div>
     );

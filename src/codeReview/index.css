@@ -17,7 +17,7 @@
 }
 
 .modal_head{
-    color: skyblue;
+    /* color: skyblue; */
 }
 .modal_code{
     /* word-break:break-all;  경계선을 넘으면 다음줄로 바꿔줌*/
@@ -28,7 +28,7 @@
     text-align: center;
     padding : 15px;
     font-size: 20px;
-    color: skyblue;
+    /* color: skyblue; */
 }
 
 #modal .modal_input{
@@ -144,9 +144,9 @@ height:10vh;
     position: absolute;
     margin-right: 10%;
     width:53vw;
-    height:40.5vh;
+    height:42vh;
     left: 45.7vw;
-    top:58.6vh;
+    top:57vh;
     border: 1px solid grey;
 }
 .compile_result_content{

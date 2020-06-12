@@ -4,11 +4,12 @@ import './CodeEditor.css';
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { Link, Route, BrowserRouter as Router } from "react-router-dom"
 import axios from 'axios';
-
+var color_flag =3;
 class CodeEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      color_flag111 : 1,
       mount_flag:1,
       comment_tb:[],
       code_state : 'mentee',
@@ -28,11 +29,35 @@ class CodeEditor extends React.Component {
     };
   };
 componentDidUpdate(){
- 
-
-        
-    
-
+  if(color_flag >0 ){
+  this.props.comment_tb.map((comment) =>{ 
+    this.editor.deltaDecorations(
+      this.editor.getModel().getAllDecorations(),
+      [ 
+        {
+          range: {startLineNumber: comment.cmtLineNumber, startColumn: 1, endLineNumber: comment.cmtLineNumber, endColumn: 1},
+          options: {
+            isWholeLine: true,
+            // linesDecorationsClassName: "myLineDecoration",
+            //inlineClassName: "myInlineDecoration"
+            className : "myLineDecoration",
+            //glyphMarginClassName: 'myLineDecoration'
+          }
+        },
+      ]
+    );//decoration 끝  
+    })
+    color_flag--;
+    console.log(color_flag)
+  }
+  if(color_flag <=0){
+    if(this.state.theme === "vs-white"){
+      this.changeBackColor("myLineDecoration");
+       }
+       else if (this.state.theme === "vs-dark"){
+       this.changeBackColor("myLineDecorationBlack");
+     }
+  }
 
 }
 
@@ -60,7 +85,7 @@ editorDidMount = (editor) => {
    //code 초기값 설정 componentDidMount로도 가능
    componentWillMount(){
     
-  const url = `http://59.29.224.144:30000/codereview/82`;
+  const url = `http://59.29.224.144:30000/codereview/100`;
  axios.get(url)
      .then(response =>{
       console.log(response.data);
@@ -73,7 +98,9 @@ editorDidMount = (editor) => {
        console.log(error);
      })
  }
-
+componentDidMount(){
+ 
+}
     handleCompile = () => { //실행 버튼 클릭 했을 때
       console.log(this.props.comment_tb)
       console.log(this.editor.getValue().replace(/ /g,"")); //모든 공백 제거
@@ -101,6 +128,10 @@ editorDidMount = (editor) => {
                       
       });
    
+      document.getElementById("mentorEditor").style.visibility="hidden"
+      document.getElementById("menteeEditor").style.display="block"
+      document.getElementById("menteeEditor").style.top="-45vh"
+      
       this.props.handleState('mentee');
       //readOnly : false -> true
       this.setState(prevState =>({
@@ -111,13 +142,30 @@ editorDidMount = (editor) => {
       
     };
   
+    changeBackColor = (color) =>{
+      //var range = new monaco.Range(3, 1,3, 1)
+      console.log( this.editor.getModel().getAllDecorations());
+      //console.log(this.editor.getModel().getAllDecorations()[3].options.className)
+     
+        for(let i=0; i < this.editor.getModel().getAllDecorations().length; i++){
+              this.editor.getModel().getAllDecorations()[i].options.className=color;
+        }
+        
+        
+    }
+    changecolor_flag = ()=>{
+      this.setState({color_flag111 : 1})
+    }
+    
     changeByMentor = () =>{
       
       this.setState({ code_state: 'mentor',
                       code: this.state.mentorCode,
                       
       });
-
+      document.getElementById("mentorEditor").style.visibility="visible"
+      document.getElementById("menteeEditor").style.display="none"
+      
       this.props.handleState('mentor');
       console.log(":" + this.state.code_state)
       //readOnly : true -> false
@@ -127,7 +175,7 @@ editorDidMount = (editor) => {
       }))
       
     }
-
+    
 
 
     setLanguage = (e) =>{
@@ -135,11 +183,37 @@ editorDidMount = (editor) => {
       }
     
       setTheme = (e)=>{
+        
         this.setState({theme: e.target.value})
-        //this.props.handleTheme(e.target.value);
+        if(e.target.value === "vs-white"){
+       console.log(e.target.value)
+       this.changeBackColor("myLineDecoration");
+        }
+        else if (e.target.value === "vs-dark"){
+        this.changeBackColor("myLineDecorationBlack");
+            console.log(e.target.value)
+      }
+      this.setState({theme: e.target.value})
       }
   
       setLineSelect = (e) =>{
+        // this.props.comment_tb.map((comment) =>{ 
+        //   this.editor.deltaDecorations(
+        //     this.editor.getModel().getAllDecorations(),
+        //     [ 
+        //       {
+        //         range: {startLineNumber: comment.cmtLineNumber, startColumn: 1, endLineNumber: comment.cmtLineNumber, endColumn: 1},
+        //         options: {
+        //           isWholeLine: true,
+        //           // linesDecorationsClassName: "myLineDecoration",
+        //           //inlineClassName: "myInlineDecoration"
+        //           className : "myLineDecoration",
+        //           //glyphMarginClassName: 'myLineDecoration'
+        //         }
+        //       },
+        //     ]
+        //   );//decoration 끝  
+        //   })
           this.setState({lineSelect: e.target.value})
       }
 
@@ -148,51 +222,28 @@ editorDidMount = (editor) => {
 
       console.log(this.state.mount_flag)
      
-      if(this.state.code_state ==="mentee"){
+      // if(this.state.code_state ==="mentee"){
       
-      this.props.comment_tb.map((comment) =>{ 
-        this.editor.deltaDecorations(
-          this.editor.getModel().getAllDecorations(),
-          [ 
-            {
-              range: new monaco.Range(comment.cmtLineNumber, 1,comment.cmtLineNumber, 1),
-              options: {
-                isWholeLine: true,
-                // linesDecorationsClassName: "myLineDecoration",
-                //inlineClassName: "myInlineDecoration"
-                className : "myLineDecoration",
-                //glyphMarginClassName: 'myLineDecoration'
-              }
-            },
-          ]
-        );//decoration 끝  
-        })
-        // if(flag1===6) {console.log(111111111111111); //window.location.href="/review"}
-        // flag1++;
-      }
-      else{
+      // this.props.comment_tb.map((comment) =>{ 
+      //   this.editor.deltaDecorations(
+      //     this.editor.getModel().getAllDecorations(),
+      //     [ 
+      //       {
+      //         range: {startLineNumber: comment.cmtLineNumber, startColumn: 1, endLineNumber: comment.cmtLineNumber, endColumn: 1},
+      //         options: {
+      //           isWholeLine: true,
+      //           // linesDecorationsClassName: "myLineDecoration",
+      //           //inlineClassName: "myInlineDecoration"
+      //           className : "myLineDecoration",
+      //           //glyphMarginClassName: 'myLineDecoration'
+      //         }
+      //       },
+      //     ]
+      //   );//decoration 끝  
+      //   })
+      // }
 
-        this.editor.deltaDecorations(
-          this.editor.getModel().getAllDecorations(),
-          [ 
-            {
-              range: new monaco.Range(200, 1,1, 1),
-              options: {
-                isWholeLine: true,
-                // linesDecorationsClassName: "myLineDecoration",
-                //inlineClassName: "myInlineDecoration"
-                className : "myLineDecoration1",
-                //glyphMarginClassName: 'myLineDecoration'
-              }
-            },
-          ]
-        );//decoration 끝  
       
-        
-          
-          
-      }
-
 
       return (
         <div>
@@ -212,11 +263,11 @@ editorDidMount = (editor) => {
               </select>
           </form>
           <form >
-               <select className="selectButton3"id="lineSelect"  size="1" onChange={this.setLineSelect}>
-            <option value="off">line_select_off</option>
-                  <option value="on">line_select_on</option>
-               </select>
-            </form>
+					<select className="selectButton3"id="lineSelect"  size="1" onChange={this.setLineSelect}>
+            <option value="off">review off</option>
+						<option value="on">review on</option>
+					</select>
+				</form>
             <button className="selectButton2"  onClick={this.handleCompile} type="button">
               실행
             </button>
@@ -229,12 +280,13 @@ editorDidMount = (editor) => {
 
             
           </div >
+          <div id="mentorEditor" style={{display:"block", visibility:"hidden", zIndex:"-1"}}>
           <MonacoEditor
             height="45vh"
-            width="54vw"
+            width="53vw"
             language={language}
             //defaultValue={lineSelect}
-            value={code}
+            value={this.state.mentorCode}
             code_state={code_state}
             options={options}
             onChange={this.onChange}
@@ -244,7 +296,26 @@ editorDidMount = (editor) => {
             comment_tb={this.props.comment_tb}
             modal_start={this.props.modal_start}
           />
-              
+          
+          </div>
+          <div id="menteeEditor" style={{display:"block", position:"relative", top:"-45vh",zIndex:"1"}}>
+                    <MonacoEditor
+            height="45vh"
+            width="53vw"
+            language={language}
+            //defaultValue={lineSelect}
+            value={this.state.menteeCode}
+            code_state={code_state}
+            options={options}
+            onChange={this.onChange}
+            editorDidMount={this.editorDidMount}
+            theme={theme}
+            lineSelect={lineSelect}
+            comment_tb={this.props.comment_tb}
+            modal_start={this.props.modal_start}
+          />
+          </div>
+         
         </div>
       );
     }
