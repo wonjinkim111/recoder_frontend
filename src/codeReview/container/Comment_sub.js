@@ -78,14 +78,14 @@ export default class Comment_sub extends Component {
         axios.delete(url) 
           .then(response =>{console.log(response.data)
       
-            //window.location.href="/review"
+            window.location.href="/review"
           
           }
             ) 
             .catch(error => {
               alert("다시 시도해 주십시오")
             })
-        // document.getElementById("modal3").style.display="none";
+            this.setState({realOpen: true});
     }
 
     render() {
@@ -112,9 +112,10 @@ export default class Comment_sub extends Component {
                 <div className = "menteeCode">
                    &nbsp; {this.props.menteeCode}
                 </div>
-                <span className="mentorContent">
+                <div className="mentorContent">
                     {this.props.content}
-                </span>
+                </div>
+
                 <br/><br/>
 
                 <button type="button" className="modal_comment_open_btn" value={this.props.cmtId} onClick={this.handleOpenContent}>댓글</button>

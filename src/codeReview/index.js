@@ -52,7 +52,7 @@ class App extends Component{
   componentDidMount(){
 
    
-    const url1 = `http://59.29.224.144:30000/codereview/82`;
+    const url1 = `http://59.29.224.144:30000/codereview/100`;
     axios.get(url1)
         .then(response =>{
            this.setState({ reviewReq : response.data})
@@ -150,7 +150,7 @@ handleSubmitModal = () =>{
   })
    .then(response =>{console.log(response.data)
       console.log("됀다다다다다다")
-    //window.location.href="/review"
+    window.location.href="/review"
   
   }
     ) 
@@ -211,7 +211,7 @@ handleState = (state) =>{
 
 
 
-<Dialog  open={this.state.open} onClose={this.handleClose}>
+<Dialog open={this.state.open} onClose={this.handleClose}>
 
 {/* <DialogTitle>댓글</DialogTitle> */}
 <DialogContent>
@@ -263,7 +263,8 @@ handleState = (state) =>{
                     handleTheme={this.handleTheme}/>
         </div>
 
-        <div className="review_comment">
+
+         <div className="review_comment">
           <div className="title"> &nbsp; Review</div>
         <Comment  handleRemove={this.handleRemove} 
                   lineNumber={lineNumber} 
@@ -273,7 +274,7 @@ handleState = (state) =>{
         <div className = "compile_result">
           <div className="title" > &nbsp; 실행 결과</div>
           <textarea className="compile_result_content" placeholder="실행 결과가 여기에 표시됩니다." readOnly></textarea> 
-        </div>
+        </div> 
         {/* </div> */}
       </div>
     );

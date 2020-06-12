@@ -2,6 +2,25 @@
     width:5vw;
     height:5vh;
     font-size: 20px;
+    
+}
+ .selectButton_mentee{
+    width:5vw;
+    height:5.2vh;
+    font-size: 20px;
+   border-top: 1;
+   border-left: 1;
+   border-right:1;
+    border-bottom: 0px solid;
+}
+.selectButton_mentor{
+    width:5vw;
+    height:5.2vh;
+    font-size: 20px;
+   border-top: 1;
+   border-left: 1;
+   border-right:1;
+    border-bottom: 2px solid; 
 }
 
 .selectButton2{
@@ -15,3 +34,20 @@
     height: 5.1vh;
 
 }
+
+.myInlineDecoration {
+    background: lightgreen;  
+    cursor: pointer;
+    display: inline-block;
+    }
+    .myLineDecoration {
+    background: lightgreen;
+    display: inline-block;
+    }
+    
+    
+      .myLineDecorationBlack {
+        background:  rgb(56, 182, 25); 
+        display: inline-block;
+        }
+        
