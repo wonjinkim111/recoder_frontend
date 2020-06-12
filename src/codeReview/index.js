@@ -4,7 +4,7 @@ import CodeEditor from "./container/CodeEditor";
 import Comment from './container/Comment';
 import './index.css';
 import axios from 'axios';
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import * as monaco from "monaco-editor";
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
