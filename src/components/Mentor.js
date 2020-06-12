@@ -6,22 +6,19 @@ import MenteeList from './MenteeList';
 import RoomReviewList from './RoomReviewList';
 import MentorRoom from './MentorRoom';
 
-function MentorLogin(props){
+function MentorLogin({match}){
     //console.log(props);
 
 const handleRouter = e =>{
             
 }
     return(
- 
         <Router>
         <div className='horizontal'>
         <MentorDashBoard/>
-        {/* <Route exact path={props.path} component={MenteeList}/>
-        <Route path={`${props.path}/roomreviewlist`} component={RoomReviewList}/>
-        <Route path={`${props.path}/setting`} component={MentorRoom}/> */}
-        {/* <Route exact path={props.path} component={RoomReviewList}/> */}
-        <Route exact path={props.path} component={MentorRoom}/> 
+         <Route exact path={`${match.path}/:id`} component={MenteeList}/>
+         <Route path={`${match.path}/reviewlist/:id`} component={RoomReviewList}/>
+        <Route path={`${match.path}/setting/:id`} component={MentorRoom}/> 
         </div>
         </Router>
  

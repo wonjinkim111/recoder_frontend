@@ -14,10 +14,8 @@ import Button from '@material-ui/core/Button';
 
 
 class App extends Component{
-
-  
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   
     this.state = {
       flag: 0,
@@ -50,9 +48,7 @@ class App extends Component{
   }
 
   componentDidMount(){
-
-   
-    const url1 = `http://59.29.224.144:30000/codereview/82`;
+    const url1 = `http://59.29.224.144:30000/codereview/${this.props.match.params.id}`;
     axios.get(url1)
         .then(response =>{
            this.setState({ reviewReq : response.data})
@@ -63,9 +59,7 @@ class App extends Component{
           console.log(error);
         })
 
-    const url2 = `http://59.29.224.144:40000/comment/100`;
-
-
+    const url2 = `http://59.29.224.144:40000/comment/${this.props.match.params.id}`;
     axios.get(url2)
         .then(response =>{
           console.log("여기는 코멘트 가져오기")
@@ -139,17 +133,17 @@ handleSubmitModal = () =>{
   //var txt = document.getElementById('comment_txt');
   console.log(11111111111111111111111)
   ///console.log(this.state.text)
-  //const user = JSON.parse(localStorage.getItem('user'));
-  const url = 'http://59.29.224.144:40000/comment?100';
+  const user = JSON.parse(sessionStorage.getItem('user'));
+  const url = `http://59.29.224.144:40000/comment/${this.props.match.params.id}`;
   axios.post(url, {
-    reviewId : 100,
+    reviewId : this.props.match.params.id,
     content : this.state.text,
     cmtLineNumber : this.state.lineNumber,
-    nickName : "멘토닉넴",
+    nickName : user.mentorNickname,
     cmtCode : this.state.outputText
   })
    .then(response =>{console.log(response.data)
-      console.log("됀다다다다다다")
+      console.log("됩니다유")
     //window.location.href="/review"
   
   }

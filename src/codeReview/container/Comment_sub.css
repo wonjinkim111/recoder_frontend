@@ -42,15 +42,15 @@ padding-left: 65px;
 
 .modal_comment_open_btn{
 position: relative;
-font-size: 20px;
+font-size: 150%;
 bottom:0%;
 left:10%;
 border: 1px solid grey;
 background-color: rgba(0, 0, 0, 0);
 color: skyblue;
 margin:10px;
-padding-right:100px;
-padding-left: 100px;
+padding-right:15%;
+padding-left: 15%;
 border-radius: 0.2em;
 } 
 
@@ -72,15 +72,16 @@ border-radius: 0.2em;
 
 .modal_comment_remove_btn{
   position: relative;
-  font-size: 20px;
+  font-size: 150%;
   bottom:0%;
-  left: 15%;
+  right :10%;
+  float: right;
   border: 1px solid grey;
   background-color: rgba(0, 0, 0, 0);
   color: skyblue;
   margin:10px;
-  padding-right:100px;
-  padding-left: 100px;
+  padding-right: 15%;
+  padding-left:  15%;
   border-radius: 0.2em
   }
 
@@ -189,6 +190,10 @@ background: lightgreen;
 display: inline-block;
 }
 
+.myLineDecoration1 {
+  display: inline-block;
+  background: white;
+  }
 
 .modal_input{
   position: absolute;

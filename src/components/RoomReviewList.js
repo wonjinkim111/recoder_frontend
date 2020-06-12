@@ -70,33 +70,28 @@ const rows = [
 ];
 
 
-export default function RoomReviewList() {
+export default function RoomReviewList(props) {
   const classes = useStyles();
 
-  const [reviewList, setreviewList] = React.useState({});
-  
-  const handleEnter = e => {
-    
-  }
-
+  const [reviewList, setreviewList] = React.useState([]);
   const [testData1, setTestData1] = React.useState(rows);
-//   useEffect(() => {
-//     const roomid = document.location.href.split("?");
-//     const url = `http://59.29.224.144:30000/codereview/list/${roomid}`;
-//     axios.get(url)
-//     .then(response =>{console.log(response)
-//         this.setState({
-//             reviewList : response.data
-//         })
 
-//     }) 
-//       .catch(error => {
-//         // alert("error")
-//         console.log(error);
-//       })
+  useEffect(() => {
+    //const roomid = document.location.href.split("?");
+    //console.log(props.match.params.id);
+    console.log(props.match.params.id);
+    const url = `http://59.29.224.144:30000/codereview/list/${props.match.params.id}`;
+    axios.get(url)
+    .then(response =>{console.log(response)
+        setreviewList(response.data);
+        console.log(reviewList);
+    }) 
+      .catch(error => {
+        // alert("error")
+        console.log(error);
+      })
+  });
 
-
-//   }, []);
     const handleSearch= e =>{
         //console.log(rows)
         console.log(search.searchTitle)
@@ -162,7 +157,7 @@ export default function RoomReviewList() {
             </TableHead>
 
             <TableBody style={{ width: "10ww" }}>
-              {testData1.map((row, index) => (
+              {/* {testData1.map((row, index) => (
                 <StyledTableRow key={row.name}>
                   <StyledTableCell component="th" scope="row">
                     {row.name}
@@ -170,25 +165,25 @@ export default function RoomReviewList() {
                   <StyledTableCell align="center">{row.reviewTitle}</StyledTableCell>
                   <StyledTableCell align="center">{row.reviewNickname}</StyledTableCell>
                   <StyledTableCell align="center">
-                    <Link to={`/mentordashboard?roomId=${row.name}`}>
-                      <Button value={row.name} onClick={handleEnter} variant="contained" color="primary" >입장</Button>
+                    <Link to={`/mentordashboard/${row.name}`}>
+                      <Button value={row.name} variant="contained" color="primary" >입장</Button>
                     </Link>
                   </StyledTableCell>
 
                 </StyledTableRow>
-              ))}
-              {/* {reviewList.map((list,index)=>(
+              ))} */}
+              {reviewList.map((list,index)=>(
                 <StyledTableRow key={list.roomId}>
-                    <StyledTableCell component="th" scope="row">{index+1} or {list.roomId}</StyledTableCell>
-                    <StyledTableCell align="center">{list.reviewTitle}</StyledTableCell>
-                    <StyledTableCell align="center">{list.menteeNickname}</StyledTableCell>
-                    <StyledTableCell align="center" value={}onClick={this.handleEnter}>
-                        <Link to={`/mentordashboard?roomId=${list.roomId}`}>
-                        <button>입장</button>
-                        </Link>
-                    </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">{index + 1}</StyledTableCell>
+                  <StyledTableCell align="center">{list.reviewTitle}</StyledTableCell>
+                  <StyledTableCell align="center">{list.menteeNickname}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    <Link to={`/review/${list.reviewId}`}>
+                      <button>입장</button>
+                    </Link>
+                  </StyledTableCell>
                 </StyledTableRow>
-            ))} */}
+              ))}
             </TableBody>
           </Table>
         </TableContainer>

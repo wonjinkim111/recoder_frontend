@@ -27,54 +27,53 @@ class MenteeReviewList2 extends React.Component{
         super(props);
 
         this.state={
-            rooms : [
-                {
-                    reviewId: 1,
-                    roomId: 19,
-                    mentorId: 2,
-                    menteeId: 4,
-                    reviewTitle: "알고리즘 봐주세요",
-                    reviewRegDate: "2020-06-03T00:00:00",
-                    reviewLanguage: 0,
-                    mentorNickname: "고수입니다."
-                },
-                {
-                  reviewId: 1,
-                  roomId: 20,
-                  mentorId: 3,
-                  menteeId: 4,
-                  reviewTitle: "알고리즘좀 ..",
-                  reviewRegDate: "2020-06-10T00:00:00",
-                  reviewLanguage: 0,
-                  mentorNickname: "나는야 멘토"
-                },
+            reviews : [
+                // {
+                //     reviewId: 1,
+                //     roomId: 19,
+                //     mentorId: 2,
+                //     menteeId: 4,
+                //     reviewTitle: "알고리즘 봐주세요",
+                //     reviewRegDate: "2020-06-03T00:00:00",
+                //     reviewLanguage: 0,
+                //     mentorNickname: "고수입니다."
+                // },
+                // {
+                //   reviewId: 1,
+                //   roomId: 20,
+                //   mentorId: 3,
+                //   menteeId: 4,
+                //   reviewTitle: "알고리즘좀 ..",
+                //   reviewRegDate: "2020-06-10T00:00:00",
+                //   reviewLanguage: 0,
+                //   mentorNickname: "나는야 멘토"
+                // },
               ]
         }
     }
     
-    // componentDidMount(){
-    //   const user = JSON.parse(sessionStorage.getItem('user'));
-    //   const url = `http://59.29.224.144:20000/room/mentor/${user.mentorid}`;
-    //     axios.get(url)
-    //      .then(response =>{console.log(response)
-    //         this.setState({
-    //             rooms : response.data
-    //         })
-
-    //     }) 
-    //       .catch(error => {
-    //         alert(error);
-    //       })
-    // }
+    componentDidMount(){
+      const user = JSON.parse(sessionStorage.getItem('user'));
+      const url = `http://59.29.224.144:30000/codereview/mentee/${user.menteeid}`;
+        axios.get(url)
+         .then(response =>{console.log(response)
+            this.setState({
+                reviews : response.data
+            })
+        }) 
+          .catch(error => {
+            alert(error);
+          })
+    }
 
 
 
     render(){
         const {classes} = this.props;
-            const reviewItems= this.state.rooms.map((r,roomId)=>{
+            const reviewItems= this.state.reviews.map((r,reviewId)=>{
             return (
                 <Grid item>
-                <ReviewItem room={r} key={roomId}/>
+                <ReviewItem review={r} key={reviewId}/>
                 
                 </Grid>
             )

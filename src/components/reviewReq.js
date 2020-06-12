@@ -13,6 +13,8 @@ import { withRouter, Link as RouterLink } from 'react-router-dom';
 import { green } from '@material-ui/core/colors';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import MonacoEditor from '../codeReview/container/editor';
+import CodeEditor from '../codeReview/container/CodeEditor';
 
 
 const styles = theme => ({
@@ -111,8 +113,8 @@ handleChange = (e) => {
 
 handleSubmit=(e)=>{
   e.preventDefault();
-  const user = JSON.parse(sessionStorage.getItem('user'));
-  window.location.href=`/menteedashboard?menteeid=${user.menteeid}`;
+  // const user = JSON.parse(sessionStorage.getItem('user'));
+  // window.location.href=`/menteedashboard?menteeid=${user.menteeid}`;
   //const valid = onTextValidation();   
 
   //if(!valid)console.error("invalid");
@@ -122,30 +124,30 @@ handleSubmit=(e)=>{
   // console.log("reviewLanguage: "+1)
   // console.log("reviewCode: "+this.state.reviewCode)
    
-  // const user = JSON.parse(sessionStorage.getItem('user'));
-  //   const url = 'http://59.29.224.144:30000/codereview';
-  //   axios.post(url, {
-  //     roomId: this.props.roomid,
-  //     mentorId: this.props.mentorid,
-  //     menteeId: user.menteeid,
-  //     reviewTitle: this.state.reviewTitle,
-  //     reviewContent: this.state.reviewContent,
-  //     reviewCode: this.state.reviewCode
-  //   })
-  //    .then(response =>{console.log(response.data)
-  //       alert('추가되었습니다.');
-  //       window.location.href=`/menteedashboard?menteeid=${user.menteeid}`;
+  const user = JSON.parse(sessionStorage.getItem('user'));
+    const url = 'http://59.29.224.144:30000/codereview';
+    axios.post(url, {
+      roomId: this.props.roomid,
+      mentorId: this.props.mentorid,
+      menteeId: user.menteeid,
+      reviewTitle: this.state.reviewTitle,
+      reviewContent: this.state.reviewContent,
+      reviewCode: this.state.reviewCode
+    })
+     .then(response =>{console.log(response.data)
+        alert('추가되었습니다.');
+        window.location.href=`/menteedashboard/reviewlist`;
         
       // this.props.history.push({
       //   pathname: '/mentor/roomlist'
       // });
     
-    // }
-    //   ) 
-    //   .catch(error => {
-    //     alert("다시 시도해 주십시오")
-    //   //   setValues({reviewTitle:'', reviewContent:''});
-    //   })
+    }
+      ) 
+      .catch(error => {
+        alert("다시 시도해 주십시오")
+      //   setValues({reviewTitle:'', reviewContent:''});
+      })
     
   
 } // handleSubmit 끝

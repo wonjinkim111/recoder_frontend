@@ -27,7 +27,14 @@ class CodeEditor extends React.Component {
       }
     };
   };
+componentDidUpdate(){
+ 
 
+        
+    
+
+
+}
 
 editorDidMount = (editor) => {
   this.editor = editor;
@@ -93,7 +100,6 @@ editorDidMount = (editor) => {
                       code: this.state.menteeCode,
                       
       });
-      this.setState({code_state: 'mentee'})
    
       this.props.handleState('mentee');
       //readOnly : false -> true
@@ -141,15 +147,15 @@ editorDidMount = (editor) => {
       const { code, theme, language, lineSelect, options, code_state } = this.state;
 
       console.log(this.state.mount_flag)
-      if(this.state.mount_flag < 4){
-        
+     
+      if(this.state.code_state ==="mentee"){
+      
       this.props.comment_tb.map((comment) =>{ 
-        console.log(comment.cmtLineNumber)
         this.editor.deltaDecorations(
           this.editor.getModel().getAllDecorations(),
           [ 
             {
-              range: new monaco.Range(comment.cmtLineNumber, 0, comment.cmtLineNumber, 0),
+              range: new monaco.Range(comment.cmtLineNumber, 1,comment.cmtLineNumber, 1),
               options: {
                 isWholeLine: true,
                 // linesDecorationsClassName: "myLineDecoration",
@@ -161,7 +167,30 @@ editorDidMount = (editor) => {
           ]
         );//decoration 끝  
         })
-        this.setState({mount_flag: this.state.mount_flag+1})
+        // if(flag1===6) {console.log(111111111111111); //window.location.href="/review"}
+        // flag1++;
+      }
+      else{
+
+        this.editor.deltaDecorations(
+          this.editor.getModel().getAllDecorations(),
+          [ 
+            {
+              range: new monaco.Range(200, 1,1, 1),
+              options: {
+                isWholeLine: true,
+                // linesDecorationsClassName: "myLineDecoration",
+                //inlineClassName: "myInlineDecoration"
+                className : "myLineDecoration1",
+                //glyphMarginClassName: 'myLineDecoration'
+              }
+            },
+          ]
+        );//decoration 끝  
+      
+        
+          
+          
       }
 
 
@@ -183,11 +212,11 @@ editorDidMount = (editor) => {
               </select>
           </form>
           <form >
-					<select className="selectButton3"id="lineSelect"  size="1" onChange={this.setLineSelect}>
+               <select className="selectButton3"id="lineSelect"  size="1" onChange={this.setLineSelect}>
             <option value="off">line_select_off</option>
-						<option value="on">line_select_on</option>
-					</select>
-				</form>
+                  <option value="on">line_select_on</option>
+               </select>
+            </form>
             <button className="selectButton2"  onClick={this.handleCompile} type="button">
               실행
             </button>
@@ -205,7 +234,7 @@ editorDidMount = (editor) => {
             width="54vw"
             language={language}
             //defaultValue={lineSelect}
-            value={this.state.menteeCode}
+            value={code}
             code_state={code_state}
             options={options}
             onChange={this.onChange}
@@ -215,6 +244,7 @@ editorDidMount = (editor) => {
             comment_tb={this.props.comment_tb}
             modal_start={this.props.modal_start}
           />
+              
         </div>
       );
     }

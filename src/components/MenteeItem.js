@@ -43,10 +43,15 @@ class MenteeItem extends React.Component{
       };
 
     menteeDelete = () => {
-        const url=`http://59.29.224.144:30000/users/mentor/${this.props.mentee.menteeId}`
-        axios.delete(url)
+        let form = new FormData();
+        form.append('menteeId', this.props.mentee.menteeId);
+        form.append('roomId', this.props.mentee.roomId);
+
+        const url='http://59.29.224.144:10000/users/mentor'
+        axios.delete(url, {data:form})
             .then(response=>{
                 console.log(response)
+                this.handleClose();
             })
             .catch(error => alert('오류발생'))
     }

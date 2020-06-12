@@ -6,7 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import GridListTile from '@material-ui/core/GridListTile';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Typography from '@material-ui/core/Typography';
+import {css} from '@emotion/core';
+import {SyncLoader} from "react-spinners";
 import axios from 'axios';
+
 const useStyles = theme => ({
     root: {
         display: 'flex',
@@ -26,57 +29,58 @@ class RoomList extends React.Component{
         super(props);
 
         this.state={
+            loading: true,
             rooms : [
-                {
-                    mentorId: 1,
-                    roomId: 1,
-                    mentorNickname: '멘토1',
-                    roomName: 'room1',
-                    roomInfo: '멘토입니다.',
-                    roomIsPrivate: 1,
-                    roomMax: 5,
-                    roomPicture: '../images/room.jpg'
-                },
-                {
-                    mentorId: 2,
-                    roomId: 2,
-                    mentorNickname: '멘토2',
-                    roomName: 'room2',
-                    roomInfo: '멘토야이ㅑ이',
-                    roomIsPrivate: 1,
-                    roomMax: 8,
-                    roomPicture: '../images/room.jpg'
-                },
-                {
-                    mentorId: 3,
-                    roomId: 19,
-                    mentorNickname: '멘토3',
-                    roomName: 'room3',
-                    roomInfo: '점잖은 멘토.',
-                    isPrivate: 1,
-                    roomMax: 5,
-                    roomPicture: '../images/room.jpg'
-                },
-                {
-                    mentorId: 4,
-                    roomId: 20,
-                    mentorNickname: '멘토4',
-                    roomName: 'room4',
-                    roomInfo: '활발한 멘토',
-                    roomIsPrivate: 1,
-                    roomMax: 4,
-                    roomPicture: '../images/room.jpg'
-                },
-                {
-                    mentorId: 5,
-                    roomId: 21,
-                    mentorNickname: '멘토5',
-                    roomName: 'room5',
-                    roomInfo: '웃긴멘토',
-                    roomIsPrivate: 1,
-                    roomMax: 7,
-                    roomPicture: '../images/room.jpg'
-                },
+                // {
+                //     mentorId: 1,
+                //     roomId: 1,
+                //     mentorNickname: '멘토1',
+                //     roomName: 'room1',
+                //     roomInfo: '멘토입니다.',
+                //     roomIsPrivate: 1,
+                //     roomMax: 5,
+                //     roomPicture: '../images/room.jpg'
+                // },
+                // {
+                //     mentorId: 2,
+                //     roomId: 2,
+                //     mentorNickname: '멘토2',
+                //     roomName: 'room2',
+                //     roomInfo: '멘토야이ㅑ이',
+                //     roomIsPrivate: 1,
+                //     roomMax: 8,
+                //     roomPicture: '../images/room.jpg'
+                // },
+                // {
+                //     mentorId: 3,
+                //     roomId: 19,
+                //     mentorNickname: '멘토3',
+                //     roomName: 'room3',
+                //     roomInfo: '점잖은 멘토.',
+                //     isPrivate: 1,
+                //     roomMax: 5,
+                //     roomPicture: '../images/room.jpg'
+                // },
+                // {
+                //     mentorId: 4,
+                //     roomId: 20,
+                //     mentorNickname: '멘토4',
+                //     roomName: 'room4',
+                //     roomInfo: '활발한 멘토',
+                //     roomIsPrivate: 1,
+                //     roomMax: 4,
+                //     roomPicture: '../images/room.jpg'
+                // },
+                // {
+                //     mentorId: 5,
+                //     roomId: 21,
+                //     mentorNickname: '멘토5',
+                //     roomName: 'room5',
+                //     roomInfo: '웃긴멘토',
+                //     roomIsPrivate: 1,
+                //     roomMax: 7,
+                //     roomPicture: '../images/room.jpg'
+                // },
               ]
         }
     }
@@ -86,6 +90,7 @@ class RoomList extends React.Component{
         axios.get(url)
          .then(response =>{console.log(response)
             this.setState({
+                loading: false,
                 rooms : response.data
             })
 
@@ -116,6 +121,12 @@ class RoomList extends React.Component{
 
                 <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }} />
                 <ListSubheader component="div">Room List</ListSubheader>
+                {/* {this.loading? <SyncLoader/> : {roomItems}} */}
+                <SyncLoader
+                    size={30}
+                    color={"#6600FF"}
+                    loading={this.state.loading}
+                />
                 {roomItems}
 
 

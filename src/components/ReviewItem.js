@@ -49,9 +49,9 @@ class ReviewItem extends React.Component {
 
     clickOpen = () => {
         this.setState({open : true});
-        if(this.props.room.reviewLanguage === 0)this.setState({language:'Java'});
-        else if(this.props.room.reviewLanguage === 1) this.setState({language: 'C'});
-        else if(this.props.room.reviewLanguage === 2) this.setState({language: 'Cpp'});
+        if(this.props.review.reviewLanguage === 0)this.setState({language:'Java'});
+        else if(this.props.review.reviewLanguage === 1) this.setState({language: 'C'});
+        else if(this.props.review.reviewLanguage === 2) this.setState({language: 'Cpp'});
         else this.setState({language: '기타'});
       }
     clickClose = () => {
@@ -59,7 +59,7 @@ class ReviewItem extends React.Component {
       }
     clickEnter = () => {
         //코드리뷰 페이지 이동
-        window.location.href=`/review?roomid=${this.props.room.roomId}`;
+        window.location.href=`/review/${this.props.review.reviewId}`;
       }
       
     render(){
@@ -75,14 +75,14 @@ class ReviewItem extends React.Component {
                     // image = {require(this.props.room.picture)}
                     title="room image" />
                     
-                <Button size="large" color="primary" onClick={this.clickOpen}>{this.props.room.mentorNickname}</Button>
+                <Button size="large" color="primary" onClick={this.clickOpen}>{this.props.review.mentorNickname}</Button>
                 <Dialog open={this.state.open} onClose={this.clickClose} classes={{paper:classes.dialogPaper}}>
                 <DialogTitle id="customized-dialog-title" style={{backgroundColor:"lightblue"}}>
                     <div>
                     <Avatar className={classes.large} style={{float:'left', marginRight:'1vw',}}/>
                     </div>
                     <div>
-                    {this.props.room.mentorNickname}님
+                    {this.props.review.mentorNickname}님
                     <div style={{float:'down'}}>
                     <StarIcon/>
                     <StarIcon/>
@@ -94,7 +94,7 @@ class ReviewItem extends React.Component {
                 </DialogTitle>
                 <DialogContent dividers>
                 <Typography variant="body2" color="textSecondary" component="p">
-                    리뷰 요청 시간 : {this.props.room.reviewRegDate}<br/>
+                    리뷰 요청 시간 : {this.props.review.reviewRegDate}<br/>
                     리뷰 요청 언어 : {this.state.language}
                     </Typography>
                 </DialogContent>
@@ -106,7 +106,7 @@ class ReviewItem extends React.Component {
                 </Dialog>
                 <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        {this.props.room.reviewTitle}
+                        {this.props.review.reviewTitle}
 
                         <ExitToAppIcon style={{float:'right', color:'#000066'}} onClick={this.clickEnter}/>
                     </Typography>

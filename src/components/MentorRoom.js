@@ -70,7 +70,7 @@ class MentorRoom extends React.Component {
   componentDidMount() {
     // const getUrl = document.location.href.split("?");
     // const roomId = getUrl[1].split("=");
-    const roomId = 35;
+    const roomId = this.props.match.params.id;
     const url = `http://59.29.224.144:20000/room/${roomId}`;
     axios.get(url)
       .then(response => {
@@ -84,13 +84,13 @@ class MentorRoom extends React.Component {
           roomId: response.data.roomId,
           file: response.data.roomPicture
         })
-        console.log(response.data);
-        console.log('roomName' + this.state.roomName);
-        console.log('roomInfo' + this.state.roomInfo);
-        console.log('roomIsPrivate' + this.state.roomIsPrivate);
-        console.log('file' + this.state.file);
-        console.log('roomPicture' + this.state.roomPicture);
-        console.log('roomMax' + this.state.roomMax);
+        // console.log(response.data);
+        // console.log('roomName' + this.state.roomName);
+        // console.log('roomInfo' + this.state.roomInfo);
+        // console.log('roomIsPrivate' + this.state.roomIsPrivate);
+        // console.log('file' + this.state.file);
+        // console.log('roomPicture' + this.state.roomPicture);
+        // console.log('roomMax' + this.state.roomMax);
       })
   }
 
@@ -113,11 +113,11 @@ class MentorRoom extends React.Component {
 
   handleChangeForm = e => {
     this.setState({ [e.target.name]: e.target.value });
-    console.log(e.target.value);
+   //console.log(e.target.value);
   }
   handleChange = (e) => {
     this.setState({ [e.target.name]: (e.target.checked) ? 1 : 0 });
-    console.log(e.target.value);
+    //console.log(e.target.value);
   };
 
   //이미지 태그에 이미지 올라오는부분인데 안됨
@@ -136,8 +136,6 @@ class MentorRoom extends React.Component {
 
   //수정하기
   handleModify = (e) => {
-    const roomId = 35;
-
     let form = new FormData();
     form.append('roomId', this.state.roomId)
     form.append('roomName', this.state.roomName);
@@ -166,8 +164,8 @@ class MentorRoom extends React.Component {
 
   //삭제하기
   handleDelete = (e) => {
-    const roomId = 35;
-    const url = `http://59.29.224.144:20000/room/${roomId}`;
+    //const roomId = 35;
+    const url = `http://59.29.224.144:20000/room/${this.state.roomId}`;
 
     axios.delete(url)
       .then(response => {

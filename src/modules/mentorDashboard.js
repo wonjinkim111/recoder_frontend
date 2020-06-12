@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+//import { Link, BrowserRouter as Router } from "react-router-dom"
 import List from '@material-ui/core/List';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
@@ -11,6 +12,8 @@ import ForumIcon from '@material-ui/icons/Forum';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import SettingsIcon from '@material-ui/icons/Settings';
 import PeopleIcon from '@material-ui/icons/People';
+import Link from '@material-ui/core/Link';
+import { withRouter, Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,8 +26,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MentorDashBoard(props){
   const [user, setUser] = React.useState([]);
+  const [roomid, setRoomid] = React.useState();
 
   useEffect(() => {
+    //console.log(props)
+    const getUrl = document.location.href.split("/");
+    //console.log(getUrl);
+    const len = getUrl.length;
+    setRoomid(getUrl[len-1]);
+    //const roomId = getUrl[1].split("=");
+
     const userData = JSON.parse(sessionStorage.getItem('user'));
     const url = `http://59.29.224.144:10000/users/${userData.id}`;
     axios.get(url)
@@ -39,6 +50,16 @@ export default function MentorDashBoard(props){
 
 
   }, []);
+
+  const menteelistClick = () => {
+    window.location.href=`/mentordashboard/${roomid}`;
+  }
+  const codelistClick = () => {
+    window.location.href=`/mentordashboard/reviewlist/${roomid}`;
+  }
+  const settingClick = () => {
+    window.location.href=`/mentordashboard/setting/${roomid}`;
+  }
 
     const classes = useStyles();
     // console.log(props);
@@ -58,18 +79,18 @@ export default function MentorDashBoard(props){
     <ListItemAvatar>
         <Avatar />
     </ListItemAvatar>
-    {/* <ListItemText primary= {`${user.mentorNickname}`}/> */}
-    <ListItemText primary= "00님"/>
+    <ListItemText primary= {`${user.mentorNickname}`}/>
+    {/* <ListItemText primary= "00님"/> */}
     </ListItem>
 
-    <ListItem button>
+    <ListItem button onClick={menteelistClick}>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Mentees"/>
     </ListItem>
 
-    <ListItem button>
+    <ListItem button onClick={codelistClick}>
       <ListItemIcon>
         <ForumIcon />
       </ListItemIcon>
@@ -84,7 +105,7 @@ export default function MentorDashBoard(props){
       <ListItemText primary="Metrics" />
     </ListItem>
     
-    <ListItem button>
+    <ListItem button onClick={settingClick}>
       <ListItemIcon>
         <SettingsIcon />
       </ListItemIcon>

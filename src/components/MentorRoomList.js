@@ -62,18 +62,17 @@ export default function MentorRoomList() {
 
   const handleEnter = e => {
     console.log(e.target.value)
-    window.location.href=`/mentordashboard?mentorRoomid=${e.target.value}`;
+    // window.location.href=`/mentordashboard?mentorRoomid=${e.target.value}`;
+    
   }
 
   useEffect(() => {
-
     const user = JSON.parse(sessionStorage.getItem('user'));
     console.log(user);
     const url = `http://59.29.224.144:20000/room/mentor/${user.mentorid}`;
     axios.get(url)
     .then(response =>{console.log(response)
         setMentorRoom(response.data)
-        console.log(mentorRoom);
     }) 
       .catch(error => {
         // alert("error")
@@ -102,7 +101,7 @@ export default function MentorRoomList() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row,index) => (
+          {/* {rows.map((row,index) => (
             <StyledTableRow key={row.name}>
               <StyledTableCell component="th" scope="row">
                 {row.name}
@@ -116,18 +115,22 @@ export default function MentorRoomList() {
               </StyledTableCell>
   
             </StyledTableRow>
-          ))}
-        {mentorRoom.map((list,index)=>(
-                <StyledTableRow key={list.roomId}>
-                    <StyledTableCell component="th" scope="row">{index+1} {/*or {list.roomId}*/}</StyledTableCell>
-                    <StyledTableCell align="center">{list.roomName}</StyledTableCell>
-                    <StyledTableCell align="center">{list.roomMax}</StyledTableCell>
-                    <StyledTableCell align="center" >
-                        <button value={list.roomId} onClick={handleEnter}>입장</button>
-                    </StyledTableCell>
-                </StyledTableRow>
+          ))} */}
+            {mentorRoom.map((list, index) => (
+              <StyledTableRow key={list.roomId}>
+                <StyledTableCell component="th" scope="row">{index + 1} {/*or {list.roomId}*/}</StyledTableCell>
+                <StyledTableCell align="center">{list.roomName}</StyledTableCell>
+                <StyledTableCell align="center">{list.roomMax}</StyledTableCell>
+                <StyledTableCell align="center" >
+                  <button value={list.roomId} >
+                    <Link to ={`/mentordashboard/${list.roomId}`}>
+                    입장
+                    </Link>
+                    </button>
+                </StyledTableCell>
+              </StyledTableRow>
             ))}
-        </TableBody>
+          </TableBody>
       </Table>
     </TableContainer>
     </div>

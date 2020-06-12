@@ -27,47 +27,48 @@ const useStyles = theme => ({
     }
 })
 class MenteeList extends React.Component{
-    constructor(props){
+    constructor(props,){
         super(props);
 
         this.state={
             roomLanguage: '',
             mentees:[
-                {
-                    menteeId: "45",
-                    roomId : "19",
-                    menteeNickname: "마우스",
-                    reviewCount: "3",
-                    language: 1
-                },
-                {
-                    menteeId: "47",
-                    roomId : "19",
-                    menteeNickname: "아메리카노",
-                    reviewCount: "1",
-                    language: 2
-                },
+                // {
+                //     menteeId: "45",
+                //     roomId : "19",
+                //     menteeNickname: "마우스",
+                //     reviewCount: "3",
+                //     language: 1
+                // },
+                // {
+                //     menteeId: "47",
+                //     roomId : "19",
+                //     menteeNickname: "아메리카노",
+                //     reviewCount: "1",
+                //     language: 2
+                // },
                 
             ]
         }
     }
 
-    // componentDidMount(){
-    //     //const roomId = this.props.roomid;
-    //     const getUrl = document.location.href.split("?");
-    //     const roomId = getUrl[1].split("=");
-    //     console.log(getUrl);
-    //     console.log(roomId);
-    //    //const url = `http://59.29.224.144:10000/users/mentor/mentees/19`;
-    //    const url = `http://59.29.224.144:10000/users/mentor/mentees/${roomId[1]}`;
-    //     axios.get(url)
-    //         .then(response=>{
-    //             console.log(response);
-    //             this.setState({mentees : response.data})
-    //         })
-    //         .catch(error => alert("error",error)
-    //         )
-    // }
+    componentDidMount(){
+        //const roomId = this.props.roomid;
+        //const getUrl = document.location.href.split("?");
+        //const roomId = getUrl[1].split("=");
+        //console.log(getUrl);
+        //console.log(roomId);
+       //const url = `http://59.29.224.144:10000/users/mentor/mentees/19`;
+       //console.log(this.props.match.params);
+       const url = `http://59.29.224.144:10000/users/mentor/mentees/${this.props.match.params.id}`;
+        axios.get(url)
+            .then(response=>{
+                console.log(response);
+                this.setState({mentees : response.data})
+            })
+            .catch(error => console.log(error)
+            )
+    }
 
     render(){
         const {classes} = this.props;

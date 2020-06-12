@@ -48,8 +48,13 @@ export default function Main(props) {
     const handleonClick = () => {
      const userData = JSON.parse(sessionStorage.getItem('user'));
      if(userData === null) setUrl('/signin');
-     else if(userData.mentorid === "0") setUrl('/mentorlogin');
-     else if(userData.mentorid !== "0") setUrl('/mentor/roomlist');
+     else if(userData.mentorid == 0) setUrl('/mentorlogin');
+     else if(userData.mentorid != 0) setUrl('/mentor/roomlist');
+    }
+    const handleonClick2 = () => {
+     const userData = JSON.parse(sessionStorage.getItem('user'));
+     if(userData !== null && userData.menteeid != 0) setUrl('/menteedashboard/roomlist');
+     else setUrl('/roomlist');
     }
      
         return(
@@ -78,11 +83,12 @@ export default function Main(props) {
                     color="secondary"
                     variant="contained"
                     size="large"
-                    className={classes.button}>
+                    className={classes.button}
+                    onClick={handleonClick2}>
                 <Link 
                     className={classes.rightLink}
                     component={RouterLink} 
-                    to= '/roomlist'
+                    //to= '/roomlist'
                     underline="none">
                     Mentee
                 </Link>

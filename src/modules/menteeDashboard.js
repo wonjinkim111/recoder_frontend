@@ -1,15 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import List from '@material-ui/core/List';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import RecentActorsIcon from '@material-ui/icons/RecentActors';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import SettingsIcon from '@material-ui/icons/Settings';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,6 +22,31 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 export default function MentorDashBoard(props){
+  const [user, setUser] = React.useState([]);
+
+  useEffect(() => {
+    const userData = JSON.parse(sessionStorage.getItem('user'));
+    const url = `http://59.29.224.144:10000/users/${userData.id}`;
+    axios.get(url)
+    .then(response =>{
+      console.log(response);
+      setUser(response.data)
+    }) 
+      .catch(error => {
+        // alert("error")
+        console.log(error);
+      })
+
+
+  }, []);
+
+  const roomlistClick = () => {
+    window.location.href='/menteedashboard/roomlist';
+  }
+  const participatingClick = () => {
+    window.location.href='/menteedashboard/reviewlist';
+  }
+
     const classes = useStyles();
     // console.log(props);
     // console.log(props.user)
@@ -37,11 +64,18 @@ export default function MentorDashBoard(props){
     <ListItemAvatar>
         <Avatar />
     </ListItemAvatar>
-    {/* <ListItemText primary={`${props.user.name} 님`}/> */}
-    <ListItemText primary='000님'/>
+    <ListItemText primary={`${user.menteeNickname} 님`}/>
+    {/* <ListItemText primary='000님'/> */}
     </ListItem>
 
-    <ListItem button>
+    <ListItem button onClick={roomlistClick}>
+      <ListItemIcon>
+        <AccountBalanceIcon />
+      </ListItemIcon>
+      <ListItemText primary="Room List" />
+    </ListItem>
+
+    <ListItem button onClick={participatingClick}>
       <ListItemIcon>
         <RecentActorsIcon />
       </ListItemIcon>
