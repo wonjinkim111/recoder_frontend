@@ -193,9 +193,15 @@ handleState = (state) =>{
     this.setState({flag:1});
   }
 
-  //멘토인경우 멘티리뷰리스트로, 멘티인경우 멘티대쉬보드의 룸리스트로
+  //멘토인경우 멘토 룸 리스트로, 멘티인경우 멘티대쉬보드의 룸리스트로
   exit = ()=>{
-    window.location.href='/roomlist';
+    const state = JSON.parse(sessionStorage.getItem('state'));
+    if(state === 'mentor'){
+      window.location.href='/mentor/roomlist'
+    }
+    else if(state === 'mentee'){
+      window.location.href='/menteedashboard';
+    }
   }
   
   render() {

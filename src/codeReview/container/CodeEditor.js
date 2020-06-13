@@ -9,6 +9,7 @@ class CodeEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      type: JSON.parse(sessionStorage.getItem('state')),
       color_flag111 : 1,
       mount_flag:1,
       comment_tb:[],
@@ -243,8 +244,7 @@ componentDidMount(){
       //   );//decoration 끝  
       //   })
       // }
-
-      
+ 
 
       return (
         <div>
@@ -264,10 +264,10 @@ componentDidMount(){
               </select>
           </form>
           <form >
-					<select className="selectButton3"id="lineSelect"  size="1" onChange={this.setLineSelect}>
+            {this.state.type==='mentor'? <select className="selectButton3"id="lineSelect"  size="1" onChange={this.setLineSelect}>
             <option value="off">review off</option>
 						<option value="on">review on</option>
-					</select>
+					</select> : <div/>}
 				</form>
             <button className="selectButton2"  onClick={this.handleCompile} type="button">
               실행

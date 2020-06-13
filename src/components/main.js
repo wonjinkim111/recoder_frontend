@@ -49,11 +49,17 @@ export default function Main(props) {
      const userData = JSON.parse(sessionStorage.getItem('user'));
      if(userData === null) setUrl('/signin');
      else if(userData.mentorid == 0) setUrl('/mentorlogin');
-     else if(userData.mentorid != 0) setUrl('/mentor/roomlist');
+     else if(userData.mentorid != 0) {
+         setUrl('/mentor/roomlist')
+         sessionStorage.setItem('state',JSON.stringify('mentor'));
+     };
     }
     const handleonClick2 = () => {
      const userData = JSON.parse(sessionStorage.getItem('user'));
-     if(userData !== null && userData.menteeid != 0) setUrl('/menteedashboard/roomlist');
+     if(userData !== null && userData.menteeid != 0){ 
+        sessionStorage.setItem('state',JSON.stringify('mentee'));
+        setUrl('/menteedashboard/roomlist');
+     }
      else setUrl('/roomlist');
     }
      

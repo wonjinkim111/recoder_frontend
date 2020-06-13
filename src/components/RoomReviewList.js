@@ -84,13 +84,13 @@ export default function RoomReviewList(props) {
     axios.get(url)
     .then(response =>{console.log(response)
         setreviewList(response.data);
-        console.log(reviewList);
+        //console.log(reviewList);
     }) 
       .catch(error => {
         // alert("error")
         console.log(error);
       })
-  });
+  },[]);
 
     const handleSearch= e =>{
         //console.log(rows)
@@ -118,8 +118,9 @@ export default function RoomReviewList(props) {
         setSearch({...search,[e.target.name] : e.target.value})
 
     }
-    const handleEnter = reviewId => {
-      window.location.href=`/review/${reviewId}`;
+    const handleEnter = ()=> {
+      var  targetValue = document.getElementById("getReviewId").value
+        window.location.href=`/review/${targetValue}`      
     }
 
   return (
@@ -176,16 +177,12 @@ export default function RoomReviewList(props) {
                 </StyledTableRow>
               ))} */}
               {reviewList.map((list, index) => (
-                <StyledTableRow key={list.roomId}>
+                <StyledTableRow key={list.reviewId}>
                   <StyledTableCell component="th" scope="row">{index + 1}</StyledTableCell>
                   <StyledTableCell align="center">{list.reviewTitle}</StyledTableCell>
                   <StyledTableCell align="center">{list.menteeNickname}</StyledTableCell>
                   <StyledTableCell align="center">
-                    <Button>
-                      <Link to={`/review/${list.reviewId}`}>
-                        입장
-                    </Link>
-                    </Button>
+                  <Button id ="getReviewId" value={list.reviewId} onClick={handleEnter}>입장</Button>
                   </StyledTableCell>
                 </StyledTableRow>
               ))}

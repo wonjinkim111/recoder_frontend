@@ -54,8 +54,7 @@ class App extends React.Component {
       <Route path="/mentorlogin" component={MentorLogin}/>
       <Route path="/menteelogin" component={MenteeLogin}/>
       <Route path="/mentor/roomlist" component={MentorRoomList}/>
-      <Route path="/menteereviewlist" component={MenteeReviewList2}/>
-      <Route path="/mentee" component={Mentee}/>
+      {/* <Route path="/menteereviewlist" component={MenteeReviewList2}/> */}
       <Route path="/roomlist" component={RoomList}/>
       <Route path="/profile" component={Profile}/>
       <Route path="/review/:id" component={Review}/>

@@ -6,7 +6,7 @@ import GridList from '@material-ui/core/GridList';
 import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import {css} from '@emotion/core';
-import {PulseLoader} from "react-spinners";
+import {MoonLoader} from "react-spinners";
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 
@@ -89,13 +89,20 @@ class MenteeReviewList2 extends React.Component{
             {/* <Typography aligh="center" variant="h5" gutterBottom={true}><br/>Room list</Typography> */}
             <GridList className={classes.gridList} cellHeight={'auto'} cols={3}>
                 <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }} />
-                <ListSubheader component="div">Review List</ListSubheader>
-                <PulseLoader
+                
+                {/* <PulseLoader
                     width={100}
                     size={20}
                     color={"#6600FF"}
                     loading={this.state.loading}
-                />
+                /> */}
+                {this.state.loading? <MoonLoader
+                    margin={20}
+                    width={100}
+                    size={60}
+                    color={"#9013FE"}
+                    loading={this.state.loading}
+                /> : <ListSubheader component="div">Review List</ListSubheader>}
                 {reviewItems}
 
 
