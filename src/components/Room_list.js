@@ -9,6 +9,10 @@ import Typography from '@material-ui/core/Typography';
 import {css} from '@emotion/core';
 import {MoonLoader} from "react-spinners";
 import axios from 'axios';
+import Paper from '@material-ui/core/Paper';       
+import InputBase from '@material-ui/core/InputBase';
+import IconButton from '@material-ui/core/IconButton';
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = theme => ({
     root: {
@@ -30,6 +34,9 @@ class RoomList extends React.Component{
 
         this.state={
             loading: true,
+            searchContent:"",
+            searchTitle:"title",
+            rooms2:[],
             rooms : [
                 // {
                 //     mentorId: 1,
@@ -91,7 +98,8 @@ class RoomList extends React.Component{
          .then(response =>{console.log(response)
             this.setState({
                 loading: false,
-                rooms : response.data
+                rooms : response.data,
+                rooms2 : response.data
             })
 
         }) 
@@ -100,11 +108,32 @@ class RoomList extends React.Component{
           })
     }
 
+handleChangeSearch = e =>{
+    this.setState({[e.target.name] : e.target.value})
+
+}
+
+ handleSearch= e =>{
+        console.log(this.state.rooms)
+        console.log(111+this.state.searchTitle)
+        console.log(222+this.state.searchContent)
+        var search = this.state.searchContent;
+        e.preventDefault();
+        if(this.state.searchTitle === "title"){
+            var testData1 = this.state.rooms.filter(function(room){return room.roomName.indexOf(search)!==-1})
+            this.setState({rooms2 : testData1})
+        }
+        else if (this.state.searchTitle ==="mentorNickname"){
+            var testData2 = this.state.rooms.filter(function(room){return room.mentorNickname.indexOf(search)!==-1})
+            this.setState({rooms2 : testData2})
+        }
+
+    }
 
 
     render(){
         const {classes} = this.props;
-            const roomItems= this.state.rooms.map((r,roomId)=>{
+            const roomItems= this.state.rooms2.map((r,roomId)=>{
             return (
                 <Grid item>
                 <RoomItem room={r} key={roomId}/>
@@ -115,6 +144,26 @@ class RoomList extends React.Component{
 
     return(
         <div className={classes.root}>
+
+<select style={{ position: "relative", height: "6vh", width: "5vw", float: "right", right: "0.1vw", bottom: '-0vh', borderRadius: '0.3em', marginTop:'3vh' }} name="searchTitle" onChange={this.handleChangeSearch} >
+          <option value="title">제목</option>
+          <option value="mentorNickname">멘토</option>
+        </select>
+<Paper component="form" style={{ position: "relative", minWidth: "300", float: "right" , marginTop:'3vh'}} className={classes.root}>
+          <InputBase
+            className={classes.input}
+            placeholder="방 검색"
+            inputProps={{ 'aria-label': '방 검색' }}
+            name="searchContent"
+            value={this.state.searchContent}
+            onChange={this.handleChangeSearch}
+          />
+          <IconButton type="submit" onClick={this.handleSearch} className={classes.iconButton} aria-label="search">
+            <SearchIcon style={{ height: "4vh" }} />
+          </IconButton>
+
+        </Paper>
+
 
             {/* <Typography aligh="center" variant="h5" gutterBottom={true}><br/>Room list</Typography> */}
             <GridList className={classes.gridList} cellHeight={'auto'} cols={3}>

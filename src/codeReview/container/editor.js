@@ -100,7 +100,7 @@ function (_React$Component) {
       }
 
       if (prevProps.theme !== theme) {
-        monaco.editor.setTheme(theme);
+         monaco.editor.setTheme(theme);
       }
 
       if (editor && (width !== prevProps.width || height !== prevProps.height)) {
@@ -149,6 +149,9 @@ function (_React$Component) {
         this.editor = monaco.editor.create(this.containerElement, _objectSpread({
           value: value,
           fontSize: "15px",
+          roundedSelection: true,
+          //contextmenu: false,
+          //cursorWidth: 0,
           wordWrap: true, //끝까지가면 다음줄로 자동변경
           scrollBeyondLastLine: false, //스크롤바 설정
           minimap: {     //미니맵 설정

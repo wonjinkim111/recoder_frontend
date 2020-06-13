@@ -74,6 +74,7 @@ export default function RoomReviewList(props) {
   const classes = useStyles();
 
   const [reviewList, setreviewList] = React.useState([]);
+  const [reviewList2, setreviewList2] = React.useState([]);
   const [testData1, setTestData1] = React.useState(rows);
 
   useEffect(() => {
@@ -84,7 +85,12 @@ export default function RoomReviewList(props) {
     axios.get(url)
     .then(response =>{console.log(response)
         setreviewList(response.data);
+<<<<<<< HEAD
         //console.log(reviewList);
+=======
+        setreviewList2(response.data);
+        console.log(reviewList);
+>>>>>>> a3008186a57f8aff7d6421985a32dc131b4051d6
     }) 
       .catch(error => {
         // alert("error")
@@ -93,21 +99,20 @@ export default function RoomReviewList(props) {
   },[]);
 
     const handleSearch= e =>{
+      console.log(reviewList)
         //console.log(rows)
         console.log(search.searchTitle)
         console.log(search.searchContent)
         console.log(rows)
         e.preventDefault();
-        if(search.searchTitle === "title")
-        var testData = rows.filter(function(row){return row.reviewTitle===search.searchContent})
-        else if (search.searchTitle ==="mentee"){
-
-        var testData = rows.filter(function(row){
-            
-            return row.reviewNickname==search.searchContent})
+        if(search.searchTitle === "title"){
+          var testData1 = reviewList.filter(function(row){return row.reviewTitle.indexOf(search.searchContent) !== -1})
+          setreviewList2(testData1)
         }
-        setTestData1(testData)
-         console.log(testData1)
+        else if (search.searchTitle ==="mentee"){
+          var testData2 = reviewList.filter(function(row){return row.menteeNickname.indexOf(search.searchContent) !== -1})
+          setreviewList2(testData2)
+        }
     }
 
     const [search, setSearch] = React.useState({
@@ -176,13 +181,22 @@ export default function RoomReviewList(props) {
 
                 </StyledTableRow>
               ))} */}
+<<<<<<< HEAD
               {reviewList.map((list, index) => (
                 <StyledTableRow key={list.reviewId}>
+=======
+              {reviewList2.map((list, index) => (
+                <StyledTableRow key={list.roomId}>
+>>>>>>> a3008186a57f8aff7d6421985a32dc131b4051d6
                   <StyledTableCell component="th" scope="row">{index + 1}</StyledTableCell>
                   <StyledTableCell align="center">{list.reviewTitle}</StyledTableCell>
                   <StyledTableCell align="center">{list.menteeNickname}</StyledTableCell>
                   <StyledTableCell align="center">
+<<<<<<< HEAD
                   <Button id ="getReviewId" value={list.reviewId} onClick={handleEnter}>입장</Button>
+=======
+                    <Button id ="getReviewId" value={list.reviewId} onClick={handleEnter}>입장</Button>
+>>>>>>> a3008186a57f8aff7d6421985a32dc131b4051d6
                   </StyledTableCell>
                 </StyledTableRow>
               ))}

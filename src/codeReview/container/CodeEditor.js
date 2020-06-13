@@ -4,19 +4,23 @@ import './CodeEditor.css';
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { Link, Route, BrowserRouter as Router } from "react-router-dom"
 import axios from 'axios';
-var color_flag =3;
+var color_flag =1;
 class CodeEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+<<<<<<< HEAD
       type: JSON.parse(sessionStorage.getItem('state')),
+=======
+      compile_result:'',
+>>>>>>> a3008186a57f8aff7d6421985a32dc131b4051d6
       color_flag111 : 1,
       mount_flag:1,
       comment_tb:[],
       code_state : 'mentee',
-      code: "",
+      code: "// type your code... \n",
       mentorCode: '',
-      menteeCode:'',
+      menteeCode:'mentee code\nint main(){  int i= 10;\n  printf("%d",i);\n return 0;\n}',
       theme: "vs-light",
       language:"java",
       lineSelect: 'off',
@@ -30,35 +34,42 @@ class CodeEditor extends React.Component {
     };
   };
 componentDidUpdate(){
-  if(color_flag >0 ){
-  this.props.comment_tb.map((comment) =>{ 
-    this.editor.deltaDecorations(
-      this.editor.getModel().getAllDecorations(),
-      [ 
-        {
-          range: {startLineNumber: comment.cmtLineNumber, startColumn: 1, endLineNumber: comment.cmtLineNumber, endColumn: 1},
-          options: {
-            isWholeLine: true,
-            // linesDecorationsClassName: "myLineDecoration",
-            //inlineClassName: "myInlineDecoration"
-            className : "myLineDecoration",
-            //glyphMarginClassName: 'myLineDecoration'
-          }
-        },
-      ]
-    );//decoration 끝  
+  
+  if(this.props.comment_tb.length){
+    this.props.comment_tb.map((comment) =>{ 
+      this.editor.deltaDecorations(
+        this.editor.getModel().getAllDecorations(),
+        [ 
+          {
+            range: {startLineNumber: comment.cmtLineNumber, startColumn: 1, endLineNumber: comment.cmtLineNumber, endColumn: 1},
+            options: {
+              isWholeLine: true,
+              // linesDecorationsClassName: "myLineDecoration",
+              //inlineClassName: "myInlineDecoration"
+              className : "myLineDecoration",
+              //glyphMarginClassName: 'myLineDecoration'
+            }
+          },
+        ]
+      );//decoration 끝  
     })
     color_flag--;
-    console.log(color_flag)
+    
   }
-  if(color_flag <=0){
-    if(this.state.theme === "vs-white"){
-      this.changeBackColor("myLineDecoration");
-       }
-       else if (this.state.theme === "vs-dark"){
-       this.changeBackColor("myLineDecorationBlack");
-     }
-  }
+
+  if(color_flag <0){
+    this.editor.deltaDecorations(   //내용이 추가되야 라인색깔이 적용이 되기 때문에 빈데이터 하나 추가해줌
+    this.editor.getModel().getAllDecorations(),
+    [ 
+      {
+        range: {startLineNumber: 2, startColumn: 1, endLineNumber: 2, endColumn: 1},
+        options: {
+          isWholeLine: true,
+        }
+      },
+    ]
+  );//decoration 끝
+}
 
 }
 
@@ -70,22 +81,18 @@ editorDidMount = (editor) => {
     //console.log(e.target.element.parentNode)
     let line =e.target.position.lineNumber;
     let text = this.editor.getModel().getLineContent(e.target.position.lineNumber);
-    this.props.handleLineColor(0);
-    this.props.handleOutputText(text,line,1);
+    this.props.handleOutputText(text,line,1); // index에 클릭한 라인의 내용, 라인번호, 선택됐다는 flag=1를 전달
   }//if문 끝
       
    });//onMouse 끝
   
 }//editormount 끝
 
-    onChange = (newValue, number, flag) => {
-      this.props.handleOutputText(newValue,number,flag); //텍스트값 받음
-      //console.log("onChange", newValue); // eslint-disable-line no-console
-    };
+
 
    //code 초기값 설정 componentDidMount로도 가능
    componentWillMount(){
-    const getUrl = document.location.href.split("/");
+   const getUrl = document.location.href.split("/");
     const len = getUrl.length;
     
   const url = `http://59.29.224.144:30000/codereview/${getUrl[len-1]}`;
@@ -104,147 +111,97 @@ editorDidMount = (editor) => {
 componentDidMount(){
  
 }
-    handleCompile = () => { //실행 버튼 클릭 했을 때
-      console.log(this.props.comment_tb)
-      console.log(this.editor.getValue().replace(/ /g,"")); //모든 공백 제거
-      console.log(this.editor.getValue().replace(/\s/gi,""));//모든 공백 제거
-      if (this.editor) {
-        if(this.state.code_state == "mentee")
-        this.setState({ menteeCode: this.editor.getValue() });
-        else
-        this.setState({ mentorCode: this.editor.getValue() });
-      }
-      // axios.post('/compile', {
-      //   code: this.editor.getValue()
-      // })
-      // .then(function (response) {
-      //   console.log(response);
-      // })
-      // .catch(function (error) {
-      //   console.log(error);
-      // });
-    };
+handleCompile = () => { //실행 버튼 클릭 했을 때
+  //console.log(this.editor.getValue().replace(/ /g,"")); //모든 공백 제거
+  //console.log(this.editor.getValue().replace(/\s/gi,""));//모든 공백 제거
+  if (this.editor) {
+    if(this.state.code_state === "mentee")
+      this.setState({ menteeCode: this.editor.getValue() });
+    else
+      this.setState({ mentorCode: this.editor.getValue() });
+  }
+
+  const url =`http://59.29.224.144:40000/codereview/compile2` 
+  axios.get(url)
+    .then(function (response) {
+      //console.log(response);
+      this.setState({compile_result:response.data})
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
   
-    changeByMentee = () => {
-      this.setState({ code_state: 'mentee',
-                      code: this.state.menteeCode,
-                      
-      });
+changeByMentee = () => {
+  this.setState({ code_state: 'mentee',
+                  code: this.state.menteeCode,
+  });
    
-      document.getElementById("mentorEditor").style.visibility="hidden"
-      document.getElementById("menteeEditor").style.display="block"
-      document.getElementById("menteeEditor").style.top="-45vh"
+  document.getElementById("mentorEditor").style.visibility="hidden"   //Monaco 에티터를 멘티,멘토 두개 만들어놔서 멘토 에디터 hidden 멘티 에디터는 block으로
+  document.getElementById("menteeEditor").style.display="block"       // 에디터 한개만 보여지게 설정
+  document.getElementById("menteeEditor").style.top="-45vh"
       
-      this.props.handleState('mentee');
-      //readOnly : false -> true
-      this.setState(prevState =>({
-        options:{...prevState.options,
-        readOnly: true}
-      }))
-
-      
-    };
+  this.props.handleState('mentee');
+  //readOnly : false -> true
+  this.setState(prevState =>({
+    options:{...prevState.options,
+    readOnly: true}
+  }))
+};
   
-    changeBackColor = (color) =>{
-      //var range = new monaco.Range(3, 1,3, 1)
-      console.log( this.editor.getModel().getAllDecorations());
-      //console.log(this.editor.getModel().getAllDecorations()[3].options.className)
-     
-        for(let i=0; i < this.editor.getModel().getAllDecorations().length; i++){
-              this.editor.getModel().getAllDecorations()[i].options.className=color;
-        }
-        
-        
-    }
-    changecolor_flag = ()=>{
-      this.setState({color_flag111 : 1})
-    }
-    
-    changeByMentor = () =>{
-      
-      this.setState({ code_state: 'mentor',
-                      code: this.state.mentorCode,
-                      
-      });
-      document.getElementById("mentorEditor").style.visibility="visible"
-      document.getElementById("menteeEditor").style.display="none"
-      
-      this.props.handleState('mentor');
-      console.log(":" + this.state.code_state)
-      //readOnly : true -> false
-      this.setState(prevState =>({
-        options:{...prevState.options,
-        readOnly: false}
-      }))
-      
-    }
-    
+changeBackColor = (color) =>{
+  //var range = new monaco.Range(3, 1,3, 1)
+  //console.log( this.editor.getModel().getAllDecorations());
+  //console.log("삭제 후 남은 개수 :"+ Object.keys(this.editor.getModel().getAllDecorations()).length);
+  //console.log("타입확인"+typeof(this.editor.getModel().getAllDecorations()))
 
-
-    setLanguage = (e) =>{
-        this.setState({language: e.target.value})
-      }
+  /*
+  this.editor.getModel().getAllDecorations() <= 이게 에디터 한줄한줄의 정보를 가지고 있는데 그중 className를 수정해서 색깔을 바꿔주게 설정함
+  */
+  for(let i=0; i <  Object.keys(this.editor.getModel().getAllDecorations()).length; i++){
+    this.editor.getModel().getAllDecorations()[i].options.className=color;
+  }
+}
+changecolor_flag = ()=>{
+  this.setState({color_flag111 : 1})
+}
     
-      setTheme = (e)=>{
-        
-        this.setState({theme: e.target.value})
-        if(e.target.value === "vs-white"){
-       console.log(e.target.value)
-       this.changeBackColor("myLineDecoration");
-        }
-        else if (e.target.value === "vs-dark"){
-        this.changeBackColor("myLineDecorationBlack");
-            console.log(e.target.value)
-      }
-      this.setState({theme: e.target.value})
-      }
-  
-      setLineSelect = (e) =>{
-        // this.props.comment_tb.map((comment) =>{ 
-        //   this.editor.deltaDecorations(
-        //     this.editor.getModel().getAllDecorations(),
-        //     [ 
-        //       {
-        //         range: {startLineNumber: comment.cmtLineNumber, startColumn: 1, endLineNumber: comment.cmtLineNumber, endColumn: 1},
-        //         options: {
-        //           isWholeLine: true,
-        //           // linesDecorationsClassName: "myLineDecoration",
-        //           //inlineClassName: "myInlineDecoration"
-        //           className : "myLineDecoration",
-        //           //glyphMarginClassName: 'myLineDecoration'
-        //         }
-        //       },
-        //     ]
-        //   );//decoration 끝  
-        //   })
-          this.setState({lineSelect: e.target.value})
-      }
+changeByMentor = () =>{
+  this.setState({ code_state: 'mentor',
+                  code: this.state.mentorCode,
+});
+  document.getElementById("mentorEditor").style.visibility="visible"
+  document.getElementById("menteeEditor").style.display="none"
+      
+  this.props.handleState('mentor');
+  //readOnly : true -> false
+  this.setState(prevState =>({
+    options:{...prevState.options,
+    readOnly: false}
+  }))
+}
+    
+setLanguage = (e) =>{
+  this.setState({language: e.target.value})
+}
+    
+setTheme = (e)=>{
+  this.setState({theme: e.target.value})
+  console.log(this.editor.getModel().getAllDecorations())
+  if(e.target.value === "vs-white"){
+    this.changeBackColor("myLineDecoration");
+  }
+  else if (e.target.value === "vs-dark"){
+    this.changeBackColor("myLineDecorationBlack");
+  }
+}
+
+setLineSelect = (e) =>{
+  this.setState({lineSelect: e.target.value})
+}
 
     render() {
       const { code, theme, language, lineSelect, options, code_state } = this.state;
-      //console.log(this.state.mount_flag)
-     
-      // if(this.state.code_state ==="mentee"){
-      
-      // this.props.comment_tb.map((comment) =>{ 
-      //   this.editor.deltaDecorations(
-      //     this.editor.getModel().getAllDecorations(),
-      //     [ 
-      //       {
-      //         range: {startLineNumber: comment.cmtLineNumber, startColumn: 1, endLineNumber: comment.cmtLineNumber, endColumn: 1},
-      //         options: {
-      //           isWholeLine: true,
-      //           // linesDecorationsClassName: "myLineDecoration",
-      //           //inlineClassName: "myInlineDecoration"
-      //           className : "myLineDecoration",
-      //           //glyphMarginClassName: 'myLineDecoration'
-      //         }
-      //       },
-      //     ]
-      //   );//decoration 끝  
-      //   })
-      // }
- 
 
       return (
         <div>
@@ -258,7 +215,6 @@ componentDidMount(){
         <form >
               <select className="selectButton3" id="language" value={this.state.value} size="1" onChange={this.setLanguage}>
                 <option value="java">java</option>
-                <option value="javascript">javascript</option>
                 <option value="cpp">C++</option>
                 <option value="cpp">C</option>
               </select>
@@ -282,8 +238,9 @@ componentDidMount(){
             
           </div >
           <div id="mentorEditor" style={{display:"block", visibility:"hidden", zIndex:"-1"}}>
+            
           <MonacoEditor
-            height="40vh"
+            height="45vh"
             width="53vw"
             language={language}
             //defaultValue={lineSelect}
@@ -299,9 +256,9 @@ componentDidMount(){
           />
           
           </div>
-          <div id="menteeEditor" style={{display:"block", position:"relative", top:"-40vh",zIndex:"1"}}>
+          <div id="menteeEditor" style={{display:"block", position:"relative", top:"-45vh",zIndex:"1"}}>
                     <MonacoEditor
-            height="40vh"
+            height="45vh"
             width="53vw"
             language={language}
             //defaultValue={lineSelect}

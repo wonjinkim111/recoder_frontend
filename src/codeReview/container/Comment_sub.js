@@ -78,7 +78,7 @@ export default class Comment_sub extends Component {
         axios.delete(url) 
           .then(response =>{console.log(response.data)
       
-            window.location.href="/review"
+            
           
           }
             ) 
