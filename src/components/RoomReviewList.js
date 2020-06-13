@@ -85,12 +85,8 @@ export default function RoomReviewList(props) {
     axios.get(url)
     .then(response =>{console.log(response)
         setreviewList(response.data);
-<<<<<<< HEAD
-        //console.log(reviewList);
-=======
         setreviewList2(response.data);
         console.log(reviewList);
->>>>>>> a3008186a57f8aff7d6421985a32dc131b4051d6
     }) 
       .catch(error => {
         // alert("error")
@@ -181,22 +177,13 @@ export default function RoomReviewList(props) {
 
                 </StyledTableRow>
               ))} */}
-<<<<<<< HEAD
-              {reviewList.map((list, index) => (
-                <StyledTableRow key={list.reviewId}>
-=======
               {reviewList2.map((list, index) => (
                 <StyledTableRow key={list.roomId}>
->>>>>>> a3008186a57f8aff7d6421985a32dc131b4051d6
                   <StyledTableCell component="th" scope="row">{index + 1}</StyledTableCell>
                   <StyledTableCell align="center">{list.reviewTitle}</StyledTableCell>
                   <StyledTableCell align="center">{list.menteeNickname}</StyledTableCell>
                   <StyledTableCell align="center">
-<<<<<<< HEAD
                   <Button id ="getReviewId" value={list.reviewId} onClick={handleEnter}>입장</Button>
-=======
-                    <Button id ="getReviewId" value={list.reviewId} onClick={handleEnter}>입장</Button>
->>>>>>> a3008186a57f8aff7d6421985a32dc131b4051d6
                   </StyledTableCell>
                 </StyledTableRow>
               ))}

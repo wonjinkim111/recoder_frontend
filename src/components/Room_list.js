@@ -114,9 +114,9 @@ handleChangeSearch = e =>{
 }
 
  handleSearch= e =>{
-        console.log(this.state.rooms)
-        console.log(111+this.state.searchTitle)
-        console.log(222+this.state.searchContent)
+        //console.log(this.state.rooms)
+        //console.log(111+this.state.searchTitle)
+        //console.log(222+this.state.searchContent)
         var search = this.state.searchContent;
         e.preventDefault();
         if(this.state.searchTitle === "title"){
@@ -144,27 +144,26 @@ handleChangeSearch = e =>{
 
     return(
         <div className={classes.root}>
+            <div style={{display:'flex'}}>
+                <select style={{ position: "relative", height: "8vh", width: "5vw", right: "0.1vw", bottom: '-0vh', borderRadius: '0.3em', marginTop: '3.5vh', marginRight: '1vw' }} name="searchTitle" onChange={this.handleChangeSearch} >
+                    <option value="title">제목</option>
+                    <option value="mentorNickname">멘토</option>
+                </select>
+                <Paper component="form" style={{ position: "relative", minWidth: "300", marginTop: '3vh' }} >
+                    <InputBase
+                        className={classes.input}
+                        placeholder="방 검색"
+                        inputProps={{ 'aria-label': '방 검색' }}
+                        name="searchContent"
+                        value={this.state.searchContent}
+                        onChange={this.handleChangeSearch}
+                    />
+                    <IconButton type="submit" onClick={this.handleSearch} className={classes.iconButton} aria-label="search">
+                        <SearchIcon style={{ height: "4vh" }} />
+                    </IconButton>
 
-<select style={{ position: "relative", height: "6vh", width: "5vw", float: "right", right: "0.1vw", bottom: '-0vh', borderRadius: '0.3em', marginTop:'3vh' }} name="searchTitle" onChange={this.handleChangeSearch} >
-          <option value="title">제목</option>
-          <option value="mentorNickname">멘토</option>
-        </select>
-<Paper component="form" style={{ position: "relative", minWidth: "300", float: "right" , marginTop:'3vh'}} className={classes.root}>
-          <InputBase
-            className={classes.input}
-            placeholder="방 검색"
-            inputProps={{ 'aria-label': '방 검색' }}
-            name="searchContent"
-            value={this.state.searchContent}
-            onChange={this.handleChangeSearch}
-          />
-          <IconButton type="submit" onClick={this.handleSearch} className={classes.iconButton} aria-label="search">
-            <SearchIcon style={{ height: "4vh" }} />
-          </IconButton>
-
-        </Paper>
-
-
+                </Paper>
+            </div>
             {/* <Typography aligh="center" variant="h5" gutterBottom={true}><br/>Room list</Typography> */}
             <GridList className={classes.gridList} cellHeight={'auto'} cols={3}>
 

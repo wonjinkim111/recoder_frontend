@@ -61,7 +61,7 @@ export default function ToolbarAfter() {
 
   return (
     <div className={classes.root}>
-    <AppBar position="static">
+    <AppBar position="static" style={{backgroundColor:'purple'}}>
         <Toolbar className={classes.toolbar}>
           <Link
             variant="h6"
