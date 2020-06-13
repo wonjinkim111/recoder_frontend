@@ -38,10 +38,8 @@ export default class Comment extends Component {
       }
 
     render() {
-
         return (
             <div >
-
                 <div style={{ height: "45vh", overflowY: 'scroll' }}>
                     {/* <div > &nbsp;&nbsp;&nbsp;{this.props.outputText.trim()} </div>   */}
                     <div style={{ ovpadding: 10, fontSize: 15 }}>{this.props.comment_tb.map((comment, index) => {

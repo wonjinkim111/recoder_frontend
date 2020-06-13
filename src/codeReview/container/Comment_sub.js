@@ -42,15 +42,12 @@ export default class Comment_sub extends Component {
             nickname : this.props.nickname,
           })
            .then(response =>{console.log(response.data)
-              
             window.location.href=`/review/${getUrl[len-1]}`;
-          
           }
             ) 
             .catch(error => {
               alert("다시 시도해 주십시오")
             })
-        
     }
 
     handleModal3Close=()=>{
