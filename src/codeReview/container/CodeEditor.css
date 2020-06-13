@@ -36,7 +36,7 @@
 }
 
 .myInlineDecoration {
-    background: lightgreen;  
+    background: blue;  
     cursor: pointer;
     display: inline-block;
     }

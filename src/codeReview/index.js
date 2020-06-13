@@ -11,7 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
-
+///qwer
 
 class App extends Component{
 
@@ -20,6 +20,7 @@ class App extends Component{
     super();
   
     this.state = {
+      compile_result:'',
       flag: 0,
       update_flag:0,
       outputText: '',
@@ -28,7 +29,6 @@ class App extends Component{
       reviewReq:[],
       open: false,
       text : '',
-      lineColor: 0,
       lineNumber: 0,
       modal_start:0,
       comment_flag:0,
@@ -94,6 +94,13 @@ class App extends Component{
   }
 
 
+
+handleCompile = (result1) =>{
+  this.setState({compile_result: result1});
+  console.log(result1);
+  console.log("compile")
+}
+
 handleOpenModal = () =>{
   this.setState({open: true});
     this.setState({modal_start:1})
@@ -130,14 +137,12 @@ handleCloseModal = () =>{
 
 }
 handleSubmitModal = () =>{
- this.setState({lineColor:1})
   this.setState({modal_start:0})
   //e.preventDefault()
   // document.getElementById("modal").style.display="none";
   //const {comment_tb} = this.state;
   //댓글내용,라인을 comment_tb에 저장
   //var txt = document.getElementById('comment_txt');
-  console.log(11111111111111111111111)
   ///console.log(this.state.text)
   //const user = JSON.parse(localStorage.getItem('user'));
   const url = 'http://59.29.224.144:40000/comment?100';
@@ -162,9 +167,6 @@ handleSubmitModal = () =>{
 
 }
 
-handleLineColor = (e) => {
-  this.setState({lineColor: e});
-};
 
   //editor에서 클릭한곳의 내용과 라인 넘버 가져옴
   handleOutputText = (text,number,flag) => {
@@ -202,44 +204,35 @@ handleState = (state) =>{
   }
   
   render() {
-  const {lineNumber, outputText, comment_tb, modal_start,lineColor} = this.state; 
+  const {lineNumber, outputText, comment_tb, modal_start, handleCompile} = this.state; 
  
 
     return (
       <div className="total-layout"> 
 
-
-
-
 <Dialog open={this.state.open} onClose={this.handleClose}>
-
-{/* <DialogTitle>댓글</DialogTitle> */}
-<DialogContent>
-<div className="modal_head">
-              &nbsp; Line{' '} {this.state.lineNumber}<br/>
-              </div>
-              <div className="modal_code">  {this.state.outputText.trim()} </div> 
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            multiline
-            id="comment_txt"
-            margin="normal"
-            style={{width:400, wordBreak:"breakAll"}}
-            rows={3}
-            value={this.state.text}
-            onChange={this.handleChange}
-            placeholder="댓글 달기"
-          ></TextField>
-        
-</DialogContent>
-
-<DialogActions>
-  <Button variant="contained" color="primary" onClick={this.handleSubmitModal}>커맨트달기</Button>
-  <Button variant="outlined" color="primary" onClick={this.handleCloseModal}>닫기</Button>
-</DialogActions>
-
+  <DialogContent>
+    <div className="modal_head">&nbsp; Line{' '} {this.state.lineNumber}<br/></div>
+    <div className="modal_code">  {this.state.outputText.trim()} </div> 
+    <TextField
+      variant="outlined"
+      margin="normal"
+      fullWidth
+      multiline
+      id="comment_txt"
+      margin="normal"
+      style={{width:400, wordBreak:"breakAll"}}
+      rows={3}
+      value={this.state.text}
+      onChange={this.handleChange}
+      placeholder="댓글 달기"
+    ></TextField>
+          
+  </DialogContent>
+  <DialogActions>
+    <Button variant="contained" color="primary" onClick={this.handleSubmitModal}>커맨트달기</Button>
+    <Button variant="outlined" color="primary" onClick={this.handleCloseModal}>닫기</Button>
+  </DialogActions>
 </Dialog>
 
 
@@ -255,14 +248,11 @@ handleState = (state) =>{
 
         <div className="review_editor">
         <CodeEditor handleOutputText={this.handleOutputText} 
-                    handleLineColor={this.handleLineColor}
                     modal_start={modal_start}
-                    handleState={this.handleState}
-                    lineColor={lineColor} 
+                    handleState={this.handleState} 
                     comment_tb={comment_tb}
-                    handleTheme={this.handleTheme}/>
+                    handleCompile1={handleCompile}/>
         </div>
-
 
          <div className="review_comment">
           <div className="title"> &nbsp; Review</div>
@@ -273,7 +263,10 @@ handleState = (state) =>{
         </div>
         <div className = "compile_result">
           <div className="title" > &nbsp; 실행 결과</div>
-          <textarea className="compile_result_content" placeholder="실행 결과가 여기에 표시됩니다." readOnly></textarea> 
+          <button className="selectButton2"  type="button">
+              실행
+            </button>
+          <textarea className="compile_result_content" placeholder="실행 결과가 여기에 표시됩니다." readOnly>{this.state.compile_result}</textarea> 
         </div> 
         {/* </div> */}
       </div>

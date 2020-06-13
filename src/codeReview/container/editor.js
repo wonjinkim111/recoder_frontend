@@ -100,7 +100,7 @@ function (_React$Component) {
       }
 
       if (prevProps.theme !== theme) {
-        monaco.editor.setTheme(theme);
+         monaco.editor.setTheme(theme);
       }
 
       if (editor && (width !== prevProps.width || height !== prevProps.height)) {

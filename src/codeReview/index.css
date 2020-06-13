@@ -167,3 +167,10 @@ height:10vh;
     font-size: 1rem;
     float: right;
 }
+
+.selectButton2{
+    width:5vw;
+    height:5vh;
+    font-size: 20px;
+    float: right;
+}
