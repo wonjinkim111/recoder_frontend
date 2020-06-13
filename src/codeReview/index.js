@@ -18,6 +18,7 @@ class App extends Component{
     super(props);
   
     this.state = {
+      error: '',
       compile_result:'',
       flag: 0,
       update_flag:0,
@@ -108,10 +109,10 @@ handleOpenModal = () =>{
       })
       if (result.length !== 0){
         //txt.value = result[0].content;
-        this.setState({text : result[0].content})
+        //this.setState({text : result[0].content})
       } else {
         //txt.value = '';
-        this.setState({text :''})
+        //this.setState({text :''})
       }
 
       if(this.state.text.length ===0){
@@ -131,13 +132,16 @@ handleCloseModal = () =>{
 
 }
 handleSubmitModal = () =>{
+  this.setState({error:''})
   this.setState({modal_start:0})
+
   //e.preventDefault()
   // document.getElementById("modal").style.display="none";
   //const {comment_tb} = this.state;
   //댓글내용,라인을 comment_tb에 저장
   //var txt = document.getElementById('comment_txt');
   ///console.log(this.state.text)
+  if(this.state.text.length){
   const user = JSON.parse(sessionStorage.getItem('user'));
   const url = 'http://59.29.224.144:40000/comment';
   console.log(this.props.match.params.id);
@@ -151,7 +155,7 @@ handleSubmitModal = () =>{
   })
    .then(response =>{console.log(response.data)
       console.log("됩니다유")
-    window.location();
+    window.location.href=`/review/${this.props.match.params.id}`;
   }
     ) 
     .catch(error => {
@@ -159,8 +163,12 @@ handleSubmitModal = () =>{
       alert("다시 시도해 주십시오")
     })
 
+  
   this.setState({open: false});
-
+}
+else{
+  this.setState({error:'글을 입력해 주세요'})
+}
 }
 
 
@@ -207,36 +215,40 @@ handleState = (state) =>{
   }
   
   render() {
-  const {lineNumber, outputText, comment_tb, modal_start, handleCompile} = this.state; 
- 
+    const { lineNumber, outputText, comment_tb, modal_start, handleCompile } = this.state;
+
 
     return (
-      <div className="total-layout"> 
+      <div className="total-layout">
 
-<Dialog open={this.state.open} onClose={this.handleClose}>
-  <DialogContent>
-    <div className="modal_head">&nbsp; Line{' '} {this.state.lineNumber}<br/></div>
-    <div className="modal_code">  {this.state.outputText.trim()} </div> 
-    <TextField
-      variant="outlined"
-      margin="normal"
-      fullWidth
-      multiline
-      id="comment_txt"
-      margin="normal"
-      style={{width:400, wordBreak:"breakAll"}}
-      rows={3}
-      value={this.state.text}
-      onChange={this.handleChange}
-      placeholder="댓글 달기"
-    ></TextField>
-          
-  </DialogContent>
-  <DialogActions>
-    <Button variant="contained" color="primary" onClick={this.handleSubmitModal}>커맨트달기</Button>
-    <Button variant="outlined" color="primary" onClick={this.handleCloseModal}>닫기</Button>
-  </DialogActions>
-</Dialog>
+        <Dialog open={this.state.open} onClose={this.handleClose}>
+          <DialogContent>
+            <div className="modal_head">&nbsp; Line{' '} {this.state.lineNumber}<br /></div>
+            <div className="modal_code">  {this.state.outputText.trim()} </div>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              multiline
+              id="comment_txt"
+              margin="normal"
+              style={{ width: 400, wordBreak: "breakAll" }}
+              rows={3}
+              value={this.state.text}
+              onChange={this.handleChange}
+              placeholder="코멘트 달기"
+            ></TextField>
+
+            <div style={{ color: "red", fontSize: "12px" }}>
+              {this.state.error}
+            </div>
+
+          </DialogContent>
+          <DialogActions>
+            <Button variant="contained" color="primary" onClick={this.handleSubmitModal}>커맨트달기</Button>
+            <Button variant="outlined" color="primary" onClick={this.handleCloseModal}>닫기</Button>
+          </DialogActions>
+        </Dialog>
 
 
         <div className = "review_mentee_content">

@@ -179,7 +179,9 @@ changeByMentor = () =>{
 }
     
 setLanguage = (e) =>{
-  this.setState({language: e.target.value})
+  if(e.target.value==='java') this.setState({language:0})
+  else if(e.target.value==='c') this.setState({language:1})
+  else if(e.target.value==='cpp') this.setState({language:2})
 }
     
 setTheme = (e)=>{
@@ -212,8 +214,8 @@ setLineSelect = (e) =>{
         <form >
               <select className="selectButton3" id="language" value={this.state.value} size="1" onChange={this.setLanguage}>
                 <option value="java">java</option>
+                <option value="c">C</option>
                 <option value="cpp">C++</option>
-                <option value="cpp">C</option>
               </select>
           </form>
           <form >
