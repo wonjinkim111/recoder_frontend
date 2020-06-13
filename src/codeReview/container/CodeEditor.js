@@ -9,11 +9,8 @@ class CodeEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-<<<<<<< HEAD
       type: JSON.parse(sessionStorage.getItem('state')),
-=======
       compile_result:'',
->>>>>>> a3008186a57f8aff7d6421985a32dc131b4051d6
       color_flag111 : 1,
       mount_flag:1,
       comment_tb:[],
