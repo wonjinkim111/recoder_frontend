@@ -1,4 +1,4 @@
-import React, { Component } from '../../../node_modules/react'
+import React, { Component } from 'react'
 import './Comment_sub.css';
 import axios from 'axios';
 import Dialog from '@material-ui/core/Dialog';
@@ -78,7 +78,7 @@ export default class Comment_sub extends Component {
         axios.delete(url) 
           .then(response =>{console.log(response.data)
       
-            window.location.href="/review"
+            
           
           }
             ) 
@@ -87,7 +87,39 @@ export default class Comment_sub extends Component {
             })
             this.setState({realOpen: true});
     }
+    
+    handleClickOpen=()=> {
+        this.setState({open: true});
+      }
+      
 
+      
+      handleClose=()=> {
+        this.setState({
+          open: false
+        })
+      }
+
+      handleChangeForm=(e)=>{
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+    handleSubmit=()=>{
+        const url = ``;
+        axios.post(url,{
+
+        }).then(response =>{console.log(response.headers)
+        alert('댓글이 추가되었습니다.');
+        window.location.href='/review';
+    
+    }
+      ) 
+      .catch(error => {
+        alert("다시 시도해 주십시오")
+      //   setValues({roomName:'', roomInfo:''});
+      })
+    }
     render() {
         return (
             <div>

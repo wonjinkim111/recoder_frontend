@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
 import { withRouter, Link as RouterLink } from 'react-router-dom';
+import RoomCreate from './RoomCreate';
 
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -34,17 +35,12 @@ import { withRouter, Link as RouterLink } from 'react-router-dom';
     },
   }));
 
-export default function SignIn(props){
 
-  const [users] = React.useState({
-    name: 'user1',
-    email: 'user1@email.com',
-    gender: 0,
-    regDate: '2020-05-30 00:00:00'
-  })
+export default function SignIn(props){
 
     const classes = useStyles();
 
+    //validation check
     const isEmail = email => {
       const emailRegex = /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
     
@@ -79,44 +75,67 @@ export default function SignIn(props){
       emailError: '',
       pwdError: ''
     })
-    // const [users, setUsers] = React.useState({
+
+    // const [user, setUser] = React.useState({
     //   id: '',
     //   token: ''
     // })
+
+    //axios없을때 테스트용
+    const [test] = React.useState({
+      name: 'test',
+      id: 'test',
+      token: 'testtoken',
+      email: 'test@codeReview.com',
+      encryptedPassword: 'test1234',
+      gender: 0,
+      regDate: '2020-05-30 00:00:00'
+    })
 
     const handleChangeForm = e => {
       setValues({...values, [e.target.name]: e.target.value});
     }
 
+    // React.useEffect(() =>{
+    //   console.log('실행effect');
+    //   if(user.id!==''){
+    //     sessionStorage.setItem('user', JSON.stringify(user))
+    //     //window.location.reload();
+        
+    //   return () => {
+    //     props.history.push({
+    //       pathname: '/',
+    //       state: {user}
+    //     });
+    //   }
+    // }
+    // },[user])
+
+
     const handleSubmit=(e)=>{
       e.preventDefault();
-      const valid = onTextValidation();
+      const valid = onTextValidation();   
 
     if(!valid)console.error("invalid");
     
     else{
-      //id랑 token 받아오는거 해야함
-      const url = '/users-service/recoder/login';
+    
+      //id, token, mentorid, menteeid 받아옴
+      const url = 'http://59.29.224.144:10000/users/login';
       axios.post(url, {
         email: values.email,
         encryptedPassword: values.encryptedPassword
       })
-      // .then(response => response.data)
-      // .then((data)=>{
-      //   setUsers({id, token})
-      //}) 
-      console.log(values.email, values.encryptedPassword);
-      setValues({
-        email: "",
-        encryptedPassword: ""
-      })
-
-      props.history.push({
-        pathname: '/',
-        state: {users}
-      });
+       .then(response =>{console.log(response.headers)
+        sessionStorage.setItem('user', JSON.stringify({id:response.headers.userid,token: response.headers.token, mentorid: response.headers.mentorid, menteeid: response.headers.menteeid}))
+        window.location.href='/';})
+        .catch(error => {
+          alert("틀렸습니다.")
+          setValues({email:'', encryptedPassword:''});
+        })
+      
     }
-    }
+  } // handleSubmit 끝
 
     return(
          <Container component="main" maxWidth="xs">

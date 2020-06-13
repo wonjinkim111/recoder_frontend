@@ -1,19 +1,16 @@
 import React, {useEffect} from 'react';
-//import { Link, BrowserRouter as Router } from "react-router-dom"
 import List from '@material-ui/core/List';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import RecentActorsIcon from '@material-ui/icons/RecentActors';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import ForumIcon from '@material-ui/icons/Forum';
-import AssessmentIcon from '@material-ui/icons/Assessment';
 import SettingsIcon from '@material-ui/icons/Settings';
-import PeopleIcon from '@material-ui/icons/People';
-import Link from '@material-ui/core/Link';
-import { withRouter, Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,16 +23,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MentorDashBoard(props){
   const [user, setUser] = React.useState([]);
-  const [roomid, setRoomid] = React.useState();
 
   useEffect(() => {
-    //console.log(props)
-    const getUrl = document.location.href.split("/");
-    //console.log(getUrl);
-    const len = getUrl.length;
-    setRoomid(getUrl[len-1]);
-    //const roomId = getUrl[1].split("=");
-
     const userData = JSON.parse(sessionStorage.getItem('user'));
     const url = `http://59.29.224.144:10000/users/${userData.id}`;
     axios.get(url)
@@ -51,26 +40,22 @@ export default function MentorDashBoard(props){
 
   }, []);
 
-  const menteelistClick = () => {
-    window.location.href=`/mentordashboard/${roomid}`;
+  const roomlistClick = () => {
+    window.location.href='/menteedashboard/roomlist';
   }
-  const codelistClick = () => {
-    window.location.href=`/mentordashboard/reviewlist/${roomid}`;
-  }
-  const settingClick = () => {
-    window.location.href=`/mentordashboard/setting/${roomid}`;
+  const participatingClick = () => {
+    window.location.href='/menteedashboard/reviewlist';
   }
 
     const classes = useStyles();
     // console.log(props);
     // console.log(props.user)
-    const uesrData = sessionStorage.getItem('user');
-
+    
     return(
     // <div className={classes.root}>
     <List component="nav" subheader={
         <ListSubheader component="div" id="nested-list-subheader">
-          Mentor DashBoard
+          Mentee DashBoard
         </ListSubheader>}
         className={classes.root}
      >
@@ -79,33 +64,32 @@ export default function MentorDashBoard(props){
     <ListItemAvatar>
         <Avatar />
     </ListItemAvatar>
-    <ListItemText primary= {`${user.mentorNickname}`}/>
-    {/* <ListItemText primary= "00님"/> */}
+    <ListItemText primary={`${user.menteeNickname} 님`}/>
+    {/* <ListItemText primary='000님'/> */}
     </ListItem>
 
-    <ListItem button onClick={menteelistClick}>
+    <ListItem button onClick={roomlistClick}>
       <ListItemIcon>
-        <PeopleIcon />
+        <AccountBalanceIcon />
       </ListItemIcon>
-      <ListItemText primary="Mentees"/>
+      <ListItemText primary="Room List" />
     </ListItem>
 
-    <ListItem button onClick={codelistClick}>
+    <ListItem button onClick={participatingClick}>
       <ListItemIcon>
-        <ForumIcon />
+        <RecentActorsIcon />
       </ListItemIcon>
-      <ListItemText primary="Code List" />
+      <ListItemText primary="Participating"/>
     </ListItem>
-
 
     <ListItem button>
       <ListItemIcon>
-        <AssessmentIcon />
+        <ThumbUpAltIcon />
       </ListItemIcon>
-      <ListItemText primary="Metrics" />
+      <ListItemText primary="Reviews" />
     </ListItem>
-    
-    <ListItem button onClick={settingClick}>
+
+    <ListItem button>
       <ListItemIcon>
         <SettingsIcon />
       </ListItemIcon>

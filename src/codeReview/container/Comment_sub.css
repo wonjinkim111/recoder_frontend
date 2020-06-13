@@ -181,6 +181,10 @@ padding-left: 5%;
 .btn01, .btn02{padding: 2px 4px 2px 4px; text-align: center; font-weight: 600; line-height: 1.4em; box-shadow: 1px 1px 2px #333; border-radius: 15px;} .btn01{background-color: #008DFF; color: #333;} .btn02{background-color: #FF3E00; color: #fff;} .example01{padding: 5px; text-align: center; border: 1px solid #008DFF;}
 
 
+.myLineDecoration1 {
+  display: inline-block;
+  background: white;
+  }
 
 .modal_input{
   position: absolute;

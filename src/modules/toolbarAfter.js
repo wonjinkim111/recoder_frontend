@@ -41,11 +41,16 @@ const useStyles = makeStyles((theme) => ({
 export default function ToolbarAfter() {
   const classes = useStyles();
   const [users] = React.useState({
-    name: 'user1',
+    name: 'user111',
     email: 'user1@email.com',
     gender: 0,
     regDate: '2020-05-30 00:00:00'
   })
+
+  const handleClick = () => {
+    sessionStorage.clear();
+    window.location.href="/";
+  }
 
   // componentWillMount = () => {
   //   if(users.gender==0)
@@ -72,6 +77,7 @@ export default function ToolbarAfter() {
               color="inherit"
               variant="h6"
               underline="none"
+              // style={{padding:"50px"}}
               className={classes.rightLink}
               component={RouterLink} 
               to= {{
@@ -90,7 +96,11 @@ export default function ToolbarAfter() {
               variant="h6"
               underline="none"
               className={clsx(classes.rightLink, classes.linkSecondary)}
-              component={RouterLink} to="/"
+              onClick={handleClick}
+              style={{
+                // padding:"50px", 
+                cursor:"pointer"}}
+              // component={RouterLink} to="/"
             >
               {'LogOut'}
             </Link>

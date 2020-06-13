@@ -14,10 +14,8 @@ import Button from '@material-ui/core/Button';
 ///qwer
 
 class App extends Component{
-
-  
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   
     this.state = {
       compile_result:'',
@@ -50,9 +48,7 @@ class App extends Component{
   }
 
   componentDidMount(){
-
-   
-    const url1 = `http://59.29.224.144:30000/codereview/100`;
+    const url1 = `http://59.29.224.144:30000/codereview/${this.props.match.params.id}`;
     axios.get(url1)
         .then(response =>{
            this.setState({ reviewReq : response.data})
@@ -63,9 +59,7 @@ class App extends Component{
           console.log(error);
         })
 
-    const url2 = `http://59.29.224.144:40000/comment/100`;
-
-
+    const url2 = `http://59.29.224.144:40000/comment/${this.props.match.params.id}`;
     axios.get(url2)
         .then(response =>{
           console.log("여기는 코멘트 가져오기")
@@ -144,22 +138,24 @@ handleSubmitModal = () =>{
   //댓글내용,라인을 comment_tb에 저장
   //var txt = document.getElementById('comment_txt');
   ///console.log(this.state.text)
-  //const user = JSON.parse(localStorage.getItem('user'));
-  const url = 'http://59.29.224.144:40000/comment?100';
+  const user = JSON.parse(sessionStorage.getItem('user'));
+  const url = 'http://59.29.224.144:40000/comment';
+  console.log(this.props.match.params.id);
+  console.log(this.state);
   axios.post(url, {
-    reviewId : 100,
+    reviewId : this.props.match.params.id,
     content : this.state.text,
     cmtLineNumber : this.state.lineNumber,
-    nickName : "멘토닉넴",
+    nickName : user.mentorNickname,
     cmtCode : this.state.outputText
   })
    .then(response =>{console.log(response.data)
-      console.log("됀다다다다다다")
-    window.location.href="/review"
-  
+      console.log("됩니다유")
+    window.location();
   }
     ) 
     .catch(error => {
+      console.log(error);
       alert("다시 시도해 주십시오")
     })
 
@@ -199,6 +195,7 @@ handleState = (state) =>{
     this.setState({flag:1});
   }
 
+  //멘토인경우 멘티리뷰리스트로, 멘티인경우 멘티대쉬보드의 룸리스트로
   exit = ()=>{
     window.location.href='/roomlist';
   }
@@ -238,6 +235,7 @@ handleState = (state) =>{
 
         <div className = "review_mentee_content">
         <div className="title"> {this.state.reviewReq.reviewTitle}
+
         <button className="exit" onClick={this.exit} type="button">
               나가기
             </button>

@@ -34,7 +34,7 @@ import { Link as RouterLink } from 'react-router-dom';
     },
   }));
 
-export default function SignUp(){
+export default function SignUp(props){
 
   const isEmail = email => {
     const emailRegex = /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
@@ -88,21 +88,25 @@ export default function SignUp(){
     if(!valid)console.error("invalid");
 
     else{
-      const url = '/users-service/recoder/users';
+      const url = 'http://59.29.224.144:10000/users';
       axios.post(url, {
         name: values.name,
         email: values.email,
         encryptedPassword: values.encryptedPassword,
         gender: values.gender
       })
-      //console.log(values.name, values.email, values.encryptedPassword, values.gender);
-      setValues({
-        name: "",
-        email: "",
-        encryptedPassword: "",
-        gender: 0
-      })
-      alert("회원가입이 완료되었습니다.");
+      .then(response =>{
+        alert("가입이 완료 되었습니다.")
+        props.history.push({
+          pathname: '/signin'
+        });
+      
+      }
+        ) 
+        .catch(error => {
+          alert("이미 존재하는 회원입니다.")
+          setValues({email:'', encryptedPassword:''});
+        })
     }
   }
 

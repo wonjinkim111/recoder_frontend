@@ -4,7 +4,7 @@ import './CodeEditor.css';
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { Link, Route, BrowserRouter as Router } from "react-router-dom"
 import axios from 'axios';
-var color_flag =3;
+var color_flag =1;
 class CodeEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -31,7 +31,7 @@ class CodeEditor extends React.Component {
   };
 componentDidUpdate(){
   
-  if(this.props.comment_tb.lenth){
+  if(this.props.comment_tb.length){
     this.props.comment_tb.map((comment) =>{ 
       this.editor.deltaDecorations(
         this.editor.getModel().getAllDecorations(),
@@ -49,16 +49,16 @@ componentDidUpdate(){
         ]
       );//decoration 끝  
     })
-    color_flag=0;
+    color_flag--;
     
   }
 
-  if(color_flag <=0){
+  if(color_flag <0){
     this.editor.deltaDecorations(   //내용이 추가되야 라인색깔이 적용이 되기 때문에 빈데이터 하나 추가해줌
     this.editor.getModel().getAllDecorations(),
     [ 
       {
-        range: {startLineNumber: 1, startColumn: 1, endLineNumber: 1, endColumn: 1},
+        range: {startLineNumber: 2, startColumn: 1, endLineNumber: 2, endColumn: 1},
         options: {
           isWholeLine: true,
         }
@@ -88,8 +88,10 @@ editorDidMount = (editor) => {
 
    //code 초기값 설정 componentDidMount로도 가능
    componentWillMount(){
+   const getUrl = document.location.href.split("/");
+    const len = getUrl.length;
     
-  const url = `http://59.29.224.144:30000/codereview/100`;
+  const url = `http://59.29.224.144:30000/codereview/${getUrl[len-1]}`;
  axios.get(url)
      .then(response =>{
       console.log(response.data);
@@ -181,6 +183,7 @@ setLanguage = (e) =>{
     
 setTheme = (e)=>{
   this.setState({theme: e.target.value})
+  console.log(this.editor.getModel().getAllDecorations())
   if(e.target.value === "vs-white"){
     this.changeBackColor("myLineDecoration");
   }

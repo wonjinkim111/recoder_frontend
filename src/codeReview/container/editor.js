@@ -149,6 +149,9 @@ function (_React$Component) {
         this.editor = monaco.editor.create(this.containerElement, _objectSpread({
           value: value,
           fontSize: "15px",
+          roundedSelection: true,
+          //contextmenu: false,
+          //cursorWidth: 0,
           wordWrap: true, //끝까지가면 다음줄로 자동변경
           scrollBeyondLastLine: false, //스크롤바 설정
           minimap: {     //미니맵 설정
@@ -158,9 +161,6 @@ function (_React$Component) {
         }, options, theme ? {
           theme: theme
         } : {}), overrideServices); // After initializing monaco editor
-       
-
-  
         this.editorDidMount(this.editor);
       }
     }

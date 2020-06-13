@@ -33,87 +33,34 @@ const usestyles = makeStyles((theme)=>({
       },
 }));
 
+
 export default function Main(props) {
     const classes = usestyles();
-    // const [values, setValues] = React.useState({
-    //     mentorNickname: '멘토1',
-    //     roomName: 'room1',
-    //     roomInfo: '멘토입니다.',
-    //     roomIsPrivate: 1,
-    //     roomMax: 3,
-    //     roomPicture : '../images/room.jpg',
-    //     roomLanguage : 1
-    //   });
     
-    //   const room = {
-    //       nickname: '',
-    //       name: '',
-    //       info: '',
-    //       isPrivate: '',
-    //       max: '',
-    //       picture: '',
-    //       language: ''
-    //   }
+    const [url, setUrl]=React.useState('');
 
-    //   const [user] = React.useState(props.location.state);
-    //   console.log(user);
+    React.useEffect(() => {
+        props.history.push({
+            pathname: url
+        })
+    },[url])
 
-      const rooms = [
-        {
-            nickname: '멘토1',
-            name: 'room1',
-            info: '멘토입니다.',
-            isPrivate: 1,
-            max: 2,
-            picture: '../images/room.jpg',
-            language: 1
-        },
-        {
-            nickname: '멘토2',
-            name: 'room2',
-            info: '멘토야이ㅑ이',
-            isPrivate: 1,
-            max: 3,
-            picture: '../images/room.jpg',
-            language: 1
-        },
-        {
-            nickname: '멘토3',
-            name: 'room3',
-            info: '나는고수',
-            isPrivate: 1,
-            max: 4,
-            picture: '../images/room2.jpg',
-            language: 1
-        },
-        {
-            nickname: '멘토4',
-            name: 'room4',
-            info: '메렁메렁',
-            isPrivate: 1,
-            max: 3,
-            picture: '../images/room.jpg',
-            language: 1
-        },
-        {
-            nickname: '멘토5',
-            name: 'room5',
-            info: '제발',
-            isPrivate: 0,
-            max: 6,
-            picture: '../images/room2.jpg',
-            language: 1
-        },
-      ]
-
-      const [values] = React.useState({rooms});
-      console.log(values.rooms);            //array
-      console.log(values);                  //object
-
+    const handleonClick = () => {
+     const userData = JSON.parse(sessionStorage.getItem('user'));
+     if(userData === null) setUrl('/signin');
+     else if(userData.mentorid == 0) setUrl('/mentorlogin');
+     else if(userData.mentorid != 0) setUrl('/mentor/roomlist');
+    }
+    const handleonClick2 = () => {
+     const userData = JSON.parse(sessionStorage.getItem('user'));
+     if(userData !== null && userData.menteeid != 0) setUrl('/menteedashboard/roomlist');
+     else setUrl('/roomlist');
+    }
+     
         return(
             <ProductHeroLayout backgroundClassName={classes.background}>               
                 <img style={{ display: 'none' }} src={Background} alt="mainpage" />
-                <Typography color="inherit" align="center" variant="h2" marked="center">
+                <Typography color="inherit" align="center" variant="h2" marked="center" className={classes.h2}>
                     누구나 멘토가 될 수 있다!
                 </Typography>
                 <span><h2>_____</h2></span>
@@ -122,14 +69,12 @@ export default function Main(props) {
                     color="secondary"
                     variant="contained"
                     size="large"
-                    className={classes.button}>
+                    className={classes.button}
+                    onClick={handleonClick}>
                     <Link
                     className={classes.rightLink}
                     component={RouterLink} 
-                    to={{
-                        pathname: "/user/mentor",
-                        state: {props}
-                    }}
+                    // to={`${url}`}
                     underline="none">
                     Mentor
                 </Link>
@@ -138,23 +83,12 @@ export default function Main(props) {
                     color="secondary"
                     variant="contained"
                     size="large"
-                    className={classes.button}>
+                    className={classes.button}
+                    onClick={handleonClick2}>
                 <Link 
                     className={classes.rightLink}
                     component={RouterLink} 
-                    to={{
-                    pathname : `/roomlist`,
-                    // state : {
-                    //     nickname : values.mentorNickname,
-                    //     name: values.roomName,
-                    //     info : values.roomInfo,
-                    //     private : values.roomIsPrivate,
-                    //     max : values.roomMax,
-                    //     picture : values.roomPicture,
-                    //     language : values.roomLanguage
-                    // }
-                    state : {values : values.rooms}
-                }}
+                    //to= '/roomlist'
                     underline="none">
                     Mentee
                 </Link>

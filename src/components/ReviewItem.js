@@ -13,7 +13,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import Avatar from '@material-ui/core/Avatar';
 import StarIcon from '@material-ui/icons/Star';
 import StarHalfIcon from '@material-ui/icons/StarHalf';
-import ReviewReq from './reviewReq';
+import IconButton from '@material-ui/core/IconButton';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyles = theme => ({
     root: {
@@ -35,21 +36,30 @@ const useStyles = theme => ({
       },
   });
 
-class RoomItem extends React.Component {
+class ReviewItem extends React.Component {
     
     constructor(props){
         super(props);
         this.state={
             setOpen:false,
-            open: false
+            open: false,
+            language: ''
         }
     }
 
     clickOpen = () => {
-        this.setState({open : true})
+        this.setState({open : true});
+        if(this.props.review.reviewLanguage === 0)this.setState({language:'Java'});
+        else if(this.props.review.reviewLanguage === 1) this.setState({language: 'C'});
+        else if(this.props.review.reviewLanguage === 2) this.setState({language: 'Cpp'});
+        else this.setState({language: '기타'});
       }
     clickClose = () => {
         this.setState({open : false})
+      }
+    clickEnter = () => {
+        //코드리뷰 페이지 이동
+        window.location.href=`/review/${this.props.review.reviewId}`;
       }
       
     render(){
@@ -61,18 +71,18 @@ class RoomItem extends React.Component {
             <CardActionArea >
                 <CardMedia
                     className={classes.media}
-                    image = {require('../images/room.jpg')}
+                    image = {require('../images/review.png')}
                     // image = {require(this.props.room.picture)}
                     title="room image" />
                     
-                <Button size="large" color="primary" onClick={this.clickOpen}>{this.props.room.mentorNickname}</Button>
+                <Button size="large" color="primary" onClick={this.clickOpen}>{this.props.review.mentorNickname}</Button>
                 <Dialog open={this.state.open} onClose={this.clickClose} classes={{paper:classes.dialogPaper}}>
                 <DialogTitle id="customized-dialog-title" style={{backgroundColor:"lightblue"}}>
                     <div>
                     <Avatar className={classes.large} style={{float:'left', marginRight:'1vw',}}/>
                     </div>
                     <div>
-                    {this.props.room.mentorNickname}님
+                    {this.props.review.mentorNickname}님
                     <div style={{float:'down'}}>
                     <StarIcon/>
                     <StarIcon/>
@@ -84,19 +94,21 @@ class RoomItem extends React.Component {
                 </DialogTitle>
                 <DialogContent dividers>
                 <Typography variant="body2" color="textSecondary" component="p">
-                    {this.props.room.roomInfo}
+                    리뷰 요청 시간 : {this.props.review.reviewRegDate}<br/>
+                    리뷰 요청 언어 : {this.state.language}
                     </Typography>
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={this.clickClose} color="primary" style={{float:'left'}}>
                         확인
                     </Button>
-                    <ReviewReq roomid={this.props.room.roomId} mentorid={this.props.room.mentorId}/>
-                </DialogActions>
-             </Dialog>
+                    </DialogActions>
+                </Dialog>
                 <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        {this.props.room.roomName}
+                        {this.props.review.reviewTitle}
+
+                        <ExitToAppIcon style={{float:'right', color:'#000066'}} onClick={this.clickEnter}/>
                     </Typography>
                 </CardContent>
             </CardActionArea>
@@ -105,4 +117,4 @@ class RoomItem extends React.Component {
 }
 }
 
-export default withStyles(useStyles)(RoomItem);
+export default withStyles(useStyles)(ReviewItem);
