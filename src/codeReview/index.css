@@ -113,7 +113,7 @@ height:10vh;
     left:0%;
     font-size: 15px;
     font-family: "나눔고딕";
-    resize: none;
+    resize: "both";
     border: 0px solid grey;
 }
 .review_editor{
@@ -123,6 +123,7 @@ height:10vh;
     height:50vh;
     left: 45.7vw;
     top: -38.1vh;
+    resize: "both";
     border: 1px solid grey;
 }
 .review_comment{
@@ -133,12 +134,16 @@ height:10vh;
     top:46.6vh;
     left: 0%;
     border: 1px solid grey;
+   
 }
 .title{
     border: 1px solid grey;
     font-size: 25px;
     font-family: "나눔고딕";
     height:5vh;
+    resize: both;
+    overflow: auto;
+    
 }
 .compile_result{
     position: absolute;
@@ -148,6 +153,7 @@ height:10vh;
     left: 45.7vw;
     top:57vh;
     border: 1px solid grey;
+    resize: both;
 }
 .compile_result_content{
     position: absolute;
@@ -155,7 +161,7 @@ height:10vh;
     height:34.5vh;   
     font-size: 15px;
     font-family: "나눔고딕";
-    resize: none;
+    resize: both;
     border: 1px solid skyblue;
 }
 
@@ -173,4 +179,18 @@ height:10vh;
     height:5vh;
     font-size: 20px;
     float: right;
+}
+
+.test{
+    position: absolute;
+    border: 5px solid orange;
+    margin: 10px;
+    padding: 20px;
+    width: 300px;
+    overflow: auto;
+    resize: both;
+}
+
+#test{
+    resize: both;
 }

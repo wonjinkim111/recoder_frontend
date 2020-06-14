@@ -91,7 +91,7 @@ editorDidMount = (editor) => {
    componentWillMount(){
    const getUrl = document.location.href.split("/");
     const len = getUrl.length;
-    
+    console.log(getUrl)
   const url = `http://59.29.224.144:30000/codereview/${getUrl[len-1]}`;
  axios.get(url)
      .then(response =>{
