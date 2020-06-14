@@ -50,6 +50,7 @@ class App extends Component{
 
   componentDidMount(){
     const url1 = `http://59.29.224.144:30000/codereview/${this.props.match.params.id}`;
+    console.log("리뷰타이틀 :"+ this.props.match.params.id)
     axios.get(url1)
         .then(response =>{
            this.setState({ reviewReq : response.data})

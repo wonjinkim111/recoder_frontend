@@ -113,21 +113,20 @@ handleChangeSearch = e =>{
 
 }
 
- handleSearch= e =>{
+    handleSearch = e => {
         //console.log(this.state.rooms)
         //console.log(111+this.state.searchTitle)
         //console.log(222+this.state.searchContent)
         var search = this.state.searchContent;
         e.preventDefault();
-        if(this.state.searchTitle === "title"){
-            var testData1 = this.state.rooms.filter(function(room){return room.roomName.indexOf(search)!==-1})
-            this.setState({rooms2 : testData1})
+        if (this.state.searchTitle === "title") {
+            var testData1 = this.state.rooms.filter(function (room) { return room.roomName.indexOf(search) !== -1 })
+            this.setState({ rooms2: testData1 })
         }
-        else if (this.state.searchTitle ==="mentorNickname"){
-            var testData2 = this.state.rooms.filter(function(room){return room.mentorNickname.indexOf(search)!==-1})
-            this.setState({rooms2 : testData2})
+        else if (this.state.searchTitle === "mentorNickname") {
+            var testData2 = this.state.rooms.filter(function (room) { return room.mentorNickname.indexOf(search) !== -1 })
+            this.setState({ rooms2: testData2 })
         }
-
     }
 
 

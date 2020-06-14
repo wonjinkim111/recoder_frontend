@@ -20,6 +20,7 @@ class CodeEditor extends React.Component {
       menteeCode:'mentee code\nint main(){  int i= 10;\n  printf("%d",i);\n return 0;\n}',
       theme: "vs-light",
       language:"java",
+      axiosLanguage:0,
       lineSelect: 'off',
       options: {
         selectOnLineNumbers: true,
@@ -91,7 +92,7 @@ editorDidMount = (editor) => {
    componentWillMount(){
    const getUrl = document.location.href.split("/");
     const len = getUrl.length;
-    
+                console.log("코드에디터 " +getUrl[len-1])
   const url = `http://59.29.224.144:30000/codereview/${getUrl[len-1]}`;
  axios.get(url)
      .then(response =>{
@@ -179,9 +180,9 @@ changeByMentor = () =>{
 }
     
 setLanguage = (e) =>{
-  if(e.target.value==='java') this.setState({language:0})
-  else if(e.target.value==='c') this.setState({language:1})
-  else if(e.target.value==='cpp') this.setState({language:2})
+  if(e.target.value==='java') this.setState({axiosLanguage:0})
+  else if(e.target.value==='c') this.setState({axiosLanguage:1})
+  else if(e.target.value==='cpp') this.setState({axiosLanguage:2})
 }
     
 setTheme = (e)=>{
