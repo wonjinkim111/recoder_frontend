@@ -43,10 +43,11 @@ export default function MentorLogin(props){
         let userData = JSON.parse(sessionStorage.getItem('user'));
         sessionStorage.setItem('user', JSON.stringify({id:userData.id, token:userData.token, mentorid: userData.mentorid, menteeid: response.data.menteeId}))
           alert('추가되었습니다.');
-          sessionStorage('state',JSON.stringify('mentee'));
-          props.history.push({
-            pathname: '/menteedashboard/roomlist'
-          });
+          sessionStorage.setItem('state',JSON.stringify('mentee'));
+          // props.history.push({
+          //   pathname: '/menteedashboard/roomlist'
+          // });
+          
       }
         ) 
         .catch(error => {

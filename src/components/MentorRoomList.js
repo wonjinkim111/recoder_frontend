@@ -122,11 +122,13 @@ export default function MentorRoomList() {
                 <StyledTableCell align="center">{list.roomName}</StyledTableCell>
                 <StyledTableCell align="center">{list.roomMax}</StyledTableCell>
                 <StyledTableCell align="center" >
-                  <button value={list.roomId} >
-                    <Link to ={`/mentordashboard/${list.roomId}`}>
+                  <Button color="primary" value={list.roomId} >
+                    <Link 
+                    underline="none"
+                    to ={`/mentordashboard/${list.roomId}`}>
                     입장
                     </Link>
-                    </button>
+                    </Button>
                 </StyledTableCell>
               </StyledTableRow>
             ))}
