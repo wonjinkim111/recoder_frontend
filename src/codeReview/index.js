@@ -240,7 +240,6 @@ handleState = (state) =>{
 
 
     return (
-<<<<<<< HEAD
       <div className="total-layout"> 
 
 <Dialog open={this.state.open} onClose={this.handleClose}>
@@ -267,54 +266,17 @@ handleState = (state) =>{
     <Button variant="outlined" color="primary" onClick={this.handleCloseModal}>닫기</Button>
   </DialogActions>
 </Dialog>
-=======
-      <div className="total-layout">
->>>>>>> 1c27a41b8c1ab6fe0a1e67459e113a232d787291
-
-        <Dialog open={this.state.open} onClose={this.handleClose}>
-          <DialogContent>
-            <div className="modal_head">&nbsp; Line{' '} {this.state.lineNumber}<br /></div>
-            <div className="modal_code">  {this.state.outputText.trim()} </div>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              multiline
-              id="comment_txt"
-              margin="normal"
-              style={{ width: 400, wordBreak: "breakAll" }}
-              rows={3}
-              value={this.state.text}
-              onChange={this.handleChange}
-              placeholder="코멘트 달기"
-            ></TextField>
-
-<<<<<<< HEAD
-        <div className = "review_mentee_content" >
-        <div className="title"> <div className="content"> &nbsp;{this.state.reviewReq.reviewTitle}         <button className="exit" onClick={this.exit} type="button">
-=======
-            <div style={{ color: "red", fontSize: "12px" }}>
-              {this.state.error}
-            </div>
-
-          </DialogContent>
-          <DialogActions>
-            <Button variant="contained" color="primary" onClick={this.handleSubmitModal}>커맨트달기</Button>
-            <Button variant="outlined" color="primary" onClick={this.handleCloseModal}>닫기</Button>
-          </DialogActions>
-        </Dialog>
 
         
         <div className = "review_mentee_content">
         <div className="title"> {this.state.reviewReq.reviewTitle}
 
         <button className="exit" onClick={this.exit} type="button">
->>>>>>> 1c27a41b8c1ab6fe0a1e67459e113a232d787291
               나가기
             </button></div>
 
 
-            </div>
+           
         <br/>
         {this.state.reviewReq.reviewContent}
         </div>
@@ -334,20 +296,12 @@ handleState = (state) =>{
                   lineNumber={lineNumber} 
                   outputText={outputText}
                   comment_tb={comment_tb}/>
-                  <div className="test">test</div>
-                  <div className="test">test</div>
+                  
         </div>
       
         <div className = "compile_result">
-<<<<<<< HEAD
           <div className="title" > <div className="content"> &nbsp; 실행 결과           
           <button className="selectButton2" onClick={this.handleCompile} type="button">실행</button></div></div>
-=======
-          <div className="title" > &nbsp; 실행 결과
-          <button className="selectButton2"  type="button">
-              실행
-            </button></div>
->>>>>>> 1c27a41b8c1ab6fe0a1e67459e113a232d787291
 
           <textarea className="compile_result_content" placeholder="실행 결과가 여기에 표시됩니다." readOnly>{this.state.compile_result}</textarea> 
         </div> 

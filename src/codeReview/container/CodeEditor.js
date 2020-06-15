@@ -220,7 +220,6 @@ setLineSelect = (e) =>{
                </select>
             </form>
         <form >
-<<<<<<< HEAD
               <select className="selectButton4" id="language" value={this.state.value} size="1" onChange={this.setLanguage}>
                 <option value="java">&nbsp;java&nbsp;</option>
                 <option value="cpp">&nbsp;C++&nbsp;</option>
@@ -234,19 +233,6 @@ setLineSelect = (e) =>{
 					</select>
 
 
-=======
-              <select className="selectButton3" id="language" value={this.state.value} size="1" onChange={this.setLanguage}>
-                <option value="java">java</option>
-                <option value="c">C</option>
-                <option value="cpp">C++</option>
-              </select>
-          </form>
-          <form >
-            {this.state.type==='mentor'? <select className="selectButton3"id="lineSelect"  size="1" onChange={this.setLineSelect}>
-            <option value="off">review off</option>
-						<option value="on">review on</option>
-					</select> : <div/>}
->>>>>>> 1c27a41b8c1ab6fe0a1e67459e113a232d787291
 				</form>
         {/* <Select
             labelId="demo-controlled-open-select-label"
