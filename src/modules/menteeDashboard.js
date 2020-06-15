@@ -53,7 +53,7 @@ export default function MentorDashBoard(props){
     
     return(
     // <div className={classes.root}>
-    <List component="nav" subheader={
+    <List component="nav" style={{border:"1 solid black"}} subheader={
         <ListSubheader component="div" id="nested-list-subheader">
           Mentee DashBoard
         </ListSubheader>}
@@ -96,6 +96,5 @@ export default function MentorDashBoard(props){
       <ListItemText primary="Settings" />
     </ListItem>
   </List>
-//   </div>
     )
 }

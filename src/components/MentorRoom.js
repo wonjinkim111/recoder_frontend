@@ -21,13 +21,13 @@ const styles = theme => ({
     display: 'none'  
         },
     image: {
-      maxHeight: '50vh',
+      maxHeight: '45vh',
       maxWidth: '30vw'
     },
     button: {
       marginTop: '1vh',
-      bottom : 0
-      
+      bottom : 0,
+      width: '20vw'
     }  
     });
 
@@ -49,6 +49,7 @@ class MentorRoom extends React.Component {
     this.state = {
       file: null,
       fileName: '',
+      image : `${require('../images/room2.jpg')}`,
       open: false,
       dialogopen: false,
 
@@ -123,14 +124,15 @@ class MentorRoom extends React.Component {
   //이미지 태그에 이미지 올라오는부분인데 안됨
   onImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
-      let reader = new FileReader();
-      reader.onload = (e) => {
-        var img = document.createElement('img');
-        img.setAttribute("src", e.target.result);
-        document.querySelector("div#image_container").appendChild(img);
-        //this.setState({image: e.target.result});
-      };
-      reader.readAsDataURL(e.target.files[0]);
+      this.setState({image:e.target.result})
+      // let reader = new FileReader();
+      // reader.onload = (e) => {
+      //   var img = document.createElement('img');
+      //   img.setAttribute("src", e.target.result);
+      //   document.querySelector("div#image_container").appendChild(img);
+      //   this.setState({image: e.target.result});
+      // };
+      // reader.readAsDataURL(e.target.files[0]);
     }
   }
 
@@ -198,28 +200,27 @@ class MentorRoom extends React.Component {
 
   handleClose() {
     this.setState({
-      file: null,
-      fileName: '',
+      // file: null,
+      // fileName: '',
       open: false
     })
   }
 
   render() {
     const { classes } = this.props;
-    //const image2 = this.state.image;
+    const image2 = this.state.image;
     //const image1 = require([image2]);
-    const image1 = require('../images/room2.jpg');
+    //const image1 = require('../images/room2.jpg');
 
     return (
       <Container maxWidth="md" style={{ marginTop: '10vh' }}>
         <div style={{ flexDirection: 'row', display: 'flex', justifyContent: 'flex-start', position: 'relative' }}>
           <div>
-            {/* <div id="image_container"></div> */}
-            <img className={classes.image} src={image1} />
+            <div id="image_container"/> 
+            <img className={classes.image} src={image2} />
             <input className={classes.hidden} accept="image/*" id="raised-button-file" type="file" file={this.state.file} value={this.state.fileName} onChange={this.handleFileChange} />
             <label htmlFor="raised-button-file">
               <Button className={classes.button} variant="contained" color="primary" component="span" name="file"
-                onChange={this.onImageChange}
               >
                 {this.state.fileName === '' ? "방 이미지 선택" : this.state.fileName}
               </Button>

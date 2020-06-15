@@ -120,7 +120,7 @@ export default function RoomReviewList(props) {
 
     }
     const handleEnter = (e)=> {
-      var  targetValue = document.getElementById("getReviewId").value
+      //var  targetValue = document.getElementById("getReviewId").value
 
         window.location.href=`/review/${e.target.value}`
     
@@ -181,12 +181,14 @@ export default function RoomReviewList(props) {
                 </StyledTableRow>
               ))} */}
               {reviewList2.map((list, index) => (
+                
                 <StyledTableRow key={list.roomId}>
                   <StyledTableCell component="th" scope="row">{index + 1}</StyledTableCell>
                   <StyledTableCell align="center">{list.reviewTitle}</StyledTableCell>
                   <StyledTableCell align="center">{list.menteeNickname}</StyledTableCell>
                   <StyledTableCell align="center">
-                    <Button id ="getReviewId" value={list.reviewId} onClick={handleEnter}>입장</Button>
+                    
+                  <Button id ="getReviewId" value={list.reviewId} onClick={handleEnter}>입장 + {list.reviewId}</Button>
                   </StyledTableCell>
                 </StyledTableRow>
               ))}

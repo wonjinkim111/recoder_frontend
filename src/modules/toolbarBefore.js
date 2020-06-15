@@ -44,7 +44,7 @@ export default function ToolbarBefore() {
 
   return (
     <div className={classes.root}>
-    <AppBar position="static">
+    <AppBar position="static" >
         <Toolbar className={classes.toolbar}>
           <Link component={RouterLink} to="/"
             variant="h6"

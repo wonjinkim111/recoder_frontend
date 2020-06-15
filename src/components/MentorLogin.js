@@ -57,6 +57,7 @@ export default function MentorLogin(props){
           //console.log(response.headers);
           alert('추가되었습니다.');
           console.log(response.data);
+          sessionStorage.setItem('state',JSON.stringify('mentor'));
           let userData = JSON.parse(sessionStorage.getItem('user'));
         sessionStorage.setItem('user', JSON.stringify({id:userData.id, token:userData.token, mentorid: response.data.mentorId, menteeid: userData.menteeid}))
           props.history.push({

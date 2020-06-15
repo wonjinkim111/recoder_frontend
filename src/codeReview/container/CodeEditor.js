@@ -13,6 +13,7 @@ class CodeEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      type: JSON.parse(sessionStorage.getItem('state')),
       compile_result:'',
       color_flag111 : 1,
       mount_flag:1,
@@ -95,7 +96,7 @@ editorDidMount = (editor) => {
    componentWillMount(){
    const getUrl = document.location.href.split("/");
     const len = getUrl.length;
-    
+    console.log(getUrl)
   const url = `http://59.29.224.144:30000/codereview/${getUrl[len-1]}`;
  axios.get(url)
      .then(response =>{
@@ -185,7 +186,9 @@ this.props.handleCompile_content(this.state.mentorCode)
 }
     
 setLanguage = (e) =>{
-  this.setState({language: e.target.value})
+  if(e.target.value==='java') this.setState({language:0})
+  else if(e.target.value==='c') this.setState({language:1})
+  else if(e.target.value==='cpp') this.setState({language:2})
 }
     
 setTheme = (e)=>{
@@ -217,6 +220,7 @@ setLineSelect = (e) =>{
                </select>
             </form>
         <form >
+<<<<<<< HEAD
               <select className="selectButton4" id="language" value={this.state.value} size="1" onChange={this.setLanguage}>
                 <option value="java">&nbsp;java&nbsp;</option>
                 <option value="cpp">&nbsp;C++&nbsp;</option>
@@ -230,6 +234,19 @@ setLineSelect = (e) =>{
 					</select>
 
 
+=======
+              <select className="selectButton3" id="language" value={this.state.value} size="1" onChange={this.setLanguage}>
+                <option value="java">java</option>
+                <option value="c">C</option>
+                <option value="cpp">C++</option>
+              </select>
+          </form>
+          <form >
+            {this.state.type==='mentor'? <select className="selectButton3"id="lineSelect"  size="1" onChange={this.setLineSelect}>
+            <option value="off">review off</option>
+						<option value="on">review on</option>
+					</select> : <div/>}
+>>>>>>> 1c27a41b8c1ab6fe0a1e67459e113a232d787291
 				</form>
         {/* <Select
             labelId="demo-controlled-open-select-label"

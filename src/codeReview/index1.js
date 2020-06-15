@@ -23,7 +23,6 @@ class App extends Component{
       flag: 0,
       update_flag:0,
       outputText: '',
-      compileContent:'',
       codeState: 'mentee',
       theme:'vs-white',
       reviewReq:[],
@@ -172,26 +171,6 @@ else{
 }
 }
 
-handleCompile_content = (e) =>{
-this.setState({compileContent : e})
-}
-
-handleCompile = () => { //실행 버튼 클릭 했을 때
-  //console.log(this.editor.getValue().replace(/ /g,"")); //모든 공백 제거
-  //console.log(this.editor.getValue().replace(/\s/gi,""));//모든 공백 제거
-console.log(this.state.compileContent)
-
-  // const url =`http://59.29.224.144:40000/codereview/compile2` 
-  // axios.get(url)
-  //   .then(function (response) {
-  //     //console.log(response);
-  //     this.setState({compile_result:response.data})
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //   });
-};
-
 
   //editor에서 클릭한곳의 내용과 라인 넘버 가져옴
   handleOutputText = (text,number,flag) => {
@@ -240,36 +219,7 @@ handleState = (state) =>{
 
 
     return (
-<<<<<<< HEAD
-      <div className="total-layout"> 
-
-<Dialog open={this.state.open} onClose={this.handleClose}>
-  <DialogContent>
-    <div className="modal_head">&nbsp; Line{' '} {this.state.lineNumber}<br/></div>
-    <div className="modal_code">  {this.state.outputText.trim()} </div> 
-    <TextField
-      variant="outlined"
-      margin="normal"
-      fullWidth
-      multiline
-      id="comment_txt"
-      margin="normal"
-      style={{width:550, wordBreak:"breakAll"}}
-      rows={3}
-      value={this.state.text}
-      onChange={this.handleChange}
-      placeholder="댓글 달기"
-    ></TextField>
-          
-  </DialogContent>
-  <DialogActions>
-    <Button variant="contained" color="primary" onClick={this.handleSubmitModal}>커맨트달기</Button>
-    <Button variant="outlined" color="primary" onClick={this.handleCloseModal}>닫기</Button>
-  </DialogActions>
-</Dialog>
-=======
       <div className="total-layout">
->>>>>>> 1c27a41b8c1ab6fe0a1e67459e113a232d787291
 
         <Dialog open={this.state.open} onClose={this.handleClose}>
           <DialogContent>
@@ -289,10 +239,6 @@ handleState = (state) =>{
               placeholder="코멘트 달기"
             ></TextField>
 
-<<<<<<< HEAD
-        <div className = "review_mentee_content" >
-        <div className="title"> <div className="content"> &nbsp;{this.state.reviewReq.reviewTitle}         <button className="exit" onClick={this.exit} type="button">
-=======
             <div style={{ color: "red", fontSize: "12px" }}>
               {this.state.error}
             </div>
@@ -309,11 +255,8 @@ handleState = (state) =>{
         <div className="title"> {this.state.reviewReq.reviewTitle}
 
         <button className="exit" onClick={this.exit} type="button">
->>>>>>> 1c27a41b8c1ab6fe0a1e67459e113a232d787291
               나가기
-            </button></div>
-
-
+            </button>
             </div>
         <br/>
         {this.state.reviewReq.reviewContent}
@@ -324,12 +267,11 @@ handleState = (state) =>{
                     modal_start={modal_start}
                     handleState={this.handleState} 
                     comment_tb={comment_tb}
-                    handleCompile_content={this.handleCompile_content}
                     handleCompile1={handleCompile}/>
         </div>
 
          <div className="review_comment">
-          <div className="title_comment"> <div className="content">&nbsp; Review </div></div>
+          <div className="title"> &nbsp; Review</div>
         <Comment  handleRemove={this.handleRemove} 
                   lineNumber={lineNumber} 
                   outputText={outputText}
@@ -339,15 +281,10 @@ handleState = (state) =>{
         </div>
       
         <div className = "compile_result">
-<<<<<<< HEAD
-          <div className="title" > <div className="content"> &nbsp; 실행 결과           
-          <button className="selectButton2" onClick={this.handleCompile} type="button">실행</button></div></div>
-=======
           <div className="title" > &nbsp; 실행 결과
           <button className="selectButton2"  type="button">
               실행
             </button></div>
->>>>>>> 1c27a41b8c1ab6fe0a1e67459e113a232d787291
 
           <textarea className="compile_result_content" placeholder="실행 결과가 여기에 표시됩니다." readOnly>{this.state.compile_result}</textarea> 
         </div> 
