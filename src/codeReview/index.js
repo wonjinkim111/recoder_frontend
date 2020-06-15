@@ -269,11 +269,11 @@ handleState = (state) =>{
 
         
         <div className = "review_mentee_content">
-        <div className="title"> {this.state.reviewReq.reviewTitle}
+        <div className="title"> <div className="content">&nbsp;  {this.state.reviewReq.reviewTitle}
 
         <button className="exit" onClick={this.exit} type="button">
               나가기
-            </button></div>
+            </button></div></div>
 
 
            
