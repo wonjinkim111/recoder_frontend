@@ -14,6 +14,7 @@ import Mentee from './components/Mentee';
 import RoomList from './components/Room_list';
 import Profile from './components/Profile';
 import Review from './codeReview/index';
+import Review1 from './codeReview/index1';
 import './index.css';
 import MenteeReviewList2 from './components/MenteeReviewList2';
 import NotFound from './components/NotFound';
@@ -58,6 +59,7 @@ class App extends React.Component {
       <Route path="/roomlist" component={RoomList}/>
       <Route path="/profile" component={Profile}/>
       <Route path="/review/:id" component={Review}/>
+      <Route path="/review1/:id" component={Review1}/>
       {/* <Route component={NotFound}/> */}
     </div>
     {/* <div style={{position:"relative", height:"30%",width:"100vw",bottom:"-30%" }}> */}

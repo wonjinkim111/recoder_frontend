@@ -1,26 +1,38 @@
 .selectButton{
+    position : relative;
+    bottom: 0;
+    height: 90%;
     width:5vw;
-    height:5vh;
+    left: 1%;
     font-size: 20px;
-    
+    border-radius:0.3em;
+    border:1px solid gray;
 }
  .selectButton_mentee{
+    position : relative;
+    bottom: 5%;
+    height: 100%;
     width:5vw;
-    height:5.2vh;
+    left: 0.5%;
     font-size: 20px;
-   border-top: 1;
-   border-left: 1;
-   border-right:1;
-    border-bottom: 0px solid;
+    border-radius:0.3em;
+    border:1px solid gray;
+    color:white;
+    background-color: #337ab7;
+    font-weight : bold;
 }
 .selectButton_mentor{
+    position : relative;
+   
+    height: 100%;
     width:5vw;
-    height:5.2vh;
+    left: 1%;
     font-size: 20px;
-   border-top: 1;
-   border-left: 1;
-   border-right:1;
-    border-bottom: 2px solid; 
+    border-radius:0.3em;
+    border:1px solid gray;
+    color:white;
+    background-color: #d9534f;
+    font-weight : bold;
 }
 
 .selectButton2{
@@ -28,11 +40,35 @@
     height:5vh;
     font-size: 20px;
     float: right;
+    border-radius:0.3em;
+    border:1px solid gray;
+    color:white;
+    background-color: #5cb85c;
+   
 }
 .selectButton3{
+    position: relative;
     float: right;
     height: 5.1vh;
-
+    font-size: 17px;
+    border-radius:0.3em;
+    right: 1%;
+}
+.selectButton4{
+    position: relative;
+    float: right;
+    height: 5.1vh;
+    font-size: 17px;
+    border-radius:0.3em;
+    right: 2%;
+}
+.selectButton5{
+    position: relative;
+    float: right;
+    height: 5.1vh;
+    font-size: 17px;
+    border-radius:0.3em;
+    right: 3%;
 }
 
 .myInlineDecoration {
@@ -51,3 +87,14 @@
         display: inline-block;
         }
         
+        .title{
+
+    border: 0.5px solid gray;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    font-size: 25px;
+    font-family: "나눔고딕";
+    height:5vh;
+    color:black;
+    background-color: #f5f5f5;
+}

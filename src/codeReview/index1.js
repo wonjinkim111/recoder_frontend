@@ -23,7 +23,6 @@ class App extends Component{
       flag: 0,
       update_flag:0,
       outputText: '',
-      compileContent:'',
       codeState: 'mentee',
       theme:'vs-white',
       reviewReq:[],
@@ -51,7 +50,6 @@ class App extends Component{
 
   componentDidMount(){
     const url1 = `http://59.29.224.144:30000/codereview/${this.props.match.params.id}`;
-    console.log("리뷰타이틀 :"+ this.props.match.params.id)
     axios.get(url1)
         .then(response =>{
            this.setState({ reviewReq : response.data})
@@ -173,26 +171,6 @@ else{
 }
 }
 
-handleCompile_content = (e) =>{
-this.setState({compileContent : e})
-}
-
-handleCompile = () => { //실행 버튼 클릭 했을 때
-  //console.log(this.editor.getValue().replace(/ /g,"")); //모든 공백 제거
-  //console.log(this.editor.getValue().replace(/\s/gi,""));//모든 공백 제거
-console.log(this.state.compileContent)
-
-  // const url =`http://59.29.224.144:40000/codereview/compile2` 
-  // axios.get(url)
-  //   .then(function (response) {
-  //     //console.log(response);
-  //     this.setState({compile_result:response.data})
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //   });
-};
-
 
   //editor에서 클릭한곳의 내용과 라인 넘버 가져옴
   handleOutputText = (text,number,flag) => {
@@ -278,25 +256,22 @@ handleState = (state) =>{
 
         <button className="exit" onClick={this.exit} type="button">
               나가기
-            </button></div>
-
-
+            </button>
             </div>
         <br/>
         {this.state.reviewReq.reviewContent}
-        {/* </div> */}
+        </div>
         
         <div className="review_editor">
         <CodeEditor handleOutputText={this.handleOutputText} 
                     modal_start={modal_start}
                     handleState={this.handleState} 
                     comment_tb={comment_tb}
-                    handleCompile_content={this.handleCompile_content}
                     handleCompile1={handleCompile}/>
         </div>
 
          <div className="review_comment">
-          <div className="title_comment"> <div className="content">&nbsp; Review </div></div>
+          <div className="title"> &nbsp; Review</div>
         <Comment  handleRemove={this.handleRemove} 
                   lineNumber={lineNumber} 
                   outputText={outputText}
