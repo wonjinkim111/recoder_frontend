@@ -119,10 +119,10 @@ export default function RoomReviewList(props) {
         setSearch({...search,[e.target.name] : e.target.value})
 
     }
-    const handleEnter = ()=> {
+    const handleEnter = (e)=> {
       var  targetValue = document.getElementById("getReviewId").value
 
-        window.location.href=`/review/${targetValue}`
+        window.location.href=`/review/${e.target.value}`
     
       
     }
