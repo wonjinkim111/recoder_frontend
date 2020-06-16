@@ -69,6 +69,8 @@ const rows = [
   createData(4,'일주일째 못 풀고있어요..', "18"),
 ];
 
+const languages = ['java','c','c++','기타']
+
 
 export default function RoomReviewList(props) {
   const classes = useStyles();
@@ -86,7 +88,6 @@ export default function RoomReviewList(props) {
     .then(response =>{console.log(response)
         setreviewList(response.data);
         setreviewList2(response.data);
-        console.log(reviewList);
     }) 
       .catch(error => {
         // alert("error")
@@ -121,10 +122,7 @@ export default function RoomReviewList(props) {
     }
     const handleEnter = (e)=> {
       //var  targetValue = document.getElementById("getReviewId").value
-
-        window.location.href=`/review/${e.target.value}`
-    
-      
+        window.location.href=`/review/${e.currentTarget.value}`
     }
 
   return (
@@ -158,6 +156,7 @@ export default function RoomReviewList(props) {
                 <StyledTableCell>No.</StyledTableCell>
                 <StyledTableCell align="center">제목</StyledTableCell>
                 <StyledTableCell align="center">멘티</StyledTableCell>
+                <StyledTableCell align="center">언어</StyledTableCell>
                 <StyledTableCell align="center">입장</StyledTableCell>
 
 
@@ -181,14 +180,13 @@ export default function RoomReviewList(props) {
                 </StyledTableRow>
               ))} */}
               {reviewList2.map((list, index) => (
-                
                 <StyledTableRow key={list.roomId}>
                   <StyledTableCell component="th" scope="row">{index + 1}</StyledTableCell>
                   <StyledTableCell align="center">{list.reviewTitle}</StyledTableCell>
                   <StyledTableCell align="center">{list.menteeNickname}</StyledTableCell>
+                  <StyledTableCell align="center">{languages[list.reviewLanguage]}</StyledTableCell>
                   <StyledTableCell align="center">
-                    
-                  <Button id ="getReviewId" value={list.reviewId} onClick={handleEnter}>입장 + {list.reviewId}</Button>
+                  <Button id ="getReviewId" value={list.reviewId} onClick={handleEnter} style={{backgroundColor: '#f8585b', color:'#fff'}}>입장</Button>
                   </StyledTableCell>
                 </StyledTableRow>
               ))}

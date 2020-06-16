@@ -14,6 +14,7 @@ import Avatar from '@material-ui/core/Avatar';
 import StarIcon from '@material-ui/icons/Star';
 import StarHalfIcon from '@material-ui/icons/StarHalf';
 import ReviewReq from './reviewReq';
+import axios from 'axios';
 
 const useStyles = theme => ({
     root: {
@@ -40,21 +41,27 @@ class RoomItem extends React.Component {
     constructor(props){
         super(props);
         this.state={
+            user:[],
             setOpen:false,
             open: false
         }
     }
 
-    clickOpen = () => {
+    clickOpen = (e) => {
         this.setState({open : true})
+        const url = `http://59.29.224.144:10000/users/mentor/${e.currentTarget.value}`;
+        axios.get(url)
+            .then(response => {
+                console.log(response);
+                this.setState({user:response.data})
+            })
       }
     clickClose = () => {
         this.setState({open : false})
       }
-      
-    render(){
-        const {classes} = this.props;
 
+    render(){
+    const {classes} = this.props;
     return (
         <Card className={classes.root}>
             
@@ -65,7 +72,7 @@ class RoomItem extends React.Component {
                     // image = {require(this.props.room.picture)}
                     title="room image" />
                     
-                <Button size="large" color="primary" onClick={this.clickOpen}>{this.props.room.mentorNickname}</Button>
+                <Button size="large" color="primary" value={this.props.room.mentorId} onClick={this.clickOpen}>{this.props.room.mentorNickname}</Button>
                 <Dialog open={this.state.open} onClose={this.clickClose} classes={{paper:classes.dialogPaper}}>
                 <DialogTitle id="customized-dialog-title" style={{backgroundColor:"lightblue"}}>
                     <div>
@@ -82,6 +89,14 @@ class RoomItem extends React.Component {
                     </div>
                     </div>
                 </DialogTitle>
+                <DialogContent dividers>
+                <Typography variant="body2" component="p">
+                    멘토 소개 : {this.state.user.introduction}
+                    </Typography>
+                    <Typography variant="body2" component="p">
+                    가입 날짜 : {this.state.user.regDate}
+                    </Typography>
+                </DialogContent>
                 <DialogContent dividers>
                 <Typography variant="body2" color="textSecondary" component="p">
                     {this.props.room.roomInfo}

@@ -63,7 +63,7 @@ class App extends React.Component {
       {/* <Route component={NotFound}/> */}
     </div>
     {/* <div style={{position:"relative", height:"30%",width:"100vw",bottom:"-30%" }}> */}
-    <FootBar />
+    <FootBar/>
     {/* </div> */}
     </Router>
     </React.Fragment>

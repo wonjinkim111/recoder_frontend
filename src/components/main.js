@@ -6,6 +6,7 @@ import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import ProductHeroLayout from '../layout/ProductHeroLayout';
+import '../index.css';
 
 const usestyles = makeStyles((theme)=>({
     background: {
@@ -86,6 +87,7 @@ export default function Main(props) {
                 </Link>
                 </Button>
                 <Button
+                // style={{backgroundColor:'#4C0099'}}
                     color="secondary"
                     variant="contained"
                     size="large"

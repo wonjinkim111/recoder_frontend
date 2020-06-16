@@ -76,12 +76,15 @@ this.state = {
   reviewCode:'',
   reviewLanguage:"java",
   openreviewLanguage: false,
-
+  titleError: '',
+  contentError:'',
+  codeError: ''
 }
 
   this.handleValueChange = this.handleValueChange.bind(this)
   this.handleClickOpen = this.handleClickOpen.bind(this)
   this.handleClose = this.handleClose.bind(this);
+  this.blockNull = this.blockNull.bind(this);
 
 }
 
@@ -111,6 +114,30 @@ handleChange = (e) => {
     this.setState({ [e.target.name]: (e.target.checked)? 1:0 });
 };
 
+blockNull = () => {
+  let titleError = "";
+  let contentError = "";
+  let codeError = "";
+
+  if(this.state.reviewTitle.length === 0) titleError = "제목을 입력해 주세요";
+  //this.setState({titleError:"제목을 입력해주세요"}) ;
+  if(this.state.reviewContent.length === 0 ) contentError = "내용을 입력해 주세요";
+  //this.setState({contentError:"내용을 입력해 주세요"});
+  if(this.state.reviewCode.length === 0 ) codeError = "소스코드를 입력해 주세요";
+  //this.setState({codeError:"소스코드를 입력해주세요"});
+
+  this.setState({
+    titleError:titleError, contentError:contentError, codeError:codeError
+  })
+
+  // console.log(this.state.titleError);
+  // console.log(this.state.contentError);
+  // console.log(this.state.codeError);
+
+  if(titleError || contentError || codeError) return false;
+  return true;
+}
+
 handleSubmit=(e)=>{
   e.preventDefault();
   // const user = JSON.parse(sessionStorage.getItem('user'));
@@ -123,7 +150,12 @@ handleSubmit=(e)=>{
   // console.log("reviewContent: "+this.state.reviewContent)
   // console.log("reviewLanguage: "+1)
   // console.log("reviewCode: "+this.state.reviewCode)
-   
+  const valid = this.blockNull();
+  if(!valid){
+    console.error("not permit null")
+  }
+
+  else{   
   const user = JSON.parse(sessionStorage.getItem('user'));
     const url = 'http://59.29.224.144:30000/codereview';
     axios.post(url, {
@@ -148,7 +180,7 @@ handleSubmit=(e)=>{
         alert("다시 시도해 주십시오")
       //   setValues({reviewTitle:'', reviewContent:''});
       })
-    
+    }
   
 } // handleSubmit 끝
 
@@ -190,8 +222,8 @@ handleClose() {
 render() {
 
 const { classes } = this.props;
-console.log('props값' ,this.props);
-console.log('왜안찍혀');
+//console.log('props값' ,this.props);
+//console.log('왜안찍혀');
 
 return (
 
@@ -221,9 +253,9 @@ return (
               value={this.state.reviewTitle}
               onChange={this.handleChangeForm}
             />
-            {/* <div style={{ color: "red", fontSize: "12px" }}>
-                  {error.reviewTitleError}
-            </div> */}
+            <div style={{ color: "red", fontSize: "12px" }}>
+                  {this.state.titleError}
+            </div>
             <TextField
               variant="outlined"
               margin="normal"
@@ -240,10 +272,11 @@ return (
               value={this.state.reviewContent}
                   onChange={this.handleChangeForm}
             />
-          
+            <div style={{ color: "red", fontSize: "12px" }}>
+                  {this.state.contentError}
+            </div>          
           <Select
             labelId="demo-controlled-open-select-label"
-            id=""
             
             style={{position:"relative",bottom:"-5px",left:"0%"}}
             open={this.state.openreviewLanguage}
@@ -257,7 +290,6 @@ return (
             <MenuItem value={"c"}>c</MenuItem>
             <MenuItem value={"cpp"}>c++</MenuItem>
           </Select>
-
               <TextField
               variant="outlined"
               margin="normal"
@@ -274,6 +306,9 @@ return (
               value={this.state.reviewCode}
                   onChange={this.handleChangeForm}
             />
+            <div style={{ color: "red", fontSize: "12px" }}>
+                  {this.state.codeError}
+            </div>
   </DialogContent>
 
   <DialogActions>

@@ -132,10 +132,10 @@ handleChangeSearch = e =>{
 
     render(){
         const {classes} = this.props;
-            const roomItems= this.state.rooms2.map((r,roomId)=>{
+            const roomItems= this.state.rooms2.map(r => {
             return (
                 <Grid item>
-                <RoomItem room={r} key={roomId}/>
+                <RoomItem room={r} key={`000${r.roomId}`}/>
                 
                 </Grid>
             )

@@ -3,11 +3,19 @@ import MonacoEditor from './editor';
 import './CodeEditor.css';
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { Link, Route, BrowserRouter as Router } from "react-router-dom"
-
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-
 import axios from 'axios';
+
+
+const user = JSON.parse(sessionStorage.getItem('user'));
+//const token = user.token;
+var config = {
+  // headers: {
+  //   'Authorization' : "Bearer " + token
+  // }
+}
+
 var color_flag =1;
 class CodeEditor extends React.Component {
   constructor(props) {
@@ -24,7 +32,6 @@ class CodeEditor extends React.Component {
       menteeCode:'mentee code\nint main(){  int i= 10;\n  printf("%d",i);\n return 0;\n}',
       theme: "vs-light",
       language:"java",
-      axiosLanguage:0,
       lineSelect: 'off',
       options: {
         selectOnLineNumbers: true,
@@ -37,7 +44,8 @@ class CodeEditor extends React.Component {
   };
 componentDidUpdate(){
   
-  if(this.props.comment_tb.length){
+  if(this.props.comment_tb.length && color_flag >=1){
+    console.log(this.props.comment_tb)
     this.props.comment_tb.map((comment) =>{ 
       this.editor.deltaDecorations(
         this.editor.getModel().getAllDecorations(),
@@ -55,7 +63,8 @@ componentDidUpdate(){
         ]
       );//decoration 끝  
     })
-    color_flag--;
+    console.log(this.editor.getModel().getAllDecorations())
+    color_flag=-1;
     
   }
 
@@ -95,6 +104,8 @@ editorDidMount = (editor) => {
 
    //code 초기값 설정 componentDidMount로도 가능
    componentWillMount(){
+    //토큰 받기
+
    const getUrl = document.location.href.split("/");
     const len = getUrl.length;
     console.log(getUrl)
@@ -144,7 +155,7 @@ changeByMentee = () => {
   this.props.handleCompile_content(this.state.mentorCode)
   document.getElementById("mentorEditor").style.visibility="hidden"   //Monaco 에티터를 멘티,멘토 두개 만들어놔서 멘토 에디터 hidden 멘티 에디터는 block으로
   document.getElementById("menteeEditor").style.display="block"       // 에디터 한개만 보여지게 설정
-  document.getElementById("menteeEditor").style.top="-44vh"
+  document.getElementById("menteeEditor").style.top="-40.7vh"
       
   this.props.handleState('mentee');
   //readOnly : false -> true
@@ -160,7 +171,7 @@ changeBackColor = (color) =>{
   //console.log("삭제 후 남은 개수 :"+ Object.keys(this.editor.getModel().getAllDecorations()).length);
   //console.log("타입확인"+typeof(this.editor.getModel().getAllDecorations()))
 
-
+ console.log(this.editor.getModel().getAllDecorations().length)
   for(let i=0; i <  Object.keys(this.editor.getModel().getAllDecorations()).length; i++){
     this.editor.getModel().getAllDecorations()[i].options.className=color;
   }
@@ -187,9 +198,9 @@ this.props.handleCompile_content(this.state.mentorCode)
 }
     
 setLanguage = (e) =>{
-  if(e.target.value==='java') this.setState({axiosLanguage:0})
-  else if(e.target.value==='c') this.setState({axiosLanguage:1})
-  else if(e.target.value==='cpp') this.setState({axiosLanguage:2})
+  if(e.target.value==='java') this.setState({language:0})
+  else if(e.target.value==='c') this.setState({language:1})
+  else if(e.target.value==='cpp') this.setState({language:2})
 }
     
 setTheme = (e)=>{
@@ -211,28 +222,37 @@ setLineSelect = (e) =>{
       const { code, theme, language, lineSelect, options, code_state } = this.state;
 
       return (
-        <div>
+        <div className="layout">
           {/* <div style={{height:'5vh',border:'1px solid grey'}}> */}
-          <div className="title"> 
-          <form >
+          <div className="title1">  
+          <button className="selectButton_mentee" onClick={this.changeByMentee} type="button">
+              멘티
+            </button>
+            <button className="selectButton_mentor"  onClick={this.changeByMentor} type="button">
+              멘토
+            </button>
+
+        
                <select className="selectButton3" id="theme"  value={this.state.value}  onChange={this.setTheme} >
                   <option value="vs-white">&nbsp;white&nbsp;</option>
                   <option value="vs-dark">&nbsp;dark&nbsp;</option>
                </select>
-            </form>
-        <form >
-              <select className="selectButton3" id="language" value={this.state.value} size="1" onChange={this.setLanguage}>
-                <option value="java">java</option>
-                <option value="c">C</option>
-                <option value="cpp">C++</option>
+        
+
+              <select className="selectButton4" id="language" value={this.state.value} size="1" onChange={this.setLanguage}>
+                <option value="java">&nbsp;java&nbsp;</option>
+                <option value="cpp">&nbsp;C++&nbsp;</option>
+                <option value="cpp">&nbsp;C&nbsp;</option>
               </select>
-          </form>
-          <form >
-            {this.state.type==='mentor'? <select className="selectButton3"id="lineSelect"  size="1" onChange={this.setLineSelect}>
-            <option value="off">review off</option>
-						<option value="on">review on</option>
-					</select> : <div/>}
-				</form>
+
+
+               <select className="selectButton5"id="lineSelect"  size="1" onChange={this.setLineSelect}>
+      <option value="off">&nbsp; review off &nbsp;</option>
+                  <option value="on">&nbsp; review on &nbsp;</option>
+               </select>
+
+
+
         {/* <Select
             labelId="demo-controlled-open-select-label"
             id="lineSelect" 
@@ -246,38 +266,32 @@ setLineSelect = (e) =>{
             {/* <button className="selectButton2"  onClick={this.handleCompile} type="button">
               실행
             </button> */}
-            <button className="selectButton_mentee" onClick={this.changeByMentee} type="button">
-              멘티
-            </button>
-            <button className="selectButton_mentor"  onClick={this.changeByMentor} type="button">
-              멘토
-            </button>
 
             
           </div >
+        
           <div id="mentorEditor" style={{display:"block", visibility:"hidden", zIndex:"-1"}}>
             
-          <MonacoEditor
-            height="44vh"
-            width="53vw"
-            language={language}
-            //defaultValue={lineSelect}
-            value={this.state.mentorCode}
-            code_state={code_state}
-            options={options}
-            onChange={this.onChange}
-            editorDidMount={this.editorDidMount}
-            theme={theme}
-            lineSelect={lineSelect}
-            comment_tb={this.props.comment_tb}
-            modal_start={this.props.modal_start}
-          />
-          
-          </div>
-          <div id="menteeEditor" style={{display:"block", position:"relative", top:"-44vh",zIndex:"1"}}>
+            <MonacoEditor
+              height="45.9vh"
+              width="55vw"
+              language={language}
+              //defaultValue={lineSelect}
+              value={this.state.mentorCode}
+              code_state={code_state}
+              options={options}
+              onChange={this.onChange}
+              editorDidMount={this.editorDidMount}
+              theme={theme}
+              lineSelect={lineSelect}
+              comment_tb={this.props.comment_tb}
+              modal_start={this.props.modal_start}
+            />
+         </div>
+         <div id="menteeEditor" style={{display:"block", position:"relative", top:"-41vh",zIndex:"1"}}>
                     <MonacoEditor
-            height="45vh"
-            width="53vw"
+            height="45.9vh"
+            width="55vw"
             language={language}
             //defaultValue={lineSelect}
             value={this.state.menteeCode}
@@ -289,9 +303,9 @@ setLineSelect = (e) =>{
             lineSelect={lineSelect}
             comment_tb={this.props.comment_tb}
             modal_start={this.props.modal_start}
+            
           />
           </div>
-         
         </div>
       );
     }

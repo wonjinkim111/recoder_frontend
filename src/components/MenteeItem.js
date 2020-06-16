@@ -54,13 +54,14 @@ class MenteeItem extends React.Component{
                 this.handleClose();
             })
             .catch(error => alert('오류발생'))
+        window.location.reload();
     }
 
     componentDidMount(){
         const reviewLanguage = this.props.mentee.reviewLanguage;
-        if(reviewLanguage === 0) this.setState({language:'Java'});
-        else if(reviewLanguage === 1) this.setState({language: 'C'});
-        else if(reviewLanguage === 2 )this.setState({language:'Cpp'});
+        if(reviewLanguage === 0) this.setState({language:'java'});
+        else if(reviewLanguage === 1) this.setState({language: 'c++'});
+        else if(reviewLanguage === 2 )this.setState({language:'c'});
         else this.setState({language:'기타'});
     }
     

@@ -55,15 +55,17 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MentorRoomList() {
+export default function MentorRoomList(props) {
   const classes = useStyles();
 
   const [mentorRoom, setMentorRoom] = React.useState([]);
 
   const handleEnter = e => {
-    console.log(e.target.value)
+    //console.log(e.target.value)
     // window.location.href=`/mentordashboard?mentorRoomid=${e.target.value}`;
-    
+    // props.history.push({
+    //   pathname: `/mentordashboard/${roomId}`
+    window.location.href=`/mentordashboard/${e.currentTarget.value}`
   }
 
   useEffect(() => {
@@ -81,6 +83,7 @@ export default function MentorRoomList() {
 
 
   }, []);
+
 
   return (
     // <Container>
@@ -122,13 +125,19 @@ export default function MentorRoomList() {
                 <StyledTableCell align="center">{list.roomName}</StyledTableCell>
                 <StyledTableCell align="center">{list.roomMax}</StyledTableCell>
                 <StyledTableCell align="center" >
-                  <Button color="primary" value={list.roomId} >
+                  {/* <Button variant="contained" style={{backgroundColor:'black'}}
+                  >
                     <Link 
+                    style={{color:'white'}}
+                    to ={`/mentordashboard/${list.roomId}`}
+                    variant="h6"
                     underline="none"
-                    to ={`/mentordashboard/${list.roomId}`}>
-                    입장
+                    color="inherit">
+                    ENTER
                     </Link>
-                    </Button>
+                    </Button> */}
+                    <Button id ="getRoomId" value={list.roomId} onClick={handleEnter} style={{backgroundColor: '#f8585b', color:'#fff'}}>입장</Button>
+                    
                 </StyledTableCell>
               </StyledTableRow>
             ))}

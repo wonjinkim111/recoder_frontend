@@ -102,12 +102,12 @@ export default function ToolbarAfter() {
               component={RouterLink} 
               to= {{
                 pathname : "/profile",
-                state : {
-                  username: users.name,
-                  useremail: users.email,
-                  usergender: users.gender,
-                  userregdate: users.regDate
-                }
+                // state : {
+                //   username: users.name,
+                //   useremail: users.email,
+                //   usergender: users.gender,
+                //   userregdate: users.regDate
+                // }
               }}
             >
               {'Profile'}
