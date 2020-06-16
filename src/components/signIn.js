@@ -128,8 +128,7 @@ export default function SignIn(props){
       })
        .then(response =>{console.log(response)
         sessionStorage.setItem('user', JSON.stringify({id:response.headers.userid,token: response.headers.token, mentorid: response.headers.mentorid, menteeid: response.headers.menteeid}))
-        //window.location.href='/';})
-       })
+        window.location.href='/';})
         .catch(error => {
           alert("틀렸습니다.")
           setValues({email:'', encryptedPassword:''});

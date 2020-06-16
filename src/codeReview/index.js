@@ -202,15 +202,15 @@ class App extends Component {
     //console.log(this.editor.getValue().replace(/\s/gi,""));//모든 공백 제거
     console.log(this.state.compileContent)
 
-    // const url =`http://59.29.224.144:40000/codereview/compile2` 
-    // axios.get(url)
-    //   .then(function (response) {
-    //     //console.log(response);
-    //     this.setState({compile_result:response.data})
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    const url =`http://59.29.224.144:40000/codereview/compile2` 
+    axios.get(url)
+      .then(function (response) {
+        //console.log(response.data);
+        this.setState({compile_result:response.data})
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
 
@@ -306,6 +306,7 @@ class App extends Component {
           </div>
           <div className="title"> <div className="content"> &nbsp; Review </div></div>
           <div className="review_comment">
+          <div>&nbsp;</div>
             <Comment handleRemove={this.handleRemove}
               lineNumber={lineNumber}
               outputText={outputText}
