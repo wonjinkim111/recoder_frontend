@@ -22,7 +22,15 @@ var comment_cmtId = 0;
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
-    background: '#b3b3cc',
+    border: "1px solid skyblue",
+    backgroundColor: "black",
+  },
+  root1: {
+    minWidth: 275,
+
+  },
+  content:{
+    color: "white",
   },
   bullet: {
     display: 'inline-block',
@@ -134,30 +142,26 @@ export default function CommentItem(props) {
 
   return (
     <div>
-    {console.log(props.menteeCode)}
+      {console.log(props.menteeCode)}
 
       <Dialog open={realOpen} onClose={handleModal3Close} style={{ margin: '10' }}>
-        <div
-        // className="modal_content"
-        >
-
           &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  정말로 삭제하시겠습니까?  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <DialogActions>
             <Button type="button" variant="contained" onClick={handleRemove} >삭제</Button>
             <Button type="button" variant="contained" onClick={handleModal3Close}>취소</Button>
           </DialogActions>
-        </div>
         {/* <div className="modal_layer"></div> */}
       </Dialog>
+
       <Card className={classes.root} variant="outlined">
         <CardContent>
           <Typography className={classes.title} color="textSecondary" gutterBottom>
             Line{' '} {props.cmt_line_number}<br />
           </Typography>
-          <Typography variant="body2" component="h2">
+          <Typography className={classes.content} color="textSecondary" variant="h5" component="h2" >
             &nbsp; {props.menteeCode}
           </Typography>
-          <Typography variant="body2" component="p">
+          <Typography className={classes.content} variant="body2" component="p">
             {props.content}
           </Typography>
         </CardContent>
@@ -166,6 +170,7 @@ export default function CommentItem(props) {
           <Button size="small" color="secondary" variant="contained" value={props.cmtId} onClick={handleOpenRemove}>삭제</Button>
         </CardActions>
       </Card>
+      
       <Dialog open={open} onClose={handleClose}>
 
         <DialogTitle>댓글</DialogTitle>
@@ -175,7 +180,7 @@ export default function CommentItem(props) {
           <div style={{ height: "25vh", overflowY: 'scroll' }}>
             <div style={{ ovpadding: 10, fontSize: 15 }}>{props.replys.map((reply, index) => {
 
-              return (<List className={classes.root}>
+              return (<List className={classes.root1}>
                 <ListItem alignItems="flex-start">
                   <ListItemAvatar>
                     {reply.nickname}

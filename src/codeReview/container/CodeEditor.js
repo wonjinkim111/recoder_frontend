@@ -21,8 +21,9 @@ class CodeEditor extends React.Component {
       code: "// type your code... \n",
       mentorCode: '',
       menteeCode:'mentee code\nint main(){  int i= 10;\n  printf("%d",i);\n return 0;\n}',
-      theme: "vs-light",
+      theme: "hc-black",
       language:"java",
+      language1: 0,
       lineSelect: 'off',
       options: {
         selectOnLineNumbers: true,
@@ -209,9 +210,9 @@ this.props.handleCompile_content(this.state.mentorCode)
 }
     
 setLanguage = (e) =>{
-  if(e.target.value==='java') this.setState({language:0})
-  else if(e.target.value==='c') this.setState({language:1})
-  else if(e.target.value==='cpp') this.setState({language:2})
+  if(e.target.value==='java') this.setState({language1:0})
+  else if(e.target.value==='c') this.setState({language1:1})
+  else if(e.target.value==='cpp') this.setState({language1:2})
 }
     
 setTheme = (e)=>{
@@ -246,8 +247,9 @@ setLineSelect = (e) =>{
 
         
                <select className="selectButton3" id="theme"  value={this.state.value}  onChange={this.setTheme} >
+               <option value="hc-black">&nbsp;dark&nbsp;</option>
                   <option value="vs-white">&nbsp;white&nbsp;</option>
-                  <option value="hc-black">&nbsp;dark&nbsp;</option>
+                  
                </select>
         
 
