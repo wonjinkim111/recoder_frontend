@@ -11,16 +11,6 @@ import TextField from '@material-ui/core/TextField';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
-///qwer
-
-const user = JSON.parse(sessionStorage.getItem('user'));
-// const token = user.token;
-// var config = {
-//   headers: {
-//     'Authorization': "Bearer " + token
-//   }
-// }
-
 
 var left_width = "49.4%";
 var width_size = 98.8 - parseInt(left_width);
@@ -31,7 +21,7 @@ class App extends Component {
 
     this.state = {
       error: '',
-      compile_result: '',
+      compile_result: "",
       flag: 0,
       update_flag: 0,
       outputText: '',
@@ -41,6 +31,8 @@ class App extends Component {
       reviewReq: [],
       open: false,
       text: '',
+      nickname: '',
+      user: [],
       lineNumber: 0,
       modal_start: 0,
       comment_flag: 0,
@@ -53,6 +45,7 @@ class App extends Component {
     };
   }
 
+
   componentWillMount() {
     console.log("↵")
     document.getElementById('root').style.height = "100%";
@@ -63,16 +56,36 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // console.log(config)
+    //     const user = JSON.parse(sessionStorage.getItem('user'));
+    // const token = user.token;
+    // var config = {
+    //   headers: {
+    //     'Authorization' : "Bearer "+ "111111111111111111111",
+    //     'Content-Type': 'application/x-www-form-urlencoded',
+    //     'Accept': '*/*'
+
+    //   }
+    // }
+    const userData = JSON.parse(sessionStorage.getItem('user'));
+    const url = `http://59.29.224.144:10000/users/${userData.id}`;
+    axios.get(url)
+      .then(response => {
+        console.log(response)
+        this.setState({
+          user: response.data
+        })
+
+      })
+      .catch(error => {
+        // alert("error")
+        console.log(error);
+      })
+
     const url1 = `http://59.29.224.144:30000/codereview/${this.props.match.params.id}`;
     axios.get(url1)
       .then(response => {
         this.setState({ reviewReq: response.data })
         console.log(this.state.reviewReq)
-      })
-      // 응답(실패)
-      .catch(function (error) {
-        console.log(error);
       })
 
     const url2 = `http://59.29.224.144:40000/comment/${this.props.match.params.id}`;
@@ -105,11 +118,11 @@ class App extends Component {
 
 
 
-  handleCompile = (result1) => {
-    this.setState({ compile_result: result1 });
-    console.log(result1);
-    console.log("compile")
-  }
+  // handleCompile = (result1) =>{
+  //   this.setState({compile_result: result1});
+  //   console.log(result1);
+  //   console.log("compile")
+  // }
 
   handleOpenModal = () => {
     this.setState({ open: true });
@@ -142,45 +155,43 @@ class App extends Component {
     this.setState({ modal_start: 0 })
     this.setState({ open: false });
     //document.getElementById("modal").style.display="none";
-
-
-
   }
   handleSubmitModal = () => {
     this.setState({ error: '' })
     this.setState({ modal_start: 0 })
-    const user = JSON.parse(sessionStorage.getItem('user'));
+
+    // const user = JSON.parse(sessionStorage.getItem('user'));
     // const token = user.token;
-    // let config = {
+    // var config = {
     //   headers: {
-    //     'Authorization': 'Bearer ' + token
+    //     'Authorization' : "Bearer "+ token,
+    //     'Content-Type': 'application/x-www-form-urlencoded',
+    //     'Accept': '*/*'
     //   }
     // }
-    
-    //e.preventDefault()
-    // document.getElementById("modal").style.display="none";
-    //const {comment_tb} = this.state;
-    //댓글내용,라인을 comment_tb에 저장
-    //var txt = document.getElementById('comment_txt');
-    ///console.log(this.state.text)
+
+    const type = JSON.parse(sessionStorage.getItem('state'));
+    if (type === 'mentor') this.setState({ nickname: this.state.user.mentorNickname })
+    else if (type === 'mentee') this.setState({ nickname: this.state.user.menteeNickname })
+
+
     if (this.state.text.length) {
       const user = JSON.parse(sessionStorage.getItem('user'));
       const url = 'http://59.29.224.144:40000/comment';
       console.log(this.props.match.params.id);
       console.log(this.state);
-      axios.post(url, {
+      axios.get(url, {
         reviewId: this.props.match.params.id,
         content: this.state.text,
         cmtLineNumber: this.state.lineNumber,
-        nickName: user.mentorNickname,
+        nickName: "멘선생",
         cmtCode: this.state.outputText
       })
         .then(response => {
           console.log(response.data)
           console.log("됩니다유")
           window.location.href = `/review/${this.props.match.params.id}`;
-        }
-        )
+        })
         .catch(error => {
           console.log(error);
           alert("다시 시도해 주십시오")
@@ -194,24 +205,27 @@ class App extends Component {
     }
   }
 
-  handleCompile_content = (e) => {
-    this.setState({ compileContent: e })
-  }
-
   handleCompile = () => { //실행 버튼 클릭 했을 때
     //console.log(this.editor.getValue().replace(/ /g,"")); //모든 공백 제거
     //console.log(this.editor.getValue().replace(/\s/gi,""));//모든 공백 제거
     console.log(this.state.compileContent)
-
-    const url =`http://59.29.224.144:40000/codereview/compile2` 
+    const getUrl = document.location.href.split("/");
+    const len = getUrl.length;
+    console.log(getUrl[len - 1]);
+    const url = `http://59.29.224.144:30000/codereview/compilewindow/184`
     axios.get(url)
-      .then(function (response) {
-        //console.log(response.data);
-        this.setState({compile_result:response.data})
+      .then(response => {
+        console.log(response);
+        console.log(response.data)
+        // var data11 = JSON.parse(response);
+        this.setState({ compile_result: response.data })
+
       })
       .catch(function (error) {
         console.log(error);
       });
+    console.log("여기다")
+    console.log(this.state.compile_result)
   };
 
 
@@ -299,7 +313,7 @@ class App extends Component {
         {/* 왼쪽 */}
         <div className="left1" >
           <div className="title">
-            &nbsp;  {this.state.reviewReq.reviewTitle}
+            <div className="content"> &nbsp;  {this.state.reviewReq.reviewTitle}</div>
             <button className="exit" onClick={this.exit} type="button">나가기</button>
           </div>
           <div className="review_mentee_content">
@@ -307,7 +321,7 @@ class App extends Component {
           </div>
           <div className="title"> <div className="content"> &nbsp; Review </div></div>
           <div className="review_comment">
-          <div>&nbsp;</div>
+            <div>&nbsp;</div>
             <Comment handleRemove={this.handleRemove}
               lineNumber={lineNumber}
               outputText={outputText}
@@ -316,12 +330,15 @@ class App extends Component {
         </div>
         <div className="left2" >
           <div className="review_editor">
+
             <CodeEditor handleOutputText={this.handleOutputText}
               modal_start={modal_start}
               handleState={this.handleState}
               comment_tb={comment_tb}
               handleCompile_content={this.handleCompile_content}
               handleCompile1={handleCompile} />
+
+
           </div>
           <div className="title">
             <div className="content"> &nbsp; 실행결과  </div>
@@ -331,9 +348,6 @@ class App extends Component {
           <textarea className="compile_result_content" placeholder="실행 결과가 여기에 표시됩니다." readOnly>{this.state.compile_result}</textarea>
 
         </div>
-
-
-
       </div>
     );
   }

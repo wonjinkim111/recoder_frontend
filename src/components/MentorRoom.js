@@ -17,26 +17,26 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 const styles = theme => ({
-  input1: {
-    width: 500
+  input1:{
+    width:500
   },
-  input2: {
-    width: 500,
-    height: 250
+  input2:{
+    width:500,
+    height:250
   },
-  hidden: {
-    display: 'none'
-  },
-  image: {
-    maxHeight: '100%',
-    maxWidth: '100%'
-  },
-  button: {
-    marginTop: '1vh',
-    bottom: 0,
-    width: '100%'
-  }
-});
+    hidden: {  
+    display: 'none'  
+        },
+    image: {
+      height: '70%',
+      width: '100%'
+    },
+    button: {
+      marginTop: '1vh',
+      bottom : 0,
+      width: '100%'
+    }  
+    });
 
 
 const GreenCheckbox = withStyles({
@@ -220,91 +220,96 @@ class MentorRoom extends React.Component {
     //const image1 = require('../images/room2.jpg');
 
     return (
-      //<Container maxWidth="md" style={{ marginTop: '10vh',height:"70vh", width:"100%",backgroundColor: "gray" }}>
-      <div style={{ backgroundColor: "white", marginTop: '10vh', height: "65vh", width: '60vw', marginLeft: '10vw' }}>
-        <div style={{ border: "1px", float: "left", height: "75%", width: "40%" }}>
-          <img className={classes.image} src={image2} />
-          <div style={{ position: "relative", top: "5%" }}>
-            <input className={classes.hidden} accept="image/*" id="raised-button-file" type="file" file={this.state.file} value={this.state.fileName} onChange={this.handleFileChange} />
-            <label htmlFor="raised-button-file">
+  //<Container maxWidth="md" style={{ marginTop: '10vh',height:"70vh", width:"100%",backgroundColor: "gray" }}>
+<div style={{ backgroundColor:"white",marginTop:'10vh', height: "65vh",width:'60vw', marginLeft:'10vw'}}>
+<div style={{border:"1px",float:"left", height:"75%",width:"40%"}}>
+  <img className={classes.image} src={image2} />
+  <div style={{position:"relative",top:"5%"}}>
+  <input className={classes.hidden} accept="image/*" id="raised-button-file" type="file" file={this.state.file} value={this.state.fileName} onChange={this.handleFileChange} />
+  <label htmlFor="raised-button-file">
               <Button className={classes.button} variant="contained" color="primary" component="span" name="file"
               >
                 {this.state.fileName === '' ? "방 이미지 선택" : this.state.fileName}
               </Button>
             </label><br />
-          </div>
+            </div>
+            
+</div>
+ <div  style={{position:"relative",left:"10%",border:"1px",float:"left", height:"75%",width:"60%"}}>
+ 
+ <TextField
+              variant="outlined"
+              margin="normal"
+              required
 
-        </div>
-        <div style={{ position: "relative", left: "10%", border: "1px", float: "left", height: "75%", width: "60%" }}>
+              id="roomName"
+              InputProps={{
+                className: classes.input1
+              }}
+              label="방 이름"
+              placeholder="방 이름을입력해주세요"
+              name="roomName"
+              autoComplete="roomName"
+              autoFocus
+              value={this.state.roomName}
+              onChange={this.handleChangeForm}
+            />
+ <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              multiline
+              InputProps={{
+                className: classes.input2
+              }}
+              rowsMax="10"
+              onDragOver
+              name="roomInfo"
+              label="소개"
+              type="roomInfo"
+              id="roomInfo"
+              placeholder="방을 소개해주세요"
+              autoComplete="current-roomInfo"
+              value={this.state.roomInfo}
+              onChange={this.handleChangeForm}
+            />
+            <InputLabel style={{ position: "relative", left: "5%", bottom: "-15px" }}>누구나 방에 참여 할 수 있습니다 &nbsp;</InputLabel>
+            <FormControlLabel
+              style={{ position: "relative", bottom: "15px", left: "0" }}
+              control={<GreenCheckbox checked={this.state.roomIsPrivate} onChange={this.handleChange} name="roomIsPrivate" />}
+            />
 
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
+            <InputLabel style={{ position: "relative", bottom: "-5px" }}>허용인원 &nbsp;</InputLabel>
 
-            id="roomName"
-            InputProps={{
-              className: classes.input1
-            }}
-            label="방 이름"
-            placeholder="방 이름을입력해주세요"
-            name="roomName"
-            autoComplete="roomName"
-            autoFocus
-            value={this.state.roomName}
-            onChange={this.handleChangeForm}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            multiline
-            InputProps={{
-              className: classes.input2
-            }}
-            rowsMax="10"
-            onDragOver
-            name="roomInfo"
-            label="소개"
-            type="roomInfo"
-            id="roomInfo"
-            placeholder="방을 소개해주세요"
-            autoComplete="current-roomInfo"
-            value={this.state.roomInfo}
-            onChange={this.handleChangeForm}
-          />
-          <InputLabel style={{ position: "relative", left: "5%", bottom: "-15px" }}>누구나 방에 참여 할 수 있습니다 &nbsp;</InputLabel>
-          <FormControlLabel
-            style={{ position: "relative", bottom: "15px", left: "0" }}
-            control={<GreenCheckbox checked={this.state.roomIsPrivate} onChange={this.handleChange} name="roomIsPrivate" />}
-          />
-
-          <InputLabel style={{ position: "relative", bottom: "-5px" }}>허용인원 &nbsp;</InputLabel>
-
-          <Select
-            labelId="demo-controlled-open-select-label"
-            id=""
-            style={{ position: "relative", float: "right", bottom: "25px", right: "35%" }}
-            open={this.state.openRoomMax}
-            name="roomMax"
-            type="roomMax"
-            onClose={this.handleCloseRoomMax}
-            onOpen={this.handleOpenRoomMax}
-            value={this.state.roomMax}
-            onChange={this.handleChangeForm}
-          >
-            <MenuItem value={4}>4</MenuItem>
-            <MenuItem value={5}>5</MenuItem>
-            <MenuItem value={6}>6</MenuItem>
-            <MenuItem value={7}>7</MenuItem>
-            <MenuItem value={8}>8</MenuItem>
-            <MenuItem value={9}>9</MenuItem>
-            <MenuItem value={10}>10</MenuItem>
-          </Select>
-
-
-
+            <Select
+              labelId="demo-controlled-open-select-label"
+              id=""
+              style={{ position: "relative", float:"right" , bottom: "25px", right:"35%"}}
+              open={this.state.openRoomMax}
+              name="roomMax"
+              type="roomMax"
+              onClose={this.handleCloseRoomMax}
+              onOpen={this.handleOpenRoomMax}
+              value={this.state.roomMax}
+              onChange={this.handleChangeForm}
+            >
+              <MenuItem value={4}>4</MenuItem>
+              <MenuItem value={5}>5</MenuItem>
+              <MenuItem value={6}>6</MenuItem>
+              <MenuItem value={7}>7</MenuItem>
+              <MenuItem value={8}>8</MenuItem>
+              <MenuItem value={9}>9</MenuItem>
+              <MenuItem value={10}>10</MenuItem>
+            </Select>
+   
+    
+            
+ </div>
+ <div style={{position:"relative",border:"1px", height:"25%",width:"100%"}}>
+ <div style={{ textAlign: 'center', marginTop: '2vh' }}>
+          <Button style={{ margin: '1vw', width: '20vw' }} variant="contained" color="primary" onClick={this.handleModify}>수정하기</Button>
+          <Button style={{ margin: '1vw', width: '20vw' }} variant="contained" color="secondary" onClick={this.handleClickOpen}>삭제하기</Button>
         </div>
         <div style={{ position: "relative", border: "1px", height: "25%", width: "100%" }}>
           <div style={{ textAlign: 'center', marginTop: '2vh' }}>
@@ -330,13 +335,12 @@ class MentorRoom extends React.Component {
               <Button onClick={this.handleClose} variant="outlined" color="primary">
                 취소
                         </Button>
-            </DialogActions>
-          </Dialog>
+          </DialogActions>
+        </Dialog>
 
-        </div>
-      </div>
-
-      //</Container>
+ </div>
+</div>
+</div>
     )
   }
 }

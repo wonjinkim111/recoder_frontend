@@ -7,15 +7,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import axios from 'axios';
 
-
-const user = JSON.parse(sessionStorage.getItem('user'));
-//const token = user.token;
-var config = {
-  // headers: {
-  //   'Authorization' : "Bearer " + token
-  // }
-}
-
 var color_flag =1;
 class CodeEditor extends React.Component {
   constructor(props) {
@@ -56,7 +47,7 @@ componentDidUpdate(){
               isWholeLine: true,
               // linesDecorationsClassName: "myLineDecoration",
               //inlineClassName: "myInlineDecoration"
-              className : "myLineDecoration",
+              className : "myLineDecorationBlack",
               //glyphMarginClassName: 'myLineDecoration'
             }
           },
@@ -89,6 +80,7 @@ editorDidMount = (editor) => {
   this.editor = editor;
   
   this.editor.onMouseDown(e => {
+    console.log(e.target.position)
     if(this.state.code_state === 'mentee' && this.state.lineSelect === 'on'){  //멘티창에서 line선택기능이 on 일때만 커맨트 달 수 있음
     //console.log(e.target.element.parentNode)
     let line =e.target.position.lineNumber;
@@ -105,14 +97,23 @@ editorDidMount = (editor) => {
    //code 초기값 설정 componentDidMount로도 가능
    componentWillMount(){
     //토큰 받기
-
+    // const user = JSON.parse(sessionStorage.getItem('user'));
+    // const token = user.token;
+    // var config = {
+    //   headers: {
+    //     'Authorization' : "Bearer "+ token,
+    //     "Content-Type": "application/json",
+    //     'Accept': '*/*'
+     
+    //   }
+    // }
    const getUrl = document.location.href.split("/");
     const len = getUrl.length;
     console.log(getUrl)
   const url = `http://59.29.224.144:30000/codereview/${getUrl[len-1]}`;
  axios.get(url)
      .then(response =>{
-      console.log(response.data);
+      console.log("11111111111111"+response.data);
         this.setState({ code : response.data.reviewCode,
           menteeCode : response.data.reviewCode,
           mentorCode : response.data.reviewCode,
@@ -123,9 +124,10 @@ editorDidMount = (editor) => {
      .catch(function (error) {
        console.log(error);
      })
+    
  }
 componentDidMount(){
- 
+
 }
 handleCompile = () => { //실행 버튼 클릭 했을 때
   //console.log(this.editor.getValue().replace(/ /g,"")); //모든 공백 제거
@@ -136,7 +138,16 @@ handleCompile = () => { //실행 버튼 클릭 했을 때
     else
       this.setState({ mentorCode: this.editor.getValue() });
   }
-
+  // const user = JSON.parse(sessionStorage.getItem('user'));
+  // const token = user.token;
+  // var config = {
+  //   headers: {
+  //     'Authorization' : "Bearer "+ token,
+  //     "Content-Type": "application/json",
+  //     'Accept': '*/*'
+   
+  //   }
+  // }
   const url =`http://59.29.224.144:40000/codereview/compile2` 
   axios.get(url)
     .then(function (response) {
@@ -205,11 +216,12 @@ setLanguage = (e) =>{
     
 setTheme = (e)=>{
   this.setState({theme: e.target.value})
+  console.log(this.state.comment_tb)
   console.log(this.editor.getModel().getAllDecorations())
   if(e.target.value === "vs-white"){
     this.changeBackColor("myLineDecoration");
   }
-  else if (e.target.value === "vs-dark"){
+  else if (e.target.value === "hc-black"){
     this.changeBackColor("myLineDecorationBlack");
   }
 }
@@ -235,7 +247,7 @@ setLineSelect = (e) =>{
         
                <select className="selectButton3" id="theme"  value={this.state.value}  onChange={this.setTheme} >
                   <option value="vs-white">&nbsp;white&nbsp;</option>
-                  <option value="vs-dark">&nbsp;dark&nbsp;</option>
+                  <option value="hc-black">&nbsp;dark&nbsp;</option>
                </select>
         
 
@@ -246,7 +258,7 @@ setLineSelect = (e) =>{
               </select>
 
 
-               <select className="selectButton5"id="lineSelect"  size="1" onChange={this.setLineSelect}>
+					<select className="selectButton5"id="lineSelect"  size="1" onChange={this.setLineSelect}>
       <option value="off">&nbsp; review off &nbsp;</option>
                   <option value="on">&nbsp; review on &nbsp;</option>
                </select>

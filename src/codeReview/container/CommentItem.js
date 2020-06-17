@@ -22,6 +22,7 @@ var comment_cmtId = 0;
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
+    background: '#b3b3cc',
   },
   bullet: {
     display: 'inline-block',
@@ -39,8 +40,8 @@ const useStyles = makeStyles({
 
 export default function CommentItem(props) {
   const classes = useStyles();
-  const [open,setOpen]=React.useState(false);
-  const [realOpen, setRealOpen]=React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [realOpen, setRealOpen] = React.useState(false);
   const [text, setText] = React.useState();
 
   //댓글 : modal2
@@ -63,7 +64,7 @@ export default function CommentItem(props) {
       .then(response => {
         console.log(response.data)
 
-        window.location.href = `/review/${getUrl[len-1]}`
+        window.location.href = `/review/${getUrl[len - 1]}`
       }
       )
       .catch(error => {
@@ -131,84 +132,86 @@ export default function CommentItem(props) {
   //     })
   // }
 
-    return (
-        <div>
-            <Dialog open={realOpen} onClose={handleModal3Close} style={{margin:'10'}}>
-                <div 
-                // className="modal_content"
-                >
+  return (
+    <div>
+    {console.log(props.menteeCode)}
 
-                    &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  정말로 삭제하시겠습니까?  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <Dialog open={realOpen} onClose={handleModal3Close} style={{ margin: '10' }}>
+        <div
+        // className="modal_content"
+        >
+
+          &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  정말로 삭제하시겠습니까?  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <DialogActions>
-                        <Button type="button" variant="contained"onClick={handleRemove} >삭제</Button>
-                        <Button type="button" variant="contained" onClick={handleModal3Close}>취소</Button>
-                    </DialogActions>
-                </div>
-                {/* <div className="modal_layer"></div> */}
-            </Dialog>
-            <Card className={classes.root} variant="outlined">
-                <CardContent>
-                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                        Line{' '} {props.cmt_line_number}<br />
-                    </Typography>
-                    <Typography variant="h5" component="h2">
-                        &nbsp; {props.menteeCode}
-                    </Typography>
-                    <Typography variant="body2" component="p">
-                        {props.content}
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button size="small" color="primary" variant="contained" value={props.cmtId} onClick={handleOpenContent}>댓글</Button>
-                    <Button size="small" color="secondary" variant="contained" value={props.cmtId} onClick={handleOpenRemove}>삭제</Button>
-                </CardActions>
-            </Card>
-            <Dialog open={open} onClose={handleClose}>
-
-                <DialogTitle>댓글</DialogTitle>
-
-                <DialogContent>
-
-                    <div style={{ height: "25vh", overflowY: 'scroll' }}>
-                        <div style={{ ovpadding: 10, fontSize: 15 }}>{props.replys.map((reply, index) => {
-
-                            return (<List className={classes.root}>
-                                <ListItem alignItems="flex-start">
-                                    <ListItemAvatar>
-                                        {reply.nickname}
-                                    </ListItemAvatar>
-                                    <ListItemText
-                                        primary={reply.replyContent} />
-                                </ListItem>
-                                <Divider variant="inset" component="li" />
-                            </List>
-                            );
-                        })
-                        }
-                        </div>
-                    </div>
-
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        multiline
-                        id="comment_txt"
-                        margin="normal"
-                        style={{ width: 400, wordBreak: "breakAll" }}
-                        rows={3}
-                        value={text}
-                        onChange={handleChange}
-                        placeholder="댓글 달기"
-                    ></TextField>
-                </DialogContent>
-
-                <DialogActions>
-                    <Button variant="contained" color="primary" onClick={handleSubmit}>댓글달기</Button>
-                    <Button variant="outlined" color="primary" onClick={handleClose}>닫기</Button>
-                </DialogActions>
-
-            </Dialog>
+            <Button type="button" variant="contained" onClick={handleRemove} >삭제</Button>
+            <Button type="button" variant="contained" onClick={handleModal3Close}>취소</Button>
+          </DialogActions>
         </div>
+        {/* <div className="modal_layer"></div> */}
+      </Dialog>
+      <Card className={classes.root} variant="outlined">
+        <CardContent>
+          <Typography className={classes.title} color="textSecondary" gutterBottom>
+            Line{' '} {props.cmt_line_number}<br />
+          </Typography>
+          <Typography variant="body2" component="h2">
+            &nbsp; {props.menteeCode}
+          </Typography>
+          <Typography variant="body2" component="p">
+            {props.content}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small" color="primary" variant="contained" value={props.cmtId} onClick={handleOpenContent}>댓글</Button>
+          <Button size="small" color="secondary" variant="contained" value={props.cmtId} onClick={handleOpenRemove}>삭제</Button>
+        </CardActions>
+      </Card>
+      <Dialog open={open} onClose={handleClose}>
+
+        <DialogTitle>댓글</DialogTitle>
+
+        <DialogContent>
+
+          <div style={{ height: "25vh", overflowY: 'scroll' }}>
+            <div style={{ ovpadding: 10, fontSize: 15 }}>{props.replys.map((reply, index) => {
+
+              return (<List className={classes.root}>
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    {reply.nickname}
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={reply.replyContent} />
+                </ListItem>
+                <Divider variant="inset" component="li" />
+              </List>
+              );
+            })
+            }
+            </div>
+          </div>
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            multiline
+            id="comment_txt"
+            margin="normal"
+            style={{ width: 400, wordBreak: "breakAll" }}
+            rows={3}
+            value={text}
+            onChange={handleChange}
+            placeholder="댓글 달기"
+          ></TextField>
+        </DialogContent>
+
+        <DialogActions>
+          <Button variant="contained" color="primary" onClick={handleSubmit}>댓글달기</Button>
+          <Button variant="outlined" color="primary" onClick={handleClose}>닫기</Button>
+        </DialogActions>
+
+      </Dialog>
+    </div>
   );
 }
