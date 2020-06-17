@@ -188,7 +188,7 @@ export default function RoomReviewList(props) {
                   <StyledTableCell align="center">{list.menteeNickname}</StyledTableCell>
                   <StyledTableCell align="center">
                     
-                  <Button id ="getReviewId" value={list.reviewId} onClick={handleEnter}>입장 + {list.reviewId}</Button>
+                  <button id ="getReviewId" value={list.reviewId} onClick={handleEnter}>입장 + {list.reviewId}</button>
                   </StyledTableCell>
                 </StyledTableRow>
               ))}

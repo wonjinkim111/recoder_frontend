@@ -1,8 +1,8 @@
 .comment_sub{
   position: relative;
-  width:42vw;
-  top:1vh;
-  left:1vw;
+  width:42%;
+  top:1%;
+  left:1%;
   font-size: 15px;
   font-family: "나눔고딕";
   resize: none;
@@ -104,9 +104,9 @@ border-radius: 0.2em;
 
 #modal2 .modal_layer { /*검은색 테두리*/
   position: absolute;
-  top:-20vw;
-  left:17vw;
-  width:38vw;
+  top:-20%;
+  left:17%;
+  width:38%;
   margin:50px auto;
   height:620px;
   background:rgba(0, 0, 0, 0.5);
@@ -126,10 +126,10 @@ border-radius: 0.2em;
 #modal3 .modal_content {
   
   position:absolute;
-  top:-12vw;
-  left:27vw;
-  height:15vh;
-  width:27vw;
+  top:-12%;
+  left:27%;
+  height:15%;
+  width:27%;
   margin:100px auto;
   padding:20px 10px;
   background:#fff;
@@ -142,10 +142,10 @@ border-radius: 0.2em;
 
 #modal3 .modal_layer { /*검은색 테두리*/
   position: absolute;
-  top:-10vw;
-  left:26vw;
-  height:25vh;
-  width:30.5vw;
+  top:-10%;
+  left:26%;
+  height:25%;
+  width:30.5%;
   margin:50px auto;
   background:rgba(0, 0, 0, 0.5);
   z-index:-1;
@@ -188,8 +188,8 @@ padding-left: 5%;
 
 .modal_input{
   position: absolute;
-  width:25.5vw;
-  height:40vh;   
+  width:25.5%;
+  height:40%;   
   font-size: 15px;
   font-family: "나눔고딕";
   resize: none;
