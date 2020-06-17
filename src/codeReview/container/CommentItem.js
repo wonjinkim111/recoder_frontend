@@ -22,6 +22,15 @@ var comment_cmtId = 0;
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
+    border: "1px solid skyblue",
+    backgroundColor: "black",
+  },
+  root1: {
+    minWidth: 275,
+
+  },
+  content:{
+    color: "white",
   },
   bullet: {
     display: 'inline-block',
@@ -151,10 +160,10 @@ export default function CommentItem(props) {
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
                         Line{' '} {props.cmt_line_number}<br />
                     </Typography>
-                    <Typography variant="h5" component="h2">
+                    <Typography className={classes.content} color="textSecondary" variant="h5" component="h2" >
                         &nbsp; {props.menteeCode}
                     </Typography>
-                    <Typography variant="body2" component="p">
+                    <Typography className={classes.content} variant="body2" component="p">
                         {props.content}
                     </Typography>
                 </CardContent>
@@ -172,7 +181,7 @@ export default function CommentItem(props) {
                     <div style={{ height: "25vh", overflowY: 'scroll' }}>
                         <div style={{ ovpadding: 10, fontSize: 15 }}>{props.replys.map((reply, index) => {
 
-                            return (<List className={classes.root}>
+                            return (<List className={classes.root1}>
                                 <ListItem alignItems="flex-start">
                                     <ListItemAvatar>
                                         {reply.nickname}

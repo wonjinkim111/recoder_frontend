@@ -126,7 +126,7 @@ height:10%;
 .review_editor{
     width:110%;
     height:55%;
-    border: 1px solid black;
+    border: 0x solid black;
     border-left-width: 0px;
     border-top-width: 0px;
     background-color: black;
@@ -200,7 +200,7 @@ right: 1%;
     padding-right:2%;
     font-size: 100%;
     border-radius:0.3em;
-    border:1px solid skyblue;
+    border:0px solid skyblue;
     color:white;
 
     font-weight : bold;
@@ -226,13 +226,13 @@ float:right;
 
 .title{
     position: relative;
-    border: 0.5px solid black;
+    border: 0px solid skyblue;
     font-size: 1em;
     font-family: "나눔고딕";
     height:5vh;
     color:black;
     width: 100%;
-    background-color: rgb(20, 0, 66);
+    background-color: gray;
     font-weight : bold;
     overflow-y: "scroll";
     float : left;
@@ -244,7 +244,7 @@ float:right;
 .left1{
  
     position: relative;
-    border: 1px solid darkblue;
+    border: 0px solid skyblue;
     border-top-width: 0px;
     border-left-width: 0px;
     border-right-width: 1px solid skyblue;
@@ -262,8 +262,8 @@ float:right;
 .left2{
 
     position: relative;
-    border: 1px solid black;
-    border-right-width: 1px solid skyblue;
+    border: 0px solid black;
+    border-right-width: 0px solid skyblue;
     border-left-width: 0px;
     float:left;
 

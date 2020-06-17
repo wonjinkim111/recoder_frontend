@@ -185,12 +185,15 @@ handleSubmitModal = () =>{
   const user = JSON.parse(sessionStorage.getItem('user'));
   const url = 'http://59.29.224.144:40000/comment';
   console.log(this.props.match.params.id);
-  console.log(this.state);
-  axios.get(url,{
+
+
+ 
+
+  axios.post(url,{
     reviewId : this.props.match.params.id,
     content : this.state.text,
     cmtLineNumber : this.state.lineNumber,
-    nickName : "멘선생",
+    nickName : "나는 멘토",
     cmtCode : this.state.outputText
   })
    .then(response =>{console.log(response.data)
