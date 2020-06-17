@@ -150,12 +150,13 @@ class App extends Component {
     this.setState({ error: '' })
     this.setState({ modal_start: 0 })
     const user = JSON.parse(sessionStorage.getItem('user'));
-    const token = user.token;
-    let config = {
-      headers: {
-        'Authorization': 'Bearer ' + token
-      }
-    }
+    // const token = user.token;
+    // let config = {
+    //   headers: {
+    //     'Authorization': 'Bearer ' + token
+    //   }
+    // }
+    
     //e.preventDefault()
     // document.getElementById("modal").style.display="none";
     //const {comment_tb} = this.state;
