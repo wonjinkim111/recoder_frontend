@@ -44,7 +44,7 @@ export default function ToolbarBefore() {
 
   return (
     <div className={classes.root}>
-    <AppBar position="static">
+    <AppBar position="static" style={{backgroundColor:'#3E007C'}}>
         <Toolbar className={classes.toolbar}>
           <Link component={RouterLink} to="/"
             variant="h6"
@@ -59,7 +59,7 @@ export default function ToolbarBefore() {
               color="inherit"
               variant="h6"
               underline="none"
-              style={{padding:"50px"}}
+              // style={{padding:"50px"}}
               className={classes.rightLink}
               rel="signIn"
             >
@@ -67,7 +67,7 @@ export default function ToolbarBefore() {
             </Link>
             <Link component={RouterLink} to="/signup"
               variant="h6"
-              style={{padding:"50px"}}
+              // style={{padding:"50px"}}
               underline="none"
               className={clsx(classes.rightLink, classes.linkSecondary)}
             >

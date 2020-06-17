@@ -87,7 +87,8 @@ this.state = {
   roomInfo: '',
   roomMax:5,
   openRoomMax: false,
-
+  titleError: '',
+  contentError: ''
 }
 
 
@@ -95,7 +96,24 @@ this.state = {
   this.handleValueChange = this.handleValueChange.bind(this)
   this.handleClickOpen = this.handleClickOpen.bind(this)
   this.handleClose = this.handleClose.bind(this);
+  this.blockNull = this.blockNull(this);
+}
 
+blockNull = () => {
+  let titleError = "";
+  let contentError = "";
+
+  if(this.state.roomName.length == 0) titleError = "제목을 입력해 주세요";
+  //this.setState({titleError:"제목을 입력해주세요"}) ;
+  if(this.state.roomInfo.length == 0 ) contentError = "내용을 입력해 주세요";
+  //this.setState({contentError:"내용을 입력해 주세요"});
+
+  this.setState({
+    titleError:titleError, contentError:contentError
+  })
+
+  if(titleError || contentError) return false;
+  return true;
 }
 
 handleCloseRoomMax = e => {
@@ -115,17 +133,18 @@ handleChange = (e) => {
 
 handleSubmit=(e)=>{
   e.preventDefault();
-  //const valid = onTextValidation();   
+  
+  // console.log("roomName: "+this.state.roomName)
+  // console.log("roomInfo: "+this.state.roomInfo)
+  // console.log("roomIsPrivate: "+this.state.roomIsPrivate)
+  // console.log("roomMax: "+this.state.roomMax)
+  // console.log("file: "+this.state.file)
 
-  //if(!valid)console.error("invalid");
-  
- // else{
-  console.log("roomName: "+this.state.roomName)
-  console.log("roomInfo: "+this.state.roomInfo)
-  console.log("roomIsPrivate: "+this.state.roomIsPrivate)
-  console.log("roomMax: "+this.state.roomMax)
-  console.log("file: "+this.state.file)
-  
+  const valid = this.blockNull();
+  if(!valid){
+    console.error("not permit null")
+  }
+  else{
   const user = JSON.parse(sessionStorage.getItem('user'));
   let form = new FormData();
   form.append('roomName', this.state.roomName);
@@ -156,8 +175,7 @@ handleSubmit=(e)=>{
         alert("다시 시도해 주십시오")
       //   setValues({roomName:'', roomInfo:''});
       })
-    
-  //}
+  }
 } // handleSubmit 끝
 
 
@@ -191,114 +209,95 @@ handleClose() {
 }
 
 render() {
-
 const { classes } = this.props;
 
 return (
+  <div>
+    <Button variant="contained" color="primary" onClick={this.handleClickOpen} style={{ backgroundColor: "black", margin: '3vh', float: 'right', right: '10vw' }}>
+      방 생성하기
+    </Button>
 
-<div>
+    <Dialog open={this.state.open} onClose={this.handleClose}>
+      <DialogTitle>방 추가</DialogTitle>
+      <DialogContent>
+        <input className={classes.hidden} accept="image/*" id="raised-button-file" type="file" file={this.state.file} value={this.state.fileName} onChange={this.handleFileChange} />
+        <label htmlFor="raised-button-file">
+          <Button variant="contained" color="primary" component="span" name="file">
+            {this.state.fileName === '' ? "프로필 이미지 선택" : this.state.fileName}
+          </Button>
+        </label><br />
 
-<Button variant="contained" color="primary" onClick={this.handleClickOpen} style={{backgroundColor:"black",margin:'2vh'}}>
-  방 생성하기
-</Button>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="roomName"
+          label="방 이름"
+          placeholder="방 이름을입력해주세요"
+          name="roomName"
+          autoComplete="roomName"
+          autoFocus
+          value={this.state.roomName}
+          onChange={this.handleChangeForm}
+        />
+        <div style={{ color: "red", fontSize: "12px" }}>
+                  {this.state.titleError}
+        </div>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          multiline
+          rows={5}
+          name="roomInfo"
+          label="소개"
+          type="roomInfo"
+          id="roomInfo"
+          placeholder="방을 소개해주세요"
+          autoComplete="current-roomInfo"
+          value={this.state.roomInfo}
+          onChange={this.handleChangeForm}
+        />
+        <div style={{ color: "red", fontSize: "12px" }}>
+                  {this.state.contentError}
+        </div>
+        <InputLabel style={{ position: "relative", left: "5%", bottom: "-15px" }}>누구나 방에 참여 할 수 있습니다 &nbsp;</InputLabel>
+        <FormControlLabel
+          style={{ position: "relative", bottom: "15px", left: "0" }}
+          control={<GreenCheckbox checked={this.state.roomIsPrivate} onChange={this.handleChange} name="roomIsPrivate" />}
+        />
 
-<Dialog open={this.state.open} onClose={this.handleClose}>
+        <InputLabel style={{ position: "relative", bottom: "-5px" }}>허용인원 &nbsp;</InputLabel>
+        <Select
+          labelId="demo-controlled-open-select-label"
+          id=""
+          style={{ position: "relative", bottom: "25px", left: "85%" }}
+          open={this.state.openRoomMax}
+          name="roomMax"
+          type="roomMax"
+          onClose={this.handleCloseRoomMax}
+          onOpen={this.handleOpenRoomMax}
+          value={this.state.roomMax}
+          onChange={this.handleChangeForm}
+        >
+          <MenuItem value={5}>5</MenuItem>
+          <MenuItem value={6}>6</MenuItem>
+          <MenuItem value={7}>7</MenuItem>
+          <MenuItem value={8}>8</MenuItem>
+          <MenuItem value={9}>9</MenuItem>
+          <MenuItem value={10}>10</MenuItem>
+        </Select>
+      </DialogContent>
+      <DialogActions>
+        <Button variant="contained" color="primary" onClick={this.handleSubmit}>추가</Button>
+        <Button variant="outlined" color="primary" onClick={this.handleClose}>닫기</Button>
+      </DialogActions>
+    </Dialog>
+  </div>
 
-  <DialogTitle>방 추가</DialogTitle>
-
-  <DialogContent>
-
-  <input className={classes.hidden} accept="image/*" id="raised-button-file" type="file" file={this.state.file} value={this.state.fileName} onChange={this.handleFileChange} />
-
-  <label htmlFor="raised-button-file">
-
-  <Button variant="contained" color="primary" component="span" name="file">
-    {this.state.fileName === ''? "프로필 이미지 선택" : this.state.fileName}
-  </Button>
-
-  </label><br/>
-
-
-  <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="roomName"
-              label="방 이름"
-              placeholder="방 이름을입력해주세요"
-              name="roomName"
-              autoComplete="roomName"
-              autoFocus
-              value={this.state.roomName}
-              onChange={this.handleChangeForm}
-            />
-            {/* <div style={{ color: "red", fontSize: "12px" }}>
-                  {error.roomNameError}
-            </div> */}
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              multiline
-              rows={5}
-              name="roomInfo"
-              label="소개"
-              type="roomInfo"
-              id="roomInfo"
-              placeholder="방을 소개해주세요"
-              autoComplete="current-roomInfo"
-              value={this.state.roomInfo}
-                  onChange={this.handleChangeForm}
-            />
-
-  <InputLabel style={{position:"relative", left:"5%", bottom: "-15px"}}>누구나 방에 참여 할 수 있습니다 &nbsp;</InputLabel>
-          <FormControlLabel
-          style={{position:"relative",bottom:"15px",left:"0"}}
-              control={<GreenCheckbox checked={this.state.roomIsPrivate} onChange={this.handleChange} name="roomIsPrivate" />}
-          />
-          
-
-
-          <InputLabel style={{position:"relative", bottom: "-5px"}}>허용인원 &nbsp;</InputLabel>
-          
-          <Select
-            labelId="demo-controlled-open-select-label"
-            id=""
-            style={{position:"relative",bottom:"25px",left:"85%"}}
-            open={this.state.openRoomMax}
-            name="roomMax"
-            type= "roomMax"
-            onClose={this.handleCloseRoomMax}
-            onOpen={this.handleOpenRoomMax}
-            value={this.state.roomMax}
-            onChange={this.handleChangeForm}
-          >
-            <MenuItem value={5}>5</MenuItem>
-            <MenuItem value={6}>6</MenuItem>
-            <MenuItem value={7}>7</MenuItem>
-            <MenuItem value={8}>8</MenuItem>
-            <MenuItem value={9}>9</MenuItem>
-            <MenuItem value={10}>10</MenuItem>
-          </Select>
-          
-
-  </DialogContent>
-
-  <DialogActions>
-    <Button variant="contained" color="primary" onClick={this.handleSubmit}>추가</Button>
-    <Button variant="outlined" color="primary" onClick={this.handleClose}>닫기</Button>
-  </DialogActions>
-
-</Dialog>
-
-</div>
-
-)
-
-}
-
+)}
 }
 
 export default withStyles(styles)(RoomCreate)

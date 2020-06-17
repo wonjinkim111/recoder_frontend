@@ -16,8 +16,9 @@ import axios from 'axios';
 const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
-      maxWidth: 200,
-      backgroundColor: theme.palette.background.paper,
+      maxWidth: 55,
+      //backgroundColor: theme.palette.background.paper,
+      backgroundColor : '#26004d'
     },
   }));
 
@@ -53,47 +54,32 @@ export default function MentorDashBoard(props){
     
     return(
     // <div className={classes.root}>
-    <List component="nav" style={{border:"1 solid black"}} subheader={
-        <ListSubheader component="div" id="nested-list-subheader">
-          Mentee DashBoard
-        </ListSubheader>}
+    <List component="nav" style={{border:"1 solid black"}} 
         className={classes.root}
      >
 
-    <ListItem alignItems="center" style={{backgroundColor: 'gainsboro'}}>
-    <ListItemAvatar>
-        <Avatar />
-    </ListItemAvatar>
-    <ListItemText primary={`${user.menteeNickname} 님`}/>
-    {/* <ListItemText primary='000님'/> */}
-    </ListItem>
-
     <ListItem button onClick={roomlistClick}>
       <ListItemIcon>
-        <AccountBalanceIcon />
+        <AccountBalanceIcon style={{color:'white'}} />
       </ListItemIcon>
-      <ListItemText primary="Room List" />
     </ListItem>
 
     <ListItem button onClick={participatingClick}>
       <ListItemIcon>
-        <RecentActorsIcon />
+        <RecentActorsIcon  style={{color:'white'}}/>
       </ListItemIcon>
-      <ListItemText primary="Participating"/>
     </ListItem>
 
     <ListItem button>
       <ListItemIcon>
-        <ThumbUpAltIcon />
+        <ThumbUpAltIcon  style={{color:'white'}}/>
       </ListItemIcon>
-      <ListItemText primary="Reviews" />
     </ListItem>
 
     <ListItem button>
       <ListItemIcon>
-        <SettingsIcon />
+        <SettingsIcon  style={{color:'white'}}/>
       </ListItemIcon>
-      <ListItemText primary="Settings" />
     </ListItem>
   </List>
     )

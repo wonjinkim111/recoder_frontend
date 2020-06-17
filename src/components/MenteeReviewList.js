@@ -80,8 +80,9 @@ export default function MenteeReviewList() {
 
   return (
     <Container>
+      <div style={{height:"10vh"}}/>
     <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
+      <Table aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>No.</StyledTableCell>

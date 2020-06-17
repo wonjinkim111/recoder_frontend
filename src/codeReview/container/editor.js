@@ -100,7 +100,7 @@ function (_React$Component) {
       }
 
       if (prevProps.theme !== theme) {
-        monaco.editor.setTheme(theme);
+         monaco.editor.setTheme(theme);
       }
 
       if (editor && (width !== prevProps.width || height !== prevProps.height)) {
@@ -142,77 +142,25 @@ function (_React$Component) {
           theme = _this$props2.theme,
           options = _this$props2.options,
           overrideServices = _this$props2.overrideServices;  
-          var range = new monaco.Range(0,1,5,1);
+          
       if (this.containerElement) {
         // Before initializing monaco editor
         Object.assign(options, this.editorWillMount());
         this.editor = monaco.editor.create(this.containerElement, _objectSpread({
           value: value,
           fontSize: "15px",
+          roundedSelection: true,
+          //contextmenu: false,
+          //cursorWidth: 0,
           wordWrap: true, //끝까지가면 다음줄로 자동변경
           scrollBeyondLastLine: false, //스크롤바 설정
           minimap: {     //미니맵 설정
             enabled: false
           },
           language: language
-        }, options, range ,{}, theme ? {
+        }, options, theme ? {
           theme: theme
         } : {}), overrideServices); // After initializing monaco editor
-
-
-        
-          
-         this.editor.onMouseDown(function (e) {
-           console.log(e.target.element.parentNode)
-          if(editor_select == 'on' ){
-              //클릭한곳이 view-line
-              if(e.target.element.className == "view-line"){
-                // if(e.target.element.style.background == 'green' || e.target.element.style.background == 'lightgreen')
-                //   e.target.element.style.background = '';
-                
-                // if(editor_theme =='vs-dark')
-                //   e.target.element.style.background = 'green';
-                // else
-                //   e.target.element.style.background = 'lightgreen';
-
-                  var lineNumber=1;
-                  var children = e.target.element.textContent;
-                  
-                  while(e.target.element.style.top != "0px"){ //선택한 곳이 첫번째줄이라면 스탑
-                   e.target.element = e.target.element.previousSibling; //선택한 곳에서 위로 형제 div 찾으면서 라인수 ++해감
-                    lineNumber++;
-                  }
-                  _this$props2.onChange(children,lineNumber, 1);
-                }
-              // 클릭한곳의 부모의 부모가 view-line
-              if(e.target.element.parentNode.parentNode.className =="view-line"){
-                  // if(e.target.element.parentNode.parentNode.style.background == 'green' || e.target.element.parentNode.parentNode.style.background == 'lightgreen')
-                  //   e.target.element.parentNode.parentNode.style.background = '';
-                  // if(editor_theme =='vs-dark'){
-                  //   e.target.element.parentNode.parentNode.style.background = 'green';
-                  // }
-                  // else{
-                  //   e.target.element.parentNode.parentNode.style.background = 'lightgreen';
-                  // }
-                    var lineNumber=1;
-                    var children = e.target.element.parentNode.parentNode.textContent;
-                    e.target.element = e.target.element.parentNode.parentNode;
-                    while(e.target.element.style.top != "0px"){ //선택한 곳이 첫번째줄이라면 스탑
-                      e.target.element = e.target.element.previousSibling; //선택한 곳에서 위로 형제 div 찾으면서 라인수 ++해감
-                      lineNumber++;
-                     }
-                     _this$props2.onChange(children,lineNumber,1);
-              }
-          
-          }//editor_select 끝
-
-
-          
-      
-
-    });//여기가 mouse.down 끝
- 
-  
         this.editorDidMount(this.editor);
       }
     }

@@ -4,21 +4,21 @@ import '../index.css';
 import MentorDashBoard from '../modules/mentorDashboard';
 import MenteeList from './MenteeList';
 import RoomReviewList from './RoomReviewList';
+import MentorRoom from './MentorRoom';
 
-function MentorLogin(props){
+function MentorLogin({match}){
     //console.log(props);
 
 const handleRouter = e =>{
             
 }
     return(
- 
         <Router>
         <div className='horizontal'>
         <MentorDashBoard/>
-        {/* <MenteeList></MenteeList> */}
-        <Route exact path={this.props.path} component={MenteeList}/>
-        <Route path={`${this.props.path}/roomreviewlist`} component={RoomReviewList}/>
+         <Route exact path={`${match.path}/:id`} component={MenteeList}/>
+         <Route path={`${match.path}/reviewlist/:id`} component={RoomReviewList}/>
+        <Route path={`${match.path}/setting/:id`} component={MentorRoom}/> 
         </div>
         </Router>
  

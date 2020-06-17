@@ -14,15 +14,10 @@ import Mentee from './components/Mentee';
 import RoomList from './components/Room_list';
 import Profile from './components/Profile';
 import Review from './codeReview/index';
-import Item from './components/MenteeItem';
-import MenteeList from './components/MenteeList';
-import MentorRoom from './components/MentorRoom';
-import NotFound from './components/NotFound';
-import RoomCreate from './components/RoomCreate';
-import MenteeReviewList from './components/MenteeReviewList';
-import RoomReviewList from './components/RoomReviewList';
-import ReviewReq from './components/reviewReq';
+import Review1 from './codeReview/index1';
 import './index.css';
+import MenteeReviewList2 from './components/MenteeReviewList2';
+import NotFound from './components/NotFound';
 
 class App extends React.Component {
   data;
@@ -56,25 +51,20 @@ class App extends React.Component {
       <Route path="/signin" component={SignIn}/>
       <Route path="/signup" component={SignUp}/>
       <Route path="/mentordashboard" component={Mentor}/>
-      <Route path="/user/mentor" component={MentorLogin}/>
-      <Route path="/user/mentee" component={MenteeLogin}/>
+      <Route path="/menteedashboard" component={Mentee}/>
+      <Route path="/mentorlogin" component={MentorLogin}/>
+      <Route path="/menteelogin" component={MenteeLogin}/>
       <Route path="/mentor/roomlist" component={MentorRoomList}/>
-      <Route path="/mentee" component={Mentee}/>
+      {/* <Route path="/menteereviewlist" component={MenteeReviewList2}/> */}
       <Route path="/roomlist" component={RoomList}/>
       <Route path="/profile" component={Profile}/>
-      <Route path="/review" component={Review}/>
-      <Route path="/item" component={Item}/>
-      <Route path="/menteelist" component={MenteeList}/>
-      <Route path="/mentorRoom" component={MentorRoom}/>
-      <Route path="/reviewreq" component={ReviewReq}/>
-      <Route path="/roomCreate" component={RoomCreate}/>
-      <Route path="/reviewlist" component={MenteeReviewList}/>
-      {/* <Route path="/roomreviewlist" component={RoomReviewList}/> */}
+      <Route path="/review/:id" component={Review}/>
+      <Route path="/review1/:id" component={Review1}/>
       {/* <Route component={NotFound}/> */}
     </div>
-    <div style={{position:"absolute", height:"30%",width:"100vw",bottom:"-30%" }}>
-    <FootBar />
-    </div>
+    {/* <div style={{position:"relative", height:"30%",width:"100vw",bottom:"-30%" }}> */}
+    <FootBar/>
+    {/* </div> */}
     </Router>
     </React.Fragment>
 

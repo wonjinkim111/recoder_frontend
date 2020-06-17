@@ -1,7 +1,7 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
-import FaceRoundedIcon from '@material-ui/icons/FaceRounded';
-import Avatar from '@material-ui/core/Avatar';
+import person from '../images/person.png';
+import woman from '../images/woman.png';
 import axios from 'axios';
 import Button from '@material-ui/core/Button'
 
@@ -50,26 +50,25 @@ class Profile extends React.Component{
 
     render(){
         var gender = (this.state.user.gender===0)? "여성":"남성"
-        
+        const img = (gender=="여성")?woman : person;
         return(
-        <Container component="main" maxWidth="sm" >
-            <div style={{height:"10vh"}}></div>
-        <div>
-            <Avatar>
-                <FaceRoundedIcon color="primary" fontSize="large"/>
-            </Avatar>
-            <h2>이름 : {this.state.user.name}</h2>
-            <h2>이메일 : {this.state.user.email}</h2>
-            <h2>성별 : {gender}</h2>
-            <h2>멘토 닉네임 : {this.state.user.mentorNickname}</h2>
-            <h2>멘티 닉네임 : {this.getMenteenickname}</h2>
-            {/* <h2>이름 : {this.state.user[0].name}</h2>
-            <h2>이메일 : {this.state.user[0].email}</h2>
-            <h2>성별 : {this.state.user[0].gender}</h2>
-            <h2>멘토 닉네임 : {this.getMentornickname} </h2>
-            <h2>멘티 닉네임 : {this.getMenteenickname} </h2> */}
-         </div>
-         </Container>
+            // <Container component="main" maxWidth="sm",  >
+            <div style={{ backgroundColor:"white",marginTop:'10vh', height: "55vh",width:'80vw', marginLeft:'10vw'}}>
+                <div style={{border: '20px solid lightblue', marginTop:'10vh', height:"85%",width:'50vw', marginLeft:'10vw'}}>
+                <div style={{border:"1px",float:"left", height:"100%",width:"40%"}}>
+                <img src={`${img}`} style={{  margin: '2vw' ,width: "75%", height: '53%' }} alt="profileIMG" />
+                <h2 style={{ position:"relative", top:"-10%",    textAlign:"center"}}> {this.state.user.name}</h2>
+                </div>
+                <div  style={{border:"1px",float:"left", height:"100%",width:"60%"}}>
+                <h2>이메일 : {this.state.user.email}</h2>
+                    <h2>성별 : {gender}</h2>
+                    <h2>멘토 닉네임 : {this.state.user.mentorNickname}</h2>
+                    <h2>멘티 닉네임 : {this.state.user.menteeNickname}</h2>
+                </div>
+                
+                </div>
+                </div>
+        //  </Container >
         )
     }
 }

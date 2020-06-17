@@ -27,7 +27,7 @@ const useStyles = theme => ({
     }
 })
 class MenteeList extends React.Component{
-    constructor(props){
+    constructor(props,){
         super(props);
 
         this.state={
@@ -54,18 +54,19 @@ class MenteeList extends React.Component{
 
     componentDidMount(){
         //const roomId = this.props.roomid;
-        const getUrl = document.location.href.split("?");
-        const roomId = getUrl[1].split("=");
-        console.log(getUrl);
-        console.log(roomId);
+        //const getUrl = document.location.href.split("?");
+        //const roomId = getUrl[1].split("=");
+        //console.log(getUrl);
+        //console.log(roomId);
        //const url = `http://59.29.224.144:10000/users/mentor/mentees/19`;
-       const url = `http://59.29.224.144:10000/users/mentor/mentees/${roomId[1]}`;
+       //console.log(this.props.match.params);
+       const url = `http://59.29.224.144:10000/users/mentor/mentees/${this.props.match.params.id}`;
         axios.get(url)
             .then(response=>{
                 console.log(response);
                 this.setState({mentees : response.data})
             })
-            .catch(error => alert("error",error)
+            .catch(error => console.log(error)
             )
     }
 
@@ -79,7 +80,7 @@ class MenteeList extends React.Component{
 
         return(
             <div >
-                <div style={{height:"10vh"}}></div>
+                <div style={{height:"10vh"}}/>
             <TableContainer style={{position:"relative", height:"65vh",left:"5vw",width:"70vw"}}component={Paper}>
                 <Table>
                     <TableHead className={classes.head}>

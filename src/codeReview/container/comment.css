@@ -1,6 +1,8 @@
-.comment1{
-    height:41vh;
-    overflow: 'scroll';
-    border-radius: '0.3em'
+.box{
+    height:45%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border-radius: 0.3em;
 }
 
+/* style={{overflow:'scroll', height:'44.5vh',radius: '1.3em'}} */

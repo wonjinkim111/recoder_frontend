@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   toolbar: {
-    justifyContent: 'space-between',
+   justifyContent: 'space-between',
   },
   left: {
     flex: 1,
@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 export default function ToolbarAfter() {
   const classes = useStyles();
   const [users] = React.useState({
@@ -46,6 +47,15 @@ export default function ToolbarAfter() {
     gender: 0,
     regDate: '2020-05-30 00:00:00'
   })
+
+  const [nickname,setNickname] = React.useState();
+
+  //state에 따라서 닉네임 받아오게
+  // useEffect(() => {
+  //   const nick = JSON.parse(sessionStorage.getItem('state'));
+  //   if(nick == null) setNickname('');
+  //   else if(nick == 'mentor')
+  // });
 
   const handleClick = () => {
     sessionStorage.clear();
@@ -73,6 +83,16 @@ export default function ToolbarAfter() {
             {'Re:coder'}
           </Link>
           <div className={classes.right}>
+          <Link
+              color="inherit"
+              variant="h6"
+              underline="none"
+              // style={{padding:"50px"}}
+              className={classes.rightLink}
+              component={RouterLink}
+            >
+              {'Profile'}
+            </Link>
             <Link
               color="inherit"
               variant="h6"
@@ -82,12 +102,12 @@ export default function ToolbarAfter() {
               component={RouterLink} 
               to= {{
                 pathname : "/profile",
-                state : {
-                  username: users.name,
-                  useremail: users.email,
-                  usergender: users.gender,
-                  userregdate: users.regDate
-                }
+                // state : {
+                //   username: users.name,
+                //   useremail: users.email,
+                //   usergender: users.gender,
+                //   userregdate: users.regDate
+                // }
               }}
             >
               {'Profile'}

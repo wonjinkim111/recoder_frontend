@@ -6,6 +6,7 @@ import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import ProductHeroLayout from '../layout/ProductHeroLayout';
+import '../index.css';
 
 const usestyles = makeStyles((theme)=>({
     background: {
@@ -48,8 +49,19 @@ export default function Main(props) {
     const handleonClick = () => {
      const userData = JSON.parse(sessionStorage.getItem('user'));
      if(userData === null) setUrl('/signin');
-     else if(userData.mentorid === "0") setUrl('/user/mentor');
-     else if(userData.mentorid !== "0") setUrl('/mentor/roomlist');
+     else if(userData.mentorid == 0) setUrl('/mentorlogin');
+     else if(userData.mentorid != 0) {
+         setUrl('/mentor/roomlist')
+         sessionStorage.setItem('state',JSON.stringify('mentor'));
+     };
+    }
+    const handleonClick2 = () => {
+     const userData = JSON.parse(sessionStorage.getItem('user'));
+     if(userData !== null && userData.menteeid != 0){ 
+        sessionStorage.setItem('state',JSON.stringify('mentee'));
+        setUrl('/menteedashboard/roomlist');
+     }
+     else setUrl('/roomlist');
     }
      
         return(
@@ -75,14 +87,16 @@ export default function Main(props) {
                 </Link>
                 </Button>
                 <Button
+                // style={{backgroundColor:'#4C0099'}}
                     color="secondary"
                     variant="contained"
                     size="large"
-                    className={classes.button}>
+                    className={classes.button}
+                    onClick={handleonClick2}>
                 <Link 
                     className={classes.rightLink}
                     component={RouterLink} 
-                    to= '/roomlist'
+                    //to= '/roomlist'
                     underline="none">
                     Mentee
                 </Link>

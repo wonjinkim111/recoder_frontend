@@ -1,8 +1,8 @@
 .comment_sub{
   position: relative;
-  width:42vw;
-  top:1vh;
-  left:1vw;
+  width:42%;
+  top:1%;
+  left:1%;
   font-size: 15px;
   font-family: "나눔고딕";
   resize: none;
@@ -14,6 +14,7 @@
   position: relative;
   color: coral;
   left : 2%;
+  font-weight: bold;
   padding:5px;
   font-Size:15px;
   font-family: "나눔고딕";
@@ -31,10 +32,9 @@
   position: relative;
   left:2%;
   word-break: break-all;
-  color: coral;
-  padding:10px;
-  padding-right:65px;
-padding-left: 65px;
+
+  padding-right:5%;
+padding-left: 5%;
   font-size: 20px;
   font-family: "나눔고딕";
 }
@@ -42,15 +42,15 @@ padding-left: 65px;
 
 .modal_comment_open_btn{
 position: relative;
-font-size: 20px;
+font-size: 150%;
 bottom:0%;
 left:10%;
 border: 1px solid grey;
 background-color: rgba(0, 0, 0, 0);
-color: skyblue;
+
 margin:10px;
-padding-right:100px;
-padding-left: 100px;
+padding-right:15%;
+padding-left: 15%;
 border-radius: 0.2em;
 } 
 
@@ -72,15 +72,16 @@ border-radius: 0.2em;
 
 .modal_comment_remove_btn{
   position: relative;
-  font-size: 20px;
+  font-size: 150%;
   bottom:0%;
-  left: 15%;
+  right :10%;
+  float: right;
   border: 1px solid grey;
   background-color: rgba(0, 0, 0, 0);
-  color: skyblue;
+ 
   margin:10px;
-  padding-right:100px;
-  padding-left: 100px;
+  padding-right: 15%;
+  padding-left:  15%;
   border-radius: 0.2em
   }
 
@@ -94,17 +95,18 @@ border-radius: 0.2em;
   z-index:1;
 }
 
-#modal2 .modal_content {
+.modal_content {
   padding:20px 10px;
   background:#fff;
+  width: 100;
   border:1px solid #666;  
 }
 
 #modal2 .modal_layer { /*검은색 테두리*/
   position: absolute;
-  top:-20vw;
-  left:17vw;
-  width:38vw;
+  top:-20%;
+  left:17%;
+  width:38%;
   margin:50px auto;
   height:620px;
   background:rgba(0, 0, 0, 0.5);
@@ -124,10 +126,10 @@ border-radius: 0.2em;
 #modal3 .modal_content {
   
   position:absolute;
-  top:-12vw;
-  left:27vw;
-  height:15vh;
-  width:27vw;
+  top:-12%;
+  left:27%;
+  height:15%;
+  width:27%;
   margin:100px auto;
   padding:20px 10px;
   background:#fff;
@@ -140,10 +142,10 @@ border-radius: 0.2em;
 
 #modal3 .modal_layer { /*검은색 테두리*/
   position: absolute;
-  top:-10vw;
-  left:26vw;
-  height:25vh;
-  width:30.5vw;
+  top:-10%;
+  left:26%;
+  height:25%;
+  width:30.5%;
   margin:50px auto;
   background:rgba(0, 0, 0, 0.5);
   z-index:-1;
@@ -168,7 +170,7 @@ padding-left: 5%;
   bottom:-60%;
   right: 0%;
   border:0px solid #666;
-  color:skyblue;
+ 
   background-color: rgba(0, 0, 0, 0);
   padding: 2.7%;
   padding-right:5%;
@@ -177,3 +179,20 @@ padding-left: 5%;
 
 
 .btn01, .btn02{padding: 2px 4px 2px 4px; text-align: center; font-weight: 600; line-height: 1.4em; box-shadow: 1px 1px 2px #333; border-radius: 15px;} .btn01{background-color: #008DFF; color: #333;} .btn02{background-color: #FF3E00; color: #fff;} .example01{padding: 5px; text-align: center; border: 1px solid #008DFF;}
+
+
+.myLineDecoration1 {
+  display: inline-block;
+  background: white;
+  }
+
+.modal_input{
+  position: absolute;
+  width:25.5%;
+  height:40%;   
+  font-size: 15px;
+  font-family: "나눔고딕";
+  resize: none;
+  border: 1px solid skyblue;
+  
+}

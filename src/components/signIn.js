@@ -126,7 +126,7 @@ export default function SignIn(props){
         email: values.email,
         encryptedPassword: values.encryptedPassword
       })
-       .then(response =>{console.log(response.headers)
+       .then(response =>{console.log(response)
         sessionStorage.setItem('user', JSON.stringify({id:response.headers.userid,token: response.headers.token, mentorid: response.headers.mentorid, menteeid: response.headers.menteeid}))
         window.location.href='/';})
         .catch(error => {

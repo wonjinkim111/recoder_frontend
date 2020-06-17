@@ -43,19 +43,25 @@ class MenteeItem extends React.Component{
       };
 
     menteeDelete = () => {
-        const url=`http://59.29.224.144:30000/users/mentor/${this.props.mentee.menteeId}`
-        axios.delete(url)
+        let form = new FormData();
+        form.append('menteeId', this.props.mentee.menteeId);
+        form.append('roomId', this.props.mentee.roomId);
+
+        const url='http://59.29.224.144:10000/users/mentor'
+        axios.delete(url, {data:form})
             .then(response=>{
                 console.log(response)
+                this.handleClose();
             })
             .catch(error => alert('오류발생'))
+        window.location.reload();
     }
 
     componentDidMount(){
         const reviewLanguage = this.props.mentee.reviewLanguage;
-        if(reviewLanguage === 0) this.setState({language:'Java'});
-        else if(reviewLanguage === 1) this.setState({language: 'C'});
-        else if(reviewLanguage === 2 )this.setState({language:'Cpp'});
+        if(reviewLanguage === 0) this.setState({language:'java'});
+        else if(reviewLanguage === 1) this.setState({language: 'c++'});
+        else if(reviewLanguage === 2 )this.setState({language:'c'});
         else this.setState({language:'기타'});
     }
     

@@ -3,271 +3,336 @@ import { render } from "react-dom";
 import CodeEditor from "./container/CodeEditor";
 import Comment from './container/Comment';
 import './index.css';
+import axios from 'axios';
+import * as monaco from "monaco-editor";
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import Button from '@material-ui/core/Button';
+///qwer
+
+const user = JSON.parse(sessionStorage.getItem('user'));
+// const token = user.token;
+// var config = {
+//   headers: {
+//     'Authorization': "Bearer " + token
+//   }
+// }
 
 
+var left_width = "49.4%";
+var width_size = 98.8 - parseInt(left_width);
+var right_width = width_size;
+class App extends Component {
+  constructor(props) {
+    super(props);
 
-class App extends Component{
-
-  
-  constructor() {
-    super();
-  
     this.state = {
+      error: '',
+      compile_result: '',
       flag: 0,
-      update_flag:0,
+      update_flag: 0,
       outputText: '',
+      compileContent: '',
       codeState: 'mentee',
-      theme:'vs-white',
+      theme: 'vs-white',
+      reviewReq: [],
+      open: false,
+      text: '',
       lineNumber: 0,
-      modal_start:0,
-      comment_flag:0,
-      comment_tb:[
-      {cmt_id:'',review_id:'',parent_id:'',menteeCode:'mentee code', content:'이곳을 고쳐보세요',cmt_line_number:1,cmt_reg_date:''},
-      {cmt_id:'',review_id:'',parent_id:'',menteeCode:'int main(){  int i= 10;', content:'틀림',cmt_line_number:2,cmt_reg_date:''},
-      {cmt_id:'',review_id:'',parent_id:'',menteeCode:'int main(){  int i= 10;', content:'test2',cmt_line_number:4,cmt_reg_date:''}
+      modal_start: 0,
+      comment_flag: 0,
+      comment_tb: [
+        // {cmt_id:'',review_id:'',parent_id:'',menteeCode:'mentee code', content:'이곳을 고쳐보세요',cmt_line_number:1,cmt_reg_date:''},
+        // {cmt_id:'',review_id:'',parent_id:'',menteeCode:'int main(){  int i= 10;', content:'틀림',cmt_line_number:2,cmt_reg_date:''},
+        // {cmt_id:'',review_id:'',parent_id:'',menteeCode:'int main(){  int i= 10;', content:'test2',cmt_line_number:4,cmt_reg_date:''}
       ]
-      
+
     };
   }
 
-  componentWillMount(){
+  componentWillMount() {
     console.log("↵")
-    document.getElementById('root').style.height="100%";
-    document.getElementById('root').style.width="100%";
-    setTimeout(()=>{
-      this.setState({update_flag:0})},500); //페이지 로딩되면 업데이트 한번 일어나게 하려고 0.3초뒤에 업데이트 한번 일어나게 해줬음
-  }
- 
-  componentDidUpdate(){ // 코드내용을 누르면 outputText lindNumber가 바뀌면서 업데이트가 일어남
-    
-    if(this.state.codeState == 'mentee'){
-      //멘티 코드 총 라인 수
-      let total_line = document.getElementsByClassName('view-lines')[0].childElementCount;
-      let i =0;
-      //전체 라인 표시 색깔 없애기
-      console.log(total_line)
-      while(i <total_line){ //선택한 곳이 첫번째줄이라면 스탑
-        document.getElementsByClassName('view-lines')[0].childNodes[i].style.background = '';
-        i++
-      }
-      //코멘트가 있는 곳만 색깔 표시
-      //if(this.state.theme = "vs-white"){
-        this.state.comment_tb.map((selectComment)=>{if(selectComment.cmt_line_number<total_line)
-          //codeEditor에서 codeState값을 변경해주는 거보다 index에서 업데이트가 먼저 일어남  배열 오류 
-          document.getElementsByClassName('view-lines')[0].childNodes[selectComment.cmt_line_number-1].style.background = 'lightgreen';
-        })
-      //}
-      // else{
-      //   this.state.comment_tb.map((selectComment)=>{
-      //     document.getElementsByClassName('view-lines')[0].childNodes[selectComment.cmt_line_number-1].style.background = 'green';
-      //   })
-      // }
-
-      if(this.state.flag == 1 && this.state.codeState=='mentee'){
-      this.handleOpenModal();
-      this.setState({flag: 0})    
-      }
-    }//if문 끝
-    else{
-      let total_line = document.getElementsByClassName('view-lines')[0].childElementCount;
-      let i=0;
-      //전체 라인 표시 색깔 없애기
-      //console.log(total_line)
-      while(i <total_line){ //선택한 곳이 첫번째줄이라면 스탑
-        document.getElementsByClassName('view-lines')[0].childNodes[i].style.background = '';
-        i++
-      }
-      document.getElementById("modal").style.display="none"; //멘토 코드 볼 때는 모창달 안생기게 설정
-    } //else문 끝
-  
+    document.getElementById('root').style.height = "100%";
+    document.getElementById('root').style.width = "100%";
+    setTimeout(() => {
+      this.setState({ update_flag: 0 })
+    }, 500); //페이지 로딩되면 업데이트 한번 일어나게 하려고 0.3초뒤에 업데이트 한번 일어나게 해줬음
   }
 
-
-handleOpenModal = () =>{
-
-    this.setState({modal_start:1})
-    document.getElementById("modal").style.display="block";
-
-      //클릭한 라인에 멘토의 커맨트가 있으면 내용을 띄워줌
-      var txt = document.getElementById('comment_txt');
-
-      var result = this.state.comment_tb.filter((selectComment) => {
-        return (selectComment.cmt_line_number === this.state.lineNumber)
+  componentDidMount() {
+    // console.log(config)
+    const url1 = `http://59.29.224.144:30000/codereview/${this.props.match.params.id}`;
+    axios.get(url1)
+      .then(response => {
+        this.setState({ reviewReq: response.data })
+        console.log(this.state.reviewReq)
       })
-      if (result.length !== 0){
-        txt.value = result[0].content;
-      } else {
-        txt.value = '';
-      }
+      // 응답(실패)
+      .catch(function (error) {
+        console.log(error);
+      })
 
-      if(txt.value.length ==0){
-        this.setState({comment_flag:0})
-      }
-      else{
-        this.setState({comment_flag:1})
-      }
-}
+    const url2 = `http://59.29.224.144:40000/comment/${this.props.match.params.id}`;
+    axios.get(url2)
+      .then(response => {
+        console.log("여기는 코멘트 가져오기")
+        console.log(response)
 
-handleCloseModal = () =>{
-  this.setState({modal_start:0})
-  document.getElementById("modal").style.display="none";
-
-  //모달창을 닫을 때 해당 라인에 코멘트제출된 것이 없으면 backgound 색 없애줌
-  var result = this.state.comment_tb.filter((selectComment) => {
-    return (selectComment.cmt_line_number == this.state.lineNumber)
-  })
-  if (result.length === 0){
-    document.getElementsByClassName('view-lines')[0].childNodes[this.state.lineNumber-1].style.background = '';
+        this.setState({ comment_tb: response.data })
+      })
+      // 응답(실패)
+      .catch(function (error) {
+        console.log(error);
+      })
   }
 
-}
-handleSubmitModal = () =>{
+  componentDidUpdate() { // 코드내용을 누르면 setState({flag: 1 })되면서 업데이트 일어남
+    if (this.state.codeState === 'mentee') {
+      if (this.state.flag === 1 && this.state.codeState === 'mentee') {
+        this.handleOpenModal();
+        this.setState({ flag: 0 })
+      }
+    }
+    else {
+      //document.getElementById("modal").style.display="none"; //멘토 코드 볼 때는 모창달 안생기게 설정
 
-  this.setState({modal_start:0})
-  //e.preventDefault()
-  // document.getElementById("modal").style.display="none";
-  const {comment_tb} = this.state;
-  //댓글내용,라인을 comment_tb에 저장
-  var txt = document.getElementById('comment_txt');
-  if(this.state.comment_flag == 0){
+    }
 
-    
-    this.setState({
-      comment_tb: comment_tb.concat({cmt_line_number:this.state.lineNumber,
-                                     content:txt.value,
-                                    menteeCode:document.getElementsByClassName('view-lines')[0].getElementsByClassName('view-line')[this.state.lineNumber-1].textContent
-                                  })
+  }
+
+
+
+  handleCompile = (result1) => {
+    this.setState({ compile_result: result1 });
+    console.log(result1);
+    console.log("compile")
+  }
+
+  handleOpenModal = () => {
+    this.setState({ open: true });
+    this.setState({ modal_start: 1 })
+    //document.getElementById("modal").style.display="block";
+
+    //클릭한 라인에 멘토의 커맨트가 있으면 내용을 띄워줌
+    //var txt = document.getElementById('comment_txt');
+    var txt = this.state.text;
+    var result = this.state.comment_tb.filter((selectComment) => {
+      return (selectComment.cmtLineNumber === this.state.lineNumber)
     })
+    if (result.length !== 0) {
+      //txt.value = result[0].content;
+      //this.setState({text : result[0].content})
+    } else {
+      //txt.value = '';
+      //this.setState({text :''})
+    }
 
-   }
-
-  else{
-
-    this.setState({
-      comment_tb: comment_tb.map(info => info.cmt_line_number ===this.state.lineNumber? {...info, content:txt.value}:info)
-    })
+    if (this.state.text.length === 0) {
+      this.setState({ comment_flag: 0 })
+    }
+    else {
+      this.setState({ comment_flag: 1 })
+    }
   }
 
-  document.getElementById("modal").style.display="none";
-  //특정 라인의 배열 가져오기
-  
-  /*
-  axios.post('/comment', {
-    content: this.state.content,
-    cmtLineNumber: this.state.lineNumber
-  }).then((response) => {
-    console.log(response.data)
-  })
-  .catch((error) => {
-    console.log(error)
-  })
+  handleCloseModal = () => {
+    this.setState({ modal_start: 0 })
+    this.setState({ open: false });
+    //document.getElementById("modal").style.display="none";
 
-  */
 
-}
 
-handleValueChange=(e) =>{
-
-  let nextState = {};
-  nextState[e.target.name] = e.target.value;
-  this.setState(nextState);
-  console.log(e.target.name);
   }
-// onChangeText(e){
-//   this.setState({comment_content:e.target.value})
-// }
-  //editor에서 클릭한곳의 내용과 라인 넘버 가져옴
-  handleOutputText = (text,number,flag) => {
-    this.setState({outputText:text,
-    lineNumber:number,
-    flag:flag})
+  handleSubmitModal = () => {
+    this.setState({ error: '' })
+    this.setState({ modal_start: 0 })
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    const token = user.token;
+    let config = {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    }
+    //e.preventDefault()
+    // document.getElementById("modal").style.display="none";
+    //const {comment_tb} = this.state;
+    //댓글내용,라인을 comment_tb에 저장
+    //var txt = document.getElementById('comment_txt');
+    ///console.log(this.state.text)
+    if (this.state.text.length) {
+      const user = JSON.parse(sessionStorage.getItem('user'));
+      const url = 'http://59.29.224.144:40000/comment';
+      console.log(this.props.match.params.id);
+      console.log(this.state);
+      axios.post(url, {
+        reviewId: this.props.match.params.id,
+        content: this.state.text,
+        cmtLineNumber: this.state.lineNumber,
+        nickName: user.mentorNickname,
+        cmtCode: this.state.outputText
+      })
+        .then(response => {
+          console.log(response.data)
+          console.log("됩니다유")
+          window.location.href = `/review/${this.props.match.params.id}`;
+        }
+        )
+        .catch(error => {
+          console.log(error);
+          alert("다시 시도해 주십시오")
+        })
+
+
+      this.setState({ open: false });
+    }
+    else {
+      this.setState({ error: '글을 입력해 주세요' })
+    }
+  }
+
+  handleCompile_content = (e) => {
+    this.setState({ compileContent: e })
+  }
+
+  handleCompile = () => { //실행 버튼 클릭 했을 때
+    //console.log(this.editor.getValue().replace(/ /g,"")); //모든 공백 제거
+    //console.log(this.editor.getValue().replace(/\s/gi,""));//모든 공백 제거
+    console.log(this.state.compileContent)
+
+    const url =`http://59.29.224.144:40000/codereview/compile2` 
+    axios.get(url)
+      .then(function (response) {
+        //console.log(response.data);
+        this.setState({compile_result:response.data})
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
-  // handleTheme = (theme) =>{
-  //   this.setState({
-  //     theme:theme})
-  //     console.log(this.state.theme);
-  //   };
-  
-handleRemove=(lineNum)=>{
-  // const {comment_tb} = this.state;
-  this.setState({
-    comment_tb: this.state.comment_tb.filter(info => info.cmt_line_number !== lineNum)
-  })
-  console.log(this.state.comment_tb);
-}
 
-handleState = (state) =>{
-  this.setState({codeState: state})
-  console.log(this.state.codeState)
-  setTimeout(()=>{
-    this.setState({update_flag:0})},100);
-  
-}
-  handleStartUpdate = ()=>{
-    this.setState({flag:1});
+
+  //editor에서 클릭한곳의 내용과 라인 넘버 가져옴
+  handleOutputText = (text, number, flag) => {
+    this.setState({
+      outputText: text,
+      lineNumber: number,
+      flag: flag
+    })
+  };
+
+
+  handleRemove = (lineNum) => {
+    // const {comment_tb} = this.state;
+    this.setState({
+      comment_tb: this.state.comment_tb.filter(info => info.cmt_line_number !== lineNum)
+    })
+    console.log(this.state.comment_tb);
   }
 
-  exit = ()=>{
-    window.location.href='/roomlist';
+  handleChange = e => {
+    this.setState({ text: e.target.value })
   }
-  
+
+  handleState = (state) => {
+    this.setState({ codeState: state })
+    console.log(this.state.codeState)
+    setTimeout(() => {
+      this.setState({ update_flag: 0 })
+    }, 100);
+
+  }
+  handleStartUpdate = () => {
+    this.setState({ flag: 1 });
+  }
+
+  handlePosition = (e) => {
+    console.log("1111" + document.getElementById("left1").style.width)
+  }
+  //멘토인경우 멘토 룸 리스트로, 멘티인경우 멘티대쉬보드의 룸리스트로
+  exit = () => {
+    const state = JSON.parse(sessionStorage.getItem('state'));
+    if (state === 'mentor') {
+      window.location.href = '/mentor/roomlist'
+    }
+    else if (state === 'mentee') {
+      window.location.href = '/menteedashboard';
+    }
+  }
+
   render() {
-  const {lineNumber, outputText, comment_tb, modal_start} = this.state; 
- 
+    const { lineNumber, outputText, comment_tb, modal_start, handleCompile } = this.state;
+
 
     return (
-      <div className="total-layout"> 
+      <div className="total-layout">
 
-        {/* <div className="total-layout"> */}
 
-        <div id="modal">
-          <div className="modal_content">
-              <div className="modal_head">
-              &nbsp; Line{' '} {this.state.lineNumber}<br/>
-              </div>
-              <div className="modal_code">  {this.state.outputText.trim()} </div>   
-            {/* <form > onSubmit={this.handleSubmitModal}  action="" method="post"   */}
+        <Dialog open={this.state.open} onClose={this.handleClose}>
+          <DialogContent>
+            <div className="modal_head">&nbsp; Line{' '} {this.state.lineNumber}<br /></div>
+            <div className="modal_code">  {this.state.outputText.trim()} </div>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              multiline
+              id="comment_txt"
+              margin="normal"
+              style={{ width: 550, wordBreak: "breakAll" }}
+              rows={3}
+              value={this.state.text}
+              onChange={this.handleChange}
+              placeholder="댓글 달기"
+            ></TextField>
 
-                <textarea id="comment_txt" name="1" placeholder="input here" className="modal_input"></textarea>
-                <button type="button" className="modal_cancel_btn" id="modal_cancel_btn" onClick={this.handleCloseModal}>CANCEL</button>
-                <button type="button" className="modal_submit_btn" id="modal_submit_btn" onClick={this.handleSubmitModal} >SUBMIT</button>
-             
-            {/* </form> */}
+          </DialogContent>
+          <DialogActions>
+            <Button variant="contained" color="primary" onClick={this.handleSubmitModal}>커맨트달기</Button>
+            <Button variant="outlined" color="primary" onClick={this.handleCloseModal}>닫기</Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* 왼쪽 */}
+        <div className="left1" >
+          <div className="title">
+            &nbsp;  {this.state.reviewReq.reviewTitle}
+            <button className="exit" onClick={this.exit} type="button">나가기</button>
           </div>
-          <div className="modal_layer"></div>
-        </div> {/* 모달 끝 */}
+          <div className="review_mentee_content">
+            {this.state.reviewReq.reviewContent}
+          </div>
+          <div className="title"> <div className="content"> &nbsp; Review </div></div>
+          <div className="review_comment">
+          <div>&nbsp;</div>
+            <Comment handleRemove={this.handleRemove}
+              lineNumber={lineNumber}
+              outputText={outputText}
+              comment_tb={comment_tb} />
+          </div>
+        </div>
+        <div className="left2" >
+          <div className="review_editor">
+            <CodeEditor handleOutputText={this.handleOutputText}
+              modal_start={modal_start}
+              handleState={this.handleState}
+              comment_tb={comment_tb}
+              handleCompile_content={this.handleCompile_content}
+              handleCompile1={handleCompile} />
+          </div>
+          <div className="title">
+            <div className="content"> &nbsp; 실행결과  </div>
+            <button className="selectButton2" onClick={this.handleCompile} type="button">실행</button>
 
+          </div>
+          <textarea className="compile_result_content" placeholder="실행 결과가 여기에 표시됩니다." readOnly>{this.state.compile_result}</textarea>
 
-
-        <div className = "review_mentee_content">
-        <div className="title"> ooo's code
-        <button className="exit" onClick={this.exit} type="button">
-              나가기
-            </button>
-            </div>
-        <br/>
-          고쳐주세요~~~
         </div>
 
-        <div className="review_editor">
-        <CodeEditor handleOutputText={this.handleOutputText} 
-                    modal_start={modal_start}
-                    handleState={this.handleState}
-                    handleTheme={this.handleTheme}/>
-        </div>
 
-        <div className="review_comment">
-          <div className="title"> &nbsp; Review</div>
-        <Comment  handleRemove={this.handleRemove} 
-                  lineNumber={lineNumber} 
-                  outputText={outputText} 
-                  comment_tb={comment_tb}/>
-        </div>
-        <div className = "compile_result">
-          <div className="title" > &nbsp; 실행 결과</div>
-          <textarea className="compile_result_content" placeholder="실행 결과가 여기에 표시됩니다." readOnly></textarea> 
-        </div>
-        {/* </div> */}
+
       </div>
     );
   }

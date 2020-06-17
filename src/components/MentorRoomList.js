@@ -38,9 +38,8 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 const rows = [
-  createData(1,'테스트방1', 159, ),
-  createData(2,'테스트방2', 237, ),
- 
+  createData(1,'테스트방1', 5, ),
+  createData(2,'테스트방2', 7, ), 
 ];
 
 const useStyles = makeStyles({
@@ -56,25 +55,26 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MentorRoomList() {
+export default function MentorRoomList(props) {
   const classes = useStyles();
 
   const [mentorRoom, setMentorRoom] = React.useState([]);
 
   const handleEnter = e => {
-    console.log(e.target.value)
-    window.location.href=`/mentordashboard?mentorRoomid=${e.target.value}`;
+    //console.log(e.target.value)
+    // window.location.href=`/mentordashboard?mentorRoomid=${e.target.value}`;
+    // props.history.push({
+    //   pathname: `/mentordashboard/${roomId}`
+    window.location.href=`/mentordashboard/${e.currentTarget.value}`
   }
 
   useEffect(() => {
-
     const user = JSON.parse(sessionStorage.getItem('user'));
     console.log(user);
     const url = `http://59.29.224.144:20000/room/mentor/${user.mentorid}`;
     axios.get(url)
     .then(response =>{console.log(response)
         setMentorRoom(response.data)
-        console.log(mentorRoom);
     }) 
       .catch(error => {
         // alert("error")
@@ -84,11 +84,13 @@ export default function MentorRoomList() {
 
   }, []);
 
+
   return (
-    <Container>
-      <div style={{position:"relative", left:"80vw"}}>
+    // <Container>
+    <div>
+      {/* <div style={{position:"relative", left:"80vw"}}> */}
     <RoomCreate />
-    </div>
+      {/* </div> */}
     <TableContainer className={classes.container}>
       <Table stickyHeader className={classes.table} aria-label="customized table" >
         <TableHead>
@@ -105,7 +107,7 @@ export default function MentorRoomList() {
           {/* {rows.map((row,index) => (
             <StyledTableRow key={row.name}>
               <StyledTableCell component="th" scope="row">
-                {row.name} or
+                {row.name}
               </StyledTableCell>
               <StyledTableCell align="center">{row.calories}</StyledTableCell>
               <StyledTableCell align="center">{row.fat}</StyledTableCell>
@@ -117,19 +119,32 @@ export default function MentorRoomList() {
   
             </StyledTableRow>
           ))} */}
-        {mentorRoom.map((list,index)=>(
-                <StyledTableRow key={list.roomId}>
-                    <StyledTableCell component="th" scope="row">{index+1} {/*or {list.roomId}*/}</StyledTableCell>
-                    <StyledTableCell align="center">{list.roomName}</StyledTableCell>
-                    <StyledTableCell align="center">{list.roomMax}</StyledTableCell>
-                    <StyledTableCell align="center" >
-                        <button value={list.roomId} onClick={handleEnter}>입장</button>
-                    </StyledTableCell>
-                </StyledTableRow>
+            {mentorRoom.map((list, index) => (
+              <StyledTableRow key={list.roomId}>
+                <StyledTableCell component="th" scope="row">{index + 1} {/*or {list.roomId}*/}</StyledTableCell>
+                <StyledTableCell align="center">{list.roomName}</StyledTableCell>
+                <StyledTableCell align="center">{list.roomMax}</StyledTableCell>
+                <StyledTableCell align="center" >
+                  {/* <Button variant="contained" style={{backgroundColor:'black'}}
+                  >
+                    <Link 
+                    style={{color:'white'}}
+                    to ={`/mentordashboard/${list.roomId}`}
+                    variant="h6"
+                    underline="none"
+                    color="inherit">
+                    ENTER
+                    </Link>
+                    </Button> */}
+                    <Button id ="getRoomId" value={list.roomId} onClick={handleEnter} style={{backgroundColor: '#f8585b', color:'#fff'}}>입장</Button>
+                    
+                </StyledTableCell>
+              </StyledTableRow>
             ))}
-        </TableBody>
+          </TableBody>
       </Table>
     </TableContainer>
-    </Container>
+    </div>
+    // </Container>
   );
 }

@@ -24,6 +24,12 @@ export default function MentorLogin(props){
         mentorNickname : '',
         introduction: ''
     })
+    const [user, setUser] = React.useState({
+        id:'',
+        token:'',
+        mentorid:'',
+        menteeid:''
+    })
 
     const clickOpen = () => {
         setOpen(true);
@@ -41,20 +47,26 @@ export default function MentorLogin(props){
         setOpen(false);
     //axios에서 받아서 하기
     const userId = JSON.parse(sessionStorage.getItem('user'));
+    //const userId = 60;
     const url = `http://59.29.224.144:10000/users/mentor/${userId.id}`;
       axios.post(url, {
         mentorNickname : mentor.mentorNickname,
         introduction : mentor.introduction
       })
       .then(response =>{
-          console.log(response.headers);
+          //console.log(response.headers);
           alert('추가되었습니다.');
+          console.log(response.data);
+          sessionStorage.setItem('state',JSON.stringify('mentor'));
+          let userData = JSON.parse(sessionStorage.getItem('user'));
+        sessionStorage.setItem('user', JSON.stringify({id:userData.id, token:userData.token, mentorid: response.data.mentorId, menteeid: userData.menteeid}))
           props.history.push({
             pathname: '/mentor/roomlist'
           });
       }
         ) 
         .catch(error => {
+            console.log(error);
           alert("error")
         })
     //응답받아서 정상이면 멘토추가되었으니 페이지 변경하기
