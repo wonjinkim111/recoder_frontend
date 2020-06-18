@@ -169,20 +169,21 @@ height:10%;
     height:43%;
     left: 45.7%;
     top:56%;
-    border: 0.5px solid skyblue;
+    border: 0.5px solid purple;
     background-color: black;
    
 }
 .compile_result_content{
     position: relative;
+    top:5.2vh;
     left:1%;
     width:98%;
     height:38.5%;   
-    font-size: 15px;
+    font-size: 20px;
     font-family: "나눔고딕";
     resize: none;
     color:white;
-    border: 0px solid skyblue;
+    border: 0px solid purple;
     background-color: black;
     
 }
@@ -226,13 +227,13 @@ float:right;
 
 .title{
     position: relative;
-    border: 0px solid skyblue;
+    border: 1px solid darkblue;
     font-size: 1em;
     font-family: "나눔고딕";
     height:5vh;
     color:black;
     width: 100%;
-    background-color: gray;
+    background-color: black;
     font-weight : bold;
     overflow-y: "scroll";
     float : left;
@@ -244,10 +245,10 @@ float:right;
 .left1{
  
     position: relative;
-    border: 0px solid skyblue;
+    border: 1px solid darkblue;
     border-top-width: 0px;
     border-left-width: 0px;
-    border-right-width: 1px solid skyblue;
+    border-right-width: 1px solid #3e1e7c;
     
     float:left;
     left:0%;
@@ -262,8 +263,9 @@ float:right;
 .left2{
 
     position: relative;
-    border: 0px solid black;
-    border-right-width: 0px solid skyblue;
+    border: 1px solid #3e1e7c;
+    border-top-width: 0px;
+    border-right-width: 0px solid purple;
     border-left-width: 0px;
     float:left;
 
@@ -282,4 +284,6 @@ float:right;
     float: left;
     display: flex;
     align-items: center;
+    
+    
 }

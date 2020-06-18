@@ -307,10 +307,10 @@ class MentorRoom extends React.Component {
             
  </div>
  <div style={{position:"relative",border:"1px", height:"25%",width:"100%"}}>
- <div style={{ textAlign: 'center', marginTop: '2vh' }}>
+ {/* <div style={{ textAlign: 'center', marginTop: '2vh' }}>
           <Button style={{ margin: '1vw', width: '20vw' }} variant="contained" color="primary" onClick={this.handleModify}>수정하기</Button>
           <Button style={{ margin: '1vw', width: '20vw' }} variant="contained" color="secondary" onClick={this.handleClickOpen}>삭제하기</Button>
-        </div>
+        </div> */}
         <div style={{ position: "relative", border: "1px", height: "25%", width: "100%" }}>
           <div style={{ textAlign: 'center', marginTop: '2vh' }}>
             <Button style={{ margin: '1vw', width: '20vw' }} variant="contained" color="primary" onClick={this.handleModify}>수정하기</Button>

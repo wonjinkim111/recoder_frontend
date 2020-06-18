@@ -55,19 +55,26 @@
 .selectButton3{
 
     position : relative;
+
     height:100%;
-    float:right;
+float:right;
+
 
     font-size: 60%;
     border-radius:0.3em;
     border:1px solid gray;
     color:black;
+
     font-weight : bold;
+
+
+    
 
 }
 .selectButton4{
     position : relative;
     height: 100%;
+
     float:right;
     right: 1%;
 
@@ -81,6 +88,7 @@
 .selectButton5{
     position : relative;
     height: 100%;
+
     float:right;
     right:2%;
 
@@ -110,8 +118,8 @@
         
         .title1{
             position: relative;
-            border: 0px solid skyblue;
-            border-top-width: 1px;
+            border: 1px solid #3e1e7c;
+            border-top-width: 0px;
             border-right-width: 0px;
             border-left-width: 0px;
             font-size: 1.5em;
@@ -142,4 +150,5 @@
         }
         .layout{
             height:100%;
+            
         }
