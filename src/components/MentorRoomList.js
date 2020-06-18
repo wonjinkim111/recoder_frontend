@@ -138,12 +138,7 @@ export default function MentorRoomList(props) {
                 <StyledTableCell align="center">{list.roomName}</StyledTableCell>
                 <StyledTableCell align="center">{list.roomMax}</StyledTableCell>
                 <StyledTableCell align="center" >
-                  <button className={classes.button} value={list.roomId} >
-                    <Link to ={`/mentordashboard/${list.roomId}`}>
-                    입장
-                    </Link>
-                    </button>
-                    <Button id ="getRoomId" value={list.roomId} onClick={handleEnter} style={{backgroundColor: '#f8585b', color:'#fff'}}>입장</Button>
+                    <Button id ="getRoomId" value={list.roomId} onClick={handleEnter} style={{backgroundColor: '#3E007C', color:'#fff'}}>입장</Button>
                     
                 </StyledTableCell>
               </StyledTableRow>

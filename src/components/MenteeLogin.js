@@ -44,9 +44,9 @@ export default function MentorLogin(props){
         sessionStorage.setItem('user', JSON.stringify({id:userData.id, token:userData.token, mentorid: userData.mentorid, menteeid: response.data.menteeId}))
           alert('추가되었습니다.');
           sessionStorage.setItem('state',JSON.stringify('mentee'));
-          // props.history.push({
-          //   pathname: '/menteedashboard/roomlist'
-          // });
+          props.history.push({
+            pathname: '/menteedashboard/roomlist'
+          });
           
       }
         ) 
