@@ -15,6 +15,9 @@ import StarIcon from '@material-ui/icons/Star';
 import StarHalfIcon from '@material-ui/icons/StarHalf';
 import ReviewReq from './reviewReq';
 
+
+
+
 const useStyles = theme => ({
     root: {
         maxWidth: 400,
@@ -41,7 +44,8 @@ class RoomItem extends React.Component {
         super(props);
         this.state={
             setOpen:false,
-            open: false
+            open: false,
+            previewURL: '',
         }
     }
 
@@ -51,20 +55,23 @@ class RoomItem extends React.Component {
     clickClose = () => {
         this.setState({open : false})
       }
-      
+
+
     render(){
         const {classes} = this.props;
 
     return (
         <Card className={classes.root}>
-            
+            {console.log(this.props.room.roomPicture)}
+             {/* <input type="file" accept="image/*" file={this.props.room.roomPicture} onChange={this.handleFileInput}/> */}
+             <img id="test" width="100%" height="140px" src={this.props.room.roomPicture}/>
             <CardActionArea >
-                <CardMedia
+                {/* <CardMedia
                     className={classes.media}
                     image = {require('../images/room.jpg')}
                     // image = {require(this.props.room.picture)}
-                    title="room image" />
-                    
+                    title="room image" /> */}
+
                 <Button size="large" color="primary" onClick={this.clickOpen}>{this.props.room.mentorNickname}</Button>
                 <Dialog open={this.state.open} onClose={this.clickClose} classes={{paper:classes.dialogPaper}}>
                 <DialogTitle id="customized-dialog-title" style={{backgroundColor:"lightblue"}}>

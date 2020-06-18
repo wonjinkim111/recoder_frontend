@@ -12,7 +12,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 
-
+var compile_result="";
 var left_width="49.4%";
 var width_size = 98.8-parseInt(left_width);
 var right_width= width_size;
@@ -22,8 +22,8 @@ class App extends Component{
   
     this.state = {
       error: '',
-      compile_result:"",
       flag: 0,
+      compileResult: '',
       update_flag:0,
       outputText: '',
       compileContent:'',
@@ -116,7 +116,7 @@ axios.get(url)
       //document.getElementById("modal").style.display="none"; //멘토 코드 볼 때는 모창달 안생기게 설정
       
     } 
-
+    compile_result=this.state.compileResult;
   }
 
 
@@ -225,20 +225,20 @@ console.log(this.state.compileContent)
 const getUrl = document.location.href.split("/");
 const len = getUrl.length;
 console.log(getUrl[len-1]);
-  const url =`http://59.29.224.144:30000/codereview/compilewindow/184` 
+  const url =`http://59.29.224.144:30000/codereview/compilewindow/${getUrl[len-1]}` 
   axios.get(url)
     .then(response => {
       console.log(response);
       console.log(response.data)
      // var data11 = JSON.parse(response);
-      this.setState({compile_result:response.data})
-
+      this.setState({compileResult:response.data})
+      compile_result=response.data;
     })
     .catch(function (error) {
       console.log(error);
     });
     console.log("여기다")
-    console.log(this.state.compile_result)
+    console.log("111111111111111111111"+compile_result)
 };
 
 
@@ -355,7 +355,7 @@ handleState = (state) =>{
     <button className="selectButton2" onClick={this.handleCompile} type="button">실행</button>
      
  </div>
- <textarea className="compile_result_content" placeholder="실행 결과가 여기에 표시됩니다." readOnly>{this.state.compile_result}</textarea>
+ <div className="compile_result_content"  value={111} placeholder="실행 결과가 여기에 표시됩니다.">{compile_result}</div>
 
 </div>
 

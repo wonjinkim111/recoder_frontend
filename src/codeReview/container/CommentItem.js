@@ -22,7 +22,8 @@ var comment_cmtId = 0;
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
-    border: "1px solid skyblue",
+    border: "1px solid grey",
+   
     backgroundColor: "black",
   },
   root1: {
@@ -59,10 +60,13 @@ export default function CommentItem(props) {
   }
   const handleSubmit = () => {
 
-    console.log(this.state.text)
+    //console.log(this.state.text)
     const getUrl = document.location.href.split("/");
     const len = getUrl.length;
-
+    
+    console.log(props.comment_cmtId)
+    console.log(text)
+    console.log(props.nickname)
     const url = 'http://59.29.224.144:40000/comment/reply';
     axios.post(url, {
       cmtId: props.comment_cmtId,

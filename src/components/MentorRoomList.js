@@ -15,7 +15,7 @@ import ReviewReq from './reviewReq';
 import axios from 'axios';
 
 const StyledTableCell = withStyles((theme) => ({
-  head: {
+  c: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
   },

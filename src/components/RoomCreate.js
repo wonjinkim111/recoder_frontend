@@ -21,6 +21,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
 
+var profile_preview = null;
 const styles = theme => ({
 
 hidden: {
@@ -81,7 +82,8 @@ this.state = {
   file: null,
   fileName: '',
   open: false,
-
+  previewURL: '',
+  real_previewURL: '',
   roomIsPrivate: 1,
   roomName: '',
   roomInfo: '',
@@ -98,6 +100,13 @@ this.state = {
 
 }
 
+componentDidUpdate(){
+
+    if(this.state.file !== ''){
+      profile_preview = <img id ="test" className='profile_preview' src=""></img>
+      
+    }
+}
 handleCloseRoomMax = e => {
     this.setState({openRoomMax: false});
 };
@@ -164,9 +173,12 @@ handleSubmit=(e)=>{
 
 handleFileChange(e) {
   this.setState({
-  file: e.target.files[0],
-  fileName: e.target.value
-});
+    file: e.target.files[0],
+    fileName: e.target.value
+  });
+
+
+
 
 }
 
@@ -194,6 +206,13 @@ render() {
 
 const { classes } = this.props;
 
+
+
+
+    
+
+
+
 return (
 
 <div>
@@ -205,7 +224,8 @@ return (
 <Dialog open={this.state.open} onClose={this.handleClose}>
 
   <DialogTitle>방 추가</DialogTitle>
-
+  {/* <img src="C:\Users\HPE\Desktop\file-system-icon-27.jpg"></img> */}
+ 
   <DialogContent>
 
   <input className={classes.hidden} accept="image/*" id="raised-button-file" type="file" file={this.state.file} value={this.state.fileName} onChange={this.handleFileChange} />
