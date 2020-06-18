@@ -62,7 +62,7 @@ class App extends React.Component {
       <Route path="/review1/:id" component={Review1}/>
       {/* <Route component={NotFound}/> */}
     </div>
-    {/* <div style={{position:"relative", height:"30%",width:"100vw",bottom:"-30%" }}> */}
+    {/* <div style={{position:"absolute", height:"30%",width:"100vw",bottom:"-30%" }}> */}
     <FootBar/>
     {/* </div> */}
     </Router>
