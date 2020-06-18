@@ -1,7 +1,6 @@
 {
   "name": "recoder",
   "version": "0.1.0",
-
   "private": true,
   "dependencies": {
     "@material-table/core": "^2.0.12",
@@ -17,6 +16,7 @@
     "monaco-editor-webpack-plugin": "^1.9.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-dropzone": "^11.0.1",
     "react-monaco-editor": "^0.36.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
@@ -51,5 +51,4 @@
   "devDependencies": {
     "webpack": "4.42.0"
   }
-  
 }

@@ -63,7 +63,7 @@ export default function SignIn(props){
         emailError, pwdError
       })
   
-      if(emailError || pwdError)return false;
+      if(emailError || pwdError) return false;
       return true;
     }
 
