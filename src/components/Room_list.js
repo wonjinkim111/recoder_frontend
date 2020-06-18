@@ -168,13 +168,13 @@ handleChangeSearch = e =>{
 
                 <GridListTile key="Subheader" cols={2} style={{ height: 'auto'}} />
                 {/* <ListSubheader component="div">Room List</ListSubheader> */}
-                {this.state.loading? <MoonLoader
+                {this.state.loading? <div style={{height:"100%", width:"100%"}}><MoonLoader
                     margin={20}
                     width={100}
                     size={60}
                     color={"#9013FE"}
                     loading={this.state.loading}
-                /> :  <ListSubheader component="div">Room List</ListSubheader> }
+                /> </div>:  <ListSubheader component="div">Room List</ListSubheader> }
            
                 {roomItems}
 

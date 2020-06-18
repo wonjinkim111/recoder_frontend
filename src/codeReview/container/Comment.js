@@ -54,7 +54,7 @@ export default class Comment extends Component {
                                 key={index}
                                 handleRemove={this.props.handleRemove}
                                 nickname={this.state.nickname}/>
-                            <br />
+                         
                         </div>
                         );
                     })

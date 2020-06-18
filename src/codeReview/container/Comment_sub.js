@@ -64,7 +64,7 @@ class Comment_sub extends Component {
     axios.post(url, {
       cmtId: comment_cmtId,
       replyContent: this.state.text,
-      nickname: "하이",
+      nickname: "라이언",
     })
       .then(response => {
         console.log(response.data)

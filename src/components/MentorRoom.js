@@ -241,7 +241,7 @@ class MentorRoom extends React.Component {
               variant="outlined"
               margin="normal"
               required
-
+              fullWidth
               id="roomName"
               InputProps={{
                 className: classes.input1
@@ -254,6 +254,24 @@ class MentorRoom extends React.Component {
               value={this.state.roomName}
               onChange={this.handleChangeForm}
             />
+{/* <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              multiline
+              rows={5}
+              name="roomInfo"
+              label="소개"
+              type="roomInfo"
+              id="roomInfo"
+              placeholder="방을 소개해주세요"
+              autoComplete="roomInfo"
+              value={this.state.roomInfo}
+                  onChange={this.handleChangeForm}
+            /> */}
+
+
  <TextField
               variant="outlined"
               margin="normal"
@@ -270,7 +288,7 @@ class MentorRoom extends React.Component {
               type="roomInfo"
               id="roomInfo"
               placeholder="방을 소개해주세요"
-              autoComplete="current-roomInfo"
+              autoComplete="roomInfo"
               value={this.state.roomInfo}
               onChange={this.handleChangeForm}
             />
@@ -305,45 +323,38 @@ class MentorRoom extends React.Component {
    
     
             
-        </div>
-        <div style={{ position: "relative", border: "1px", height: "25%", width: "100%" }}>
-          {/* <div style={{ textAlign: 'center', marginTop: '2vh' }}>
+ </div>
+
+
           <Button style={{ margin: '1vw', width: '20vw' }} variant="contained" color="primary" onClick={this.handleModify}>수정하기</Button>
           <Button style={{ margin: '1vw', width: '20vw' }} variant="contained" color="secondary" onClick={this.handleClickOpen}>삭제하기</Button>
-        </div> */}
-          <div style={{ position: "relative", border: "1px", height: "25%", width: "100%" }}>
-            {/* <div style={{ textAlign: 'center', marginTop: '2vh' }}>
-            <Button style={{ margin: '1vw', width: '20vw' }} variant="contained" color="primary" onClick={this.handleModify}>수정하기</Button>
-            <Button style={{ margin: '1vw', width: '20vw' }} variant="contained" color="secondary" onClick={this.handleClickOpen}>삭제하기</Button>
-          </div> */}
-            <div style={{ textAlign: 'center', marginTop: '2vh' }}>
-              <Button style={{ margin: '1vw', width: '20vw' }} variant="contained" color="primary" onClick={this.handleModify}>수정하기</Button>
-              <Button style={{ margin: '1vw', width: '20vw' }} variant="contained" color="secondary" onClick={this.handleClickOpen}>삭제하기</Button>
-              <Dialog
-                open={this.state.dialogopen}
-                TransitionComponent={this.Transition}
-                keepMounted
-                onClose={this.handleClose}
-              >
-                <DialogTitle id="alert-dialog-slide-title" style={{ color: 'red' }}>{"방삭제"}</DialogTitle>
-                <DialogContent>
-                  <DialogContentText id="alert-dialog-slide-description">
-                    {`'${this.state.roomName}'를 정말 삭제하시겠습니까?`}
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={this.handleDelete} variant="contained" color="primary">
-                    예
+      
+        <Dialog
+          open={this.state.dialogopen}
+          TransitionComponent={this.Transition}
+          keepMounted
+          onClose={this.handleClose}
+        >
+          <DialogTitle id="alert-dialog-slide-title" style={{ color: 'red' }}>{"방삭제"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              {`'${this.state.roomName}'를 정말 삭제하시겠습니까?`}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleDelete} variant="contained" color="primary">
+              예
                         </Button>
                   <Button onClick={this.handleClose} variant="outlined" color="primary">
                     취소
                         </Button>
-                </DialogActions>
-              </Dialog>
-            </div>
-          </div>
-        </div>
-        </div>
+          </DialogActions>
+        </Dialog>
+
+
+</div>
+       
+      //</Container>
     )
   }
 }
