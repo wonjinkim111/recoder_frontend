@@ -20,6 +20,7 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    zIndex: '-1000',
     backgroundColor: theme.palette.background.default,
   },
   container: {

@@ -103,9 +103,9 @@ blockNull = () => {
   let titleError = "";
   let contentError = "";
 
-  if(this.state.roomName.length == 0) titleError = "제목을 입력해 주세요";
+  if(this.state.roomName.length === 0) titleError = "제목을 입력해 주세요";
   //this.setState({titleError:"제목을 입력해주세요"}) ;
-  if(this.state.roomInfo.length == 0 ) contentError = "내용을 입력해 주세요";
+  if(this.state.roomInfo.length === 0 ) contentError = "내용을 입력해 주세요";
   //this.setState({contentError:"내용을 입력해 주세요"});
 
   this.setState({
@@ -140,11 +140,12 @@ handleSubmit=(e)=>{
   // console.log("roomMax: "+this.state.roomMax)
   // console.log("file: "+this.state.file)
 
-  const valid = this.blockNull();
-  if(!valid){
-    console.error("not permit null")
-  }
-  else{
+  // const valid = this.blockNull;
+  // if(!valid){
+  //   console.error("not permit null")
+  // }
+
+  // else{
   const user = JSON.parse(sessionStorage.getItem('user'));
   let form = new FormData();
   form.append('roomName', this.state.roomName);
@@ -175,7 +176,7 @@ handleSubmit=(e)=>{
         alert("다시 시도해 주십시오")
       //   setValues({roomName:'', roomInfo:''});
       })
-  }
+  // }
 } // handleSubmit 끝
 
 

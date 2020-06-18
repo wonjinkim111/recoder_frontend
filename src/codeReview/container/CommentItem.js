@@ -50,9 +50,9 @@ export default function CommentItem(props) {
   }
   const handleSubmit = () => {
 
+    console.log(this.state.text)
     const getUrl = document.location.href.split("/");
     const len = getUrl.length;
-    console.log(props.nickname);
 
     const url = 'http://59.29.224.144:40000/comment/reply';
     axios.post(url, {

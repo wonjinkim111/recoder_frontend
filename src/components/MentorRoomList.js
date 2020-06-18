@@ -53,6 +53,19 @@ const useStyles = makeStyles({
   container: {
     maxHeight: 440,
   },
+  button :{
+    position : "relative",
+    bottom: "5%",
+    height: "100%",
+    width:"5vw",
+    left: "0.5%",
+    fontSize: "20px",
+    borderRadius:"0.3em",
+    border:"1px solid gray",
+    color:"white",
+    backgroundColor: "white",
+    fontWeight : "bold",
+  }
 });
 
 export default function MentorRoomList(props) {
@@ -125,17 +138,11 @@ export default function MentorRoomList(props) {
                 <StyledTableCell align="center">{list.roomName}</StyledTableCell>
                 <StyledTableCell align="center">{list.roomMax}</StyledTableCell>
                 <StyledTableCell align="center" >
-                  {/* <Button variant="contained" style={{backgroundColor:'black'}}
-                  >
-                    <Link 
-                    style={{color:'white'}}
-                    to ={`/mentordashboard/${list.roomId}`}
-                    variant="h6"
-                    underline="none"
-                    color="inherit">
-                    ENTER
+                  <button className={classes.button} value={list.roomId} >
+                    <Link to ={`/mentordashboard/${list.roomId}`}>
+                    입장
                     </Link>
-                    </Button> */}
+                    </button>
                     <Button id ="getRoomId" value={list.roomId} onClick={handleEnter} style={{backgroundColor: '#f8585b', color:'#fff'}}>입장</Button>
                     
                 </StyledTableCell>

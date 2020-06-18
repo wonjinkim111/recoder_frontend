@@ -1,6 +1,7 @@
 {
   "name": "recoder",
   "version": "0.1.0",
+
   "private": true,
   "dependencies": {
     "@material-table/core": "^2.0.12",
@@ -11,6 +12,8 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
     "monaco-editor-webpack-plugin": "^1.9.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -48,4 +51,5 @@
   "devDependencies": {
     "webpack": "4.42.0"
   }
+  
 }

@@ -17,26 +17,26 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 const styles = theme => ({
-  input1: {
-    width: 500
+  input1:{
+    width:500
   },
-  input2: {
-    width: 500,
-    height: 250
+  input2:{
+    width:500,
+    height:250
   },
-  hidden: {
-    display: 'none'
-  },
-  image: {
-    maxHeight: '100%',
-    maxWidth: '100%'
-  },
-  button: {
-    marginTop: '1vh',
-    bottom: 0,
-    width: '100%'
-  }
-});
+    hidden: {  
+    display: 'none'  
+        },
+    image: {
+      height: '70%',
+      width: '100%'
+    },
+    button: {
+      marginTop: '1vh',
+      bottom : 0,
+      width: '100%'
+    }  
+    });
 
 
 const GreenCheckbox = withStyles({
@@ -311,32 +311,36 @@ class MentorRoom extends React.Component {
             <Button style={{ margin: '1vw', width: '20vw' }} variant="contained" color="primary" onClick={this.handleModify}>수정하기</Button>
             <Button style={{ margin: '1vw', width: '20vw' }} variant="contained" color="secondary" onClick={this.handleClickOpen}>삭제하기</Button>
           </div>
-          <Dialog
-            open={this.state.dialogopen}
-            TransitionComponent={this.Transition}
-            keepMounted
-            onClose={this.handleClose}
-          >
-            <DialogTitle id="alert-dialog-slide-title" style={{ color: 'red' }}>{"방삭제"}</DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-slide-description">
-                {`'${this.state.roomName}'를 정말 삭제하시겠습니까?`}
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={this.handleDelete} variant="contained" color="primary">
-                예
+          <div style={{ position: "relative", border: "1px", height: "25%", width: "100%" }}>
+            <div style={{ textAlign: 'center', marginTop: '2vh' }}>
+              <Button style={{ margin: '1vw', width: '20vw' }} variant="contained" color="primary" onClick={this.handleModify}>수정하기</Button>
+              <Button style={{ margin: '1vw', width: '20vw' }} variant="contained" color="secondary" onClick={this.handleClickOpen}>삭제하기</Button>
+            </div>
+            <Dialog
+              open={this.state.dialogopen}
+              TransitionComponent={this.Transition}
+              keepMounted
+              onClose={this.handleClose}
+            >
+              <DialogTitle id="alert-dialog-slide-title" style={{ color: 'red' }}>{"방삭제"}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                  {`'${this.state.roomName}'를 정말 삭제하시겠습니까?`}
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.handleDelete} variant="contained" color="primary">
+                  예
                         </Button>
-              <Button onClick={this.handleClose} variant="outlined" color="primary">
-                취소
+                <Button onClick={this.handleClose} variant="outlined" color="primary">
+                  취소
                         </Button>
-            </DialogActions>
-          </Dialog>
+              </DialogActions>
+            </Dialog>
 
+          </div>
         </div>
       </div>
-
-      //</Container>
     )
   }
 }

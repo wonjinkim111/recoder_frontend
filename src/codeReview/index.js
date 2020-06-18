@@ -11,27 +11,18 @@ import TextField from '@material-ui/core/TextField';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
-///qwer
-
-const user = JSON.parse(sessionStorage.getItem('user'));
-// const token = user.token;
-// var config = {
-//   headers: {
-//     'Authorization': "Bearer " + token
-//   }
-// }
 
 
-var left_width = "49.4%";
-var width_size = 98.8 - parseInt(left_width);
-var right_width = width_size;
-class App extends Component {
+var left_width="49.4%";
+var width_size = 98.8-parseInt(left_width);
+var right_width= width_size;
+class App extends Component{
   constructor(props) {
     super(props);
 
     this.state = {
       error: '',
-      compile_result: '',
+      compile_result:"",
       flag: 0,
       update_flag: 0,
       outputText: '',
@@ -40,7 +31,9 @@ class App extends Component {
       theme: 'vs-white',
       reviewReq: [],
       open: false,
-      text: '',
+      text : '',
+      nickname:'',
+      user:[],
       lineNumber: 0,
       modal_start: 0,
       comment_flag: 0,
@@ -53,7 +46,8 @@ class App extends Component {
     };
   }
 
-  componentWillMount() {
+
+  componentWillMount(){
     console.log("↵")
     document.getElementById('root').style.height = "100%";
     document.getElementById('root').style.width = "100%";
@@ -62,17 +56,36 @@ class App extends Component {
     }, 500); //페이지 로딩되면 업데이트 한번 일어나게 하려고 0.3초뒤에 업데이트 한번 일어나게 해줬음
   }
 
-  componentDidMount() {
-    // console.log(config)
+  componentDidMount(){
+//     const user = JSON.parse(sessionStorage.getItem('user'));
+// const token = user.token;
+// var config = {
+//   headers: {
+//     'Authorization' : "Bearer "+ "111111111111111111111",
+//     'Content-Type': 'application/x-www-form-urlencoded',
+//     'Accept': '*/*'
+ 
+//   }
+// }
+const userData = JSON.parse(sessionStorage.getItem('user'));
+const url = `http://59.29.224.144:10000/users/${userData.id}`;
+axios.get(url)
+ .then(response =>{console.log(response)
+    this.setState({
+        user : response.data
+    })
+
+}) 
+  .catch(error => {
+    // alert("error")
+    console.log(error);
+  })
+
     const url1 = `http://59.29.224.144:30000/codereview/${this.props.match.params.id}`;
-    axios.get(url1)
-      .then(response => {
-        this.setState({ reviewReq: response.data })
-        console.log(this.state.reviewReq)
-      })
-      // 응답(실패)
-      .catch(function (error) {
-        console.log(error);
+     axios.get(url1)
+        .then(response =>{
+           this.setState({ reviewReq : response.data})
+           console.log(this.state.reviewReq)
       })
 
     const url2 = `http://59.29.224.144:40000/comment/${this.props.match.params.id}`;
@@ -105,11 +118,11 @@ class App extends Component {
 
 
 
-  handleCompile = (result1) => {
-    this.setState({ compile_result: result1 });
-    console.log(result1);
-    console.log("compile")
-  }
+// handleCompile = (result1) =>{
+//   this.setState({compile_result: result1});
+//   console.log(result1);
+//   console.log("compile")
+// }
 
   handleOpenModal = () => {
     this.setState({ open: true });
@@ -145,40 +158,42 @@ class App extends Component {
 
 
 
+}
+handleSubmitModal = () =>{
+  this.setState({error:''})
+  this.setState({modal_start:0})
+
+  // const user = JSON.parse(sessionStorage.getItem('user'));
+  // const token = user.token;
+  // var config = {
+  //   headers: {
+  //     'Authorization' : "Bearer "+ token,
+  //     'Content-Type': 'application/x-www-form-urlencoded',
+  //     'Accept': '*/*'
+  //   }
+  // }
+    
+  const type = JSON.parse(sessionStorage.getItem('state'));
+  if(type==='mentor')this.setState({nickname:this.state.user.mentorNickname})
+  else if(type==='mentee')this.setState({nickname:this.state.user.menteeNickname})
+
+ 
+  if(this.state.text.length){
+  const user = JSON.parse(sessionStorage.getItem('user'));
+  const url = 'http://59.29.224.144:40000/comment';
+  console.log(this.props.match.params.id);
+  console.log(this.state);
+  axios.get(url,{
+    reviewId : this.props.match.params.id,
+    content : this.state.text,
+    cmtLineNumber : this.state.lineNumber,
+    nickName : "멘선생",
+    cmtCode : this.state.outputText
+  })
+   .then(response =>{console.log(response.data)
+      console.log("됩니다유")
+    window.location.href=`/review/${this.props.match.params.id}`;
   }
-  handleSubmitModal = () => {
-    this.setState({ error: '' })
-    this.setState({ modal_start: 0 })
-    const user = JSON.parse(sessionStorage.getItem('user'));
-    const token = user.token;
-    let config = {
-      headers: {
-        'Authorization': 'Bearer ' + token
-      }
-    }
-    //e.preventDefault()
-    // document.getElementById("modal").style.display="none";
-    //const {comment_tb} = this.state;
-    //댓글내용,라인을 comment_tb에 저장
-    //var txt = document.getElementById('comment_txt');
-    ///console.log(this.state.text)
-    if (this.state.text.length) {
-      const user = JSON.parse(sessionStorage.getItem('user'));
-      const url = 'http://59.29.224.144:40000/comment';
-      console.log(this.props.match.params.id);
-      console.log(this.state);
-      axios.post(url, {
-        reviewId: this.props.match.params.id,
-        content: this.state.text,
-        cmtLineNumber: this.state.lineNumber,
-        nickName: user.mentorNickname,
-        cmtCode: this.state.outputText
-      })
-        .then(response => {
-          console.log(response.data)
-          console.log("됩니다유")
-          window.location.href = `/review/${this.props.match.params.id}`;
-        }
         )
         .catch(error => {
           console.log(error);
@@ -193,25 +208,28 @@ class App extends Component {
     }
   }
 
-  handleCompile_content = (e) => {
-    this.setState({ compileContent: e })
-  }
+handleCompile = () => { //실행 버튼 클릭 했을 때
+  //console.log(this.editor.getValue().replace(/ /g,"")); //모든 공백 제거
+  //console.log(this.editor.getValue().replace(/\s/gi,""));//모든 공백 제거
+console.log(this.state.compileContent)
+const getUrl = document.location.href.split("/");
+const len = getUrl.length;
+console.log(getUrl[len-1]);
+  const url =`http://59.29.224.144:30000/codereview/compilewindow/184` 
+  axios.get(url)
+    .then(response => {
+      console.log(response);
+      console.log(response.data)
+     // var data11 = JSON.parse(response);
+      this.setState({compile_result:response.data})
 
-  handleCompile = () => { //실행 버튼 클릭 했을 때
-    //console.log(this.editor.getValue().replace(/ /g,"")); //모든 공백 제거
-    //console.log(this.editor.getValue().replace(/\s/gi,""));//모든 공백 제거
-    console.log(this.state.compileContent)
-
-    const url =`http://59.29.224.144:40000/codereview/compile2` 
-    axios.get(url)
-      .then(function (response) {
-        //console.log(response.data);
-        this.setState({compile_result:response.data})
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    console.log("여기다")
+    console.log(this.state.compile_result)
+};
 
 
   //editor에서 클릭한곳의 내용과 라인 넘버 가져옴
@@ -236,20 +254,8 @@ class App extends Component {
     this.setState({ text: e.target.value })
   }
 
-  handleState = (state) => {
-    this.setState({ codeState: state })
-    console.log(this.state.codeState)
-    setTimeout(() => {
-      this.setState({ update_flag: 0 })
-    }, 100);
-
-  }
-  handleStartUpdate = () => {
-    this.setState({ flag: 1 });
-  }
-
-  handlePosition = (e) => {
-    console.log("1111" + document.getElementById("left1").style.width)
+  handlePosition=(e)=>{
+    console.log("1111"+document.getElementById("left1").style.width)
   }
   //멘토인경우 멘토 룸 리스트로, 멘티인경우 멘티대쉬보드의 룸리스트로
   exit = () => {
@@ -267,72 +273,75 @@ class App extends Component {
 
 
     return (
-      <div className="total-layout">
+      <div className="total-layout"> 
+     
+
+<Dialog open={this.state.open} onClose={this.handleClose}>
+  <DialogContent>
+    <div className="modal_head">&nbsp; Line{' '} {this.state.lineNumber}<br/></div>
+    <div className="modal_code">  {this.state.outputText.trim()} </div> 
+    <TextField
+      variant="outlined"
+      margin="normal"
+      fullWidth
+      multiline
+      id="comment_txt"
+      margin="normal"
+      style={{width:550, wordBreak:"breakAll"}}
+      rows={3}
+      value={this.state.text}
+      onChange={this.handleChange}
+      placeholder="댓글 달기"
+    ></TextField>
+          
+  </DialogContent>
+  <DialogActions>
+    <Button variant="contained" color="primary" onClick={this.handleSubmitModal}>커맨트달기</Button>
+    <Button variant="outlined" color="primary" onClick={this.handleCloseModal}>닫기</Button>
+  </DialogActions>
+</Dialog>
+
+{/* 왼쪽 */}
+<div   className="left1" >
+    <div className="title"> 
+    <div className="content"> &nbsp;  {this.state.reviewReq.reviewTitle}</div>
+      <button className="exit" onClick={this.exit} type="button">나가기</button>
+    </div>
+    <div className = "review_mentee_content">
+    {this.state.reviewReq.reviewContent}
+    </div>
+    <div className="title"> <div className="content"> &nbsp; Review </div></div>
+    <div className="review_comment">
+      <div>&nbsp;</div>
+    <Comment  handleRemove={this.handleRemove} 
+                  lineNumber={lineNumber} 
+                  outputText={outputText}
+                  comment_tb={comment_tb}/>
+    </div>
+</div>
+<div   className="left2" >
+  <div className="review_editor">
+
+  <CodeEditor handleOutputText={this.handleOutputText} 
+                    modal_start={modal_start}
+                    handleState={this.handleState} 
+                    comment_tb={comment_tb}
+                    handleCompile_content={this.handleCompile_content}
+                    handleCompile1={handleCompile}/>
 
 
-        <Dialog open={this.state.open} onClose={this.handleClose}>
-          <DialogContent>
-            <div className="modal_head">&nbsp; Line{' '} {this.state.lineNumber}<br /></div>
-            <div className="modal_code">  {this.state.outputText.trim()} </div>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              multiline
-              id="comment_txt"
-              margin="normal"
-              style={{ width: 550, wordBreak: "breakAll" }}
-              rows={3}
-              value={this.state.text}
-              onChange={this.handleChange}
-              placeholder="댓글 달기"
-            ></TextField>
+  </div>
+  <div className="title"> 
+    <div className="content"> &nbsp; 실행결과  </div>
+    <button className="selectButton2" onClick={this.handleCompile} type="button">실행</button>
+     
+ </div>
+ <textarea className="compile_result_content" placeholder="실행 결과가 여기에 표시됩니다." readOnly>{this.state.compile_result}</textarea>
 
-          </DialogContent>
-          <DialogActions>
-            <Button variant="contained" color="primary" onClick={this.handleSubmitModal}>커맨트달기</Button>
-            <Button variant="outlined" color="primary" onClick={this.handleCloseModal}>닫기</Button>
-          </DialogActions>
-        </Dialog>
+</div>
 
-        {/* 왼쪽 */}
-        <div className="left1" >
-          <div className="title">
-            &nbsp;  {this.state.reviewReq.reviewTitle}
-            <button className="exit" onClick={this.exit} type="button">나가기</button>
-          </div>
-          <div className="review_mentee_content">
-            {this.state.reviewReq.reviewContent}
-          </div>
-          <div className="title"> <div className="content"> &nbsp; Review </div></div>
-          <div className="review_comment">
-          <div>&nbsp;</div>
-            <Comment handleRemove={this.handleRemove}
-              lineNumber={lineNumber}
-              outputText={outputText}
-              comment_tb={comment_tb} />
-          </div>
-        </div>
-        <div className="left2" >
-          <div className="review_editor">
-            <CodeEditor handleOutputText={this.handleOutputText}
-              modal_start={modal_start}
-              handleState={this.handleState}
-              comment_tb={comment_tb}
-              handleCompile_content={this.handleCompile_content}
-              handleCompile1={handleCompile} />
-          </div>
-          <div className="title">
-            <div className="content"> &nbsp; 실행결과  </div>
-            <button className="selectButton2" onClick={this.handleCompile} type="button">실행</button>
-
-          </div>
-          <textarea className="compile_result_content" placeholder="실행 결과가 여기에 표시됩니다." readOnly>{this.state.compile_result}</textarea>
-
-        </div>
-
-
-
+       
+      
       </div>
     );
   }
