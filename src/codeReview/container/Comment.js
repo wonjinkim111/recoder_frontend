@@ -39,7 +39,6 @@ export default class Comment extends Component {
 
         return (
             <div >
-                {console.log("111111111111111111111")}
                     {console.log(this.props.comment_tb)}
                 <div style={{ height: "45vh", overflowX: "hidden",overflow: 'hidden' }}>
                     {/* <div > &nbsp;&nbsp;&nbsp;{this.props.outputText.trim()} </div>   */}
@@ -49,6 +48,7 @@ export default class Comment extends Component {
                            <CommentItem
                                 cmt_line_number={comment.cmtLineNumber}
                                 content={comment.content}
+                                menteeCode={comment.cmtCode}
                                 cmtId={comment.cmtId}
                                 replys={comment.replys}
                                 key={index}

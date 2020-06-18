@@ -13,6 +13,8 @@ import { withRouter, Link as RouterLink } from 'react-router-dom';
 import { green } from '@material-ui/core/colors';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import Dropzone from "react-dropzone";
+import './styles.css';
 import MonacoEditor from '../codeReview/container/editor';
 import CodeEditor from '../codeReview/container/CodeEditor';
 
@@ -74,18 +76,25 @@ this.state = {
   reviewTitle: '',
   reviewContent: '',
   reviewCode:'',
-  reviewLanguage:"java",
+  reviewLanguage: 0,
   openreviewLanguage: false,
   titleError: '',
   contentError:'',
-  codeError: ''
+  codeError: '',
+  fileName:'',
+  file: null
 }
 
   this.handleValueChange = this.handleValueChange.bind(this)
   this.handleClickOpen = this.handleClickOpen.bind(this)
   this.handleClose = this.handleClose.bind(this);
   this.blockNull = this.blockNull.bind(this);
+}
 
+// file drop시 실행되는 함수
+handleDrop = acceptfile => {
+  console.log(acceptfile[0]);
+  this.setState({fileName:acceptfile[0].name, file:acceptfile[0]});
 }
 
 handleClosereviewLanguage = e => {
@@ -123,16 +132,13 @@ blockNull = () => {
   //this.setState({titleError:"제목을 입력해주세요"}) ;
   if(this.state.reviewContent.length === 0 ) contentError = "내용을 입력해 주세요";
   //this.setState({contentError:"내용을 입력해 주세요"});
-  if(this.state.reviewCode.length === 0 ) codeError = "소스코드를 입력해 주세요";
+  // if(this.state.reviewCode.length === 0 ) codeError = "소스코드를 입력해 주세요";
   //this.setState({codeError:"소스코드를 입력해주세요"});
+  if(this.state.file == null) codeError = "소스코드를 upload해 주세요";
 
   this.setState({
     titleError:titleError, contentError:contentError, codeError:codeError
   })
-
-  // console.log(this.state.titleError);
-  // console.log(this.state.contentError);
-  // console.log(this.state.codeError);
 
   if(titleError || contentError || codeError) return false;
   return true;
@@ -148,7 +154,7 @@ handleSubmit=(e)=>{
   
   // console.log("reviewTitle: "+this.state.reviewTitle)
   // console.log("reviewContent: "+this.state.reviewContent)
-  // console.log("reviewLanguage: "+1)
+   console.log(this.state.reviewLanguage)
   // console.log("reviewCode: "+this.state.reviewCode)
   const valid = this.blockNull();
   if(!valid){
@@ -157,30 +163,57 @@ handleSubmit=(e)=>{
 
   else{   
   const user = JSON.parse(sessionStorage.getItem('user'));
-    const url = 'http://59.29.224.144:30000/codereview';
-    axios.post(url, {
-      roomId: this.props.roomid,
-      mentorId: this.props.mentorid,
-      menteeId: user.menteeid,
-      reviewTitle: this.state.reviewTitle,
-      reviewContent: this.state.reviewContent,
-      reviewCode: this.state.reviewCode
+    const url = 'http://59.29.224.144:30000/codereview/file';
+    let form = new FormData();
+    form.append('roomId', this.props.roomid);
+    form.append('mentorId', this.props.mentorid);
+    form.append('menteeId', user.menteeid);
+    form.append('reviewLanguage',this.state.reviewLanguage);
+    form.append('reviewTitle', this.state.reviewTitle);
+    form.append('reviewContent', this.state.reviewContent);
+    form.append('file', this.state.file)
+
+    axios({
+      method: 'post',
+      url: `${url}`,
+      data: form,
+      headers: {'Content-Type' : 'multipart/form-data'}
     })
-     .then(response =>{console.log(response.data)
-        alert('추가되었습니다.');
-        window.location.href=`/menteedashboard/reviewlist`;
+    .then(response => {
+      console.log(response.headers)
+      alert('추가 되었습니다.');
+      window.location.href=`/menteedashboard/reviewlist`
+    })
+    .catch(error => {
+      console.log(error);
+      alert("다시 시도해 주십시오");
+    })
+  console.log(this.state.file);
+  }
+    //줄로 보내기
+    // axios.post(url, {
+    //   roomId: this.props.roomid,
+    //   mentorId: this.props.mentorid,
+    //   menteeId: user.menteeid,
+    //   reviewTitle: this.state.reviewTitle,
+    //   reviewContent: this.state.reviewContent,
+    //   reviewCode: this.state.reviewCode
+    // })
+    //  .then(response =>{console.log(response.data)
+    //     alert('추가되었습니다.');
+    //     window.location.href=`/menteedashboard/reviewlist`;
         
-      // this.props.history.push({
-      //   pathname: '/mentor/roomlist'
-      // });
+    //   // this.props.history.push({
+    //   //   pathname: '/mentor/roomlist'
+    //   // });
     
-    }
-      ) 
-      .catch(error => {
-        alert("다시 시도해 주십시오")
-      //   setValues({reviewTitle:'', reviewContent:''});
-      })
-    }
+    // }
+    //   ) 
+    //   .catch(error => {
+    //     alert("다시 시도해 주십시오")
+    //   //   setValues({reviewTitle:'', reviewContent:''});
+    //   })
+    // }
   
 } // handleSubmit 끝
 
@@ -226,102 +259,124 @@ const { classes } = this.props;
 //console.log('왜안찍혀');
 
 return (
+  <div>
+    <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
+      리뷰신청
+    </Button>
 
-<div>
+    <Dialog open={this.state.open} onClose={this.handleClose}>
+      <DialogTitle>리뷰 신청</DialogTitle>
+      <DialogContent>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="reviewTitle"
+          label="제목"
+          placeholder="제목을 입력해주세요"
+          name="reviewTitle"
+          autoComplete="reviewTitle"
+          autoFocus
+          value={this.state.reviewTitle}
+          onChange={this.handleChangeForm}
+        />
+        <div style={{ color: "red", fontSize: "12px" }}>
+          {this.state.titleError}
+        </div>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          multiline
+          rows={5}
+          name="reviewContent"
+          label="설명"
+          type="reviewContent"
+          id="reviewContent"
+          placeholder="설명을 입력해주세요"
+          autoComplete="current-reviewContent"
+          value={this.state.reviewContent}
+          onChange={this.handleChangeForm}
+        />
+        <div style={{ color: "red", fontSize: "12px" }}>
+          {this.state.contentError}
+        </div>
+        <Select
+          labelId="demo-controlled-open-select-label"
+          style={{ position: "relative", bottom: "-5px", left: "0%", margin:'1vw'}}
+          open={this.state.openreviewLanguage}
+          name="reviewLanguage"
+          onClose={this.handleClosereviewLanguage}
+          onOpen={this.handleOpenreviewLanguage}
+          value={this.state.reviewLanguage}
+          onChange={this.handleChangeForm}
+        >
+          <MenuItem value="0">java</MenuItem>
+          <MenuItem value="1">c</MenuItem>
+          <MenuItem value="2">c++</MenuItem>
+        </Select>
+        {/* <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          multiline
+          rows={10}
+          name="reviewCode"
+          label="코드"
+          type="reviewCode"
+          id="reviewCode"
+          placeholder="코드을 입력해주세요"
+          autoComplete="current-reviewCode"
+          value={this.state.reviewCode}
+          onChange={this.handleChangeForm}
+        /> */}
 
-<Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-  리뷰신청
-</Button>
-
-<Dialog open={this.state.open} onClose={this.handleClose}>
-
-  <DialogTitle>리뷰 신청</DialogTitle>
-
-  <DialogContent>
-
-  <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="reviewTitle"
-              label="제목"
-              placeholder="제목을 입력해주세요"
-              name="reviewTitle"
-              autoComplete="reviewTitle"
-              autoFocus
-              value={this.state.reviewTitle}
-              onChange={this.handleChangeForm}
-            />
-            <div style={{ color: "red", fontSize: "12px" }}>
-                  {this.state.titleError}
-            </div>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              multiline
-              rows={5}
-              name="reviewContent"
-              label="설명"
-              type="reviewContent"
-              id="reviewContent"
-              placeholder="설명을 입력해주세요"
-              autoComplete="current-reviewContent"
-              value={this.state.reviewContent}
-                  onChange={this.handleChangeForm}
-            />
-            <div style={{ color: "red", fontSize: "12px" }}>
-                  {this.state.contentError}
-            </div>          
-          <Select
-            labelId="demo-controlled-open-select-label"
-            
-            style={{position:"relative",bottom:"-5px",left:"0%"}}
-            open={this.state.openreviewLanguage}
-            name="reviewLanguage"
-            onClose={this.handleClosereviewLanguage}
-            onOpen={this.handleOpenreviewLanguage}
-            value={this.state.reviewLanguage}
-            onChange={this.handleChangeForm}
-          >
-            <MenuItem value={"java"}>java</MenuItem>
-            <MenuItem value={"c"}>c</MenuItem>
-            <MenuItem value={"cpp"}>c++</MenuItem>
-          </Select>
-              <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              multiline
-              rows={10}
-              name="reviewCode"
-              label="코드"
-              type="reviewCode"
-              id="reviewCode"
-              placeholder="코드을 입력해주세요"
-              autoComplete="current-reviewCode"
-              value={this.state.reviewCode}
-                  onChange={this.handleChangeForm}
-            />
-            <div style={{ color: "red", fontSize: "12px" }}>
-                  {this.state.codeError}
-            </div>
-  </DialogContent>
-
-  <DialogActions>
-    <Button variant="contained" color="primary" onClick={this.handleSubmit}>신청</Button>
-    <Button variant="outlined" color="primary" onClick={this.handleClose}>닫기</Button>
-  </DialogActions>
-
-</Dialog>
-
-</div>
-)
-}
-}
+        <Dropzone onDrop={this.handleDrop}>
+         {({
+          getRootProps,
+          getInputProps,
+          isDragActive,
+          isDragAccept,
+          isDragReject
+        }) => {
+          // additional CSS depends on dragging status
+          const additionalClass = isDragAccept
+            ? "accept"
+            : isDragReject
+            ? "reject"
+            : "";
+            return (
+              <div
+                {...getRootProps({
+                  className: `dropzone ${additionalClass}`
+                })}
+              >
+                <input {...getInputProps()} />
+                <span>{isDragActive ? "📂" : "📁"}</span>
+                <p>Drag'n'drop file, or click to select files</p>
+              </div>
+            );
+          }}
+        </Dropzone>
+        <div>
+          <strong>File:</strong>
+          <ul>{this.fileName}
+          </ul>
+        </div>
+        <div style={{ color: "red", fontSize: "12px" }}>
+          {this.state.codeError}
+        </div>
+      </DialogContent>
+      <DialogActions>
+        <Button variant="contained" color="primary" onClick={this.handleSubmit}>신청</Button>
+        <Button variant="outlined" color="primary" onClick={this.handleClose}>닫기</Button>
+      </DialogActions>
+    </Dialog>
+  </div>
+)}}
 
 export default withStyles(styles)(ReviewReq)
 
