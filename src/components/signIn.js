@@ -121,7 +121,7 @@ export default function SignIn(props){
     else{
     
       //id, token, mentorid, menteeid 받아옴
-      const url = 'http://59.29.224.144:10000/users/login';
+      const url = 'http://192.168.45.198:10000/users/login';
       axios.post(url, {
         email: values.email,
         encryptedPassword: values.encryptedPassword

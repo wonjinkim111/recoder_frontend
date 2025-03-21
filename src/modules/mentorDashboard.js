@@ -37,7 +37,7 @@ export default function MentorDashBoard(props){
     //const roomId = getUrl[1].split("=");
 
     const userData = JSON.parse(sessionStorage.getItem('user'));
-    const url = `http://59.29.224.144:10000/users/${userData.id}`;
+    const url = `http://192.168.45.198:10000/users/${userData.id}`;
     axios.get(url)
     .then(response =>{
       console.log(response);
