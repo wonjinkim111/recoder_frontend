@@ -93,7 +93,7 @@ class RoomList extends React.Component{
     }
     
     componentDidMount(){
-        const url = 'http://192.168.45.105:20000/room';
+        const url = 'http://192.168.45.134:20000/room';
         axios.get(url)
          .then(response =>{console.log(response)
             this.setState({
