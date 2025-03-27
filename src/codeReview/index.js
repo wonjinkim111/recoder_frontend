@@ -68,7 +68,7 @@ class App extends Component {
     //   }
     // }
     const userData = JSON.parse(sessionStorage.getItem('user'));
-    const url = `http://192.168.45.134:10000/users/${userData.id}`;
+    const url = `http://192.168.45.134:32513/users/${userData.id}`;
     axios.get(url)
       .then(response => {
         console.log(response)
@@ -82,7 +82,7 @@ class App extends Component {
         console.log(error);
       })
 
-    const url1 = `http://192.168.45.134:30000/codereview/${this.props.match.params.id}`;
+    const url1 = `http://192.168.45.134:31920/codereview/${this.props.match.params.id}`;
     axios.get(url1)
       .then(response => {
         this.setState({ reviewReq: response.data })
@@ -228,7 +228,7 @@ class App extends Component {
     const getUrl = document.location.href.split("/");
     const len = getUrl.length;
     console.log(getUrl[len - 1]);
-    const url = `http://192.168.45.134:30000/codereview/compilewindow/${getUrl[len - 1]}`
+    const url = `http://192.168.45.134:31920/codereview/compilewindow/${getUrl[len - 1]}`
     axios.get(url)
       .then(response => {
         console.log(response);

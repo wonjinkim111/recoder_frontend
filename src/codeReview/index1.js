@@ -49,7 +49,7 @@ class App extends Component{
   }
 
   componentDidMount(){
-    const url1 = `http://192.168.45.134:30000/codereview/${this.props.match.params.id}`;
+    const url1 = `http://192.168.45.134:31920/codereview/${this.props.match.params.id}`;
     axios.get(url1)
         .then(response =>{
            this.setState({ reviewReq : response.data})
