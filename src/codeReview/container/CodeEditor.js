@@ -111,7 +111,7 @@ class CodeEditor extends React.Component {
     const getUrl = document.location.href.split("/");
     const len = getUrl.length;
     console.log(getUrl)
-    const url = `http://192.168.45.216:31920/codereview/${getUrl[len - 1]}`;
+    const url = `http://192.168.45.115:31920/codereview/${getUrl[len - 1]}`;
     axios.get(url)
       .then(response => {
         console.log("11111111111111" + response.data);
@@ -152,7 +152,7 @@ class CodeEditor extends React.Component {
 
     //   }
     // }
-    const url = `http://192.168.45.216:40000/codereview/compile2`
+    const url = `http://192.168.45.115:40000/codereview/compile2`
     axios.get(url)
       .then(function (response) {
         //console.log(response);

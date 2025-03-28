@@ -67,7 +67,7 @@ export default function CommentItem(props) {
     console.log(props.comment_cmtId)
     console.log(text)
     console.log(props.nickname)
-    const url = 'http://192.168.45.216:40000/comment/reply';
+    const url = 'http://192.168.45.115:40000/comment/reply';
     axios.post(url, {
       cmtId: props.comment_cmtId,
       replyContent: text,
@@ -102,7 +102,7 @@ export default function CommentItem(props) {
     console.log(comment_cmtId)
     const form = new FormData();
     form.append('cmtId', comment_cmtId);
-    const url = `http://192.168.45.216:40000/comment?cmtId=${comment_cmtId}`;
+    const url = `http://192.168.45.115:40000/comment?cmtId=${comment_cmtId}`;
     axios.delete(url)
       .then(response => {
         console.log(response.data)
