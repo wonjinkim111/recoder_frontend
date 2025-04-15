@@ -49,7 +49,7 @@ class App extends Component{
   }
 
   componentDidMount(){
-    const url1 = `http://192.168.45.45:31920/codereview/${this.props.match.params.id}`;
+    const url1 = `http://192.168.45.139:31920/codereview/${this.props.match.params.id}`;
     axios.get(url1)
         .then(response =>{
            this.setState({ reviewReq : response.data})
@@ -60,7 +60,7 @@ class App extends Component{
           console.log(error);
         })
 
-    const url2 = `http://192.168.45.45:40000/comment/${this.props.match.params.id}`;
+    const url2 = `http://192.168.45.139:40000/comment/${this.props.match.params.id}`;
     axios.get(url2)
         .then(response =>{
           console.log("여기는 코멘트 가져오기")
@@ -143,7 +143,7 @@ handleSubmitModal = () =>{
   ///console.log(this.state.text)
   if(this.state.text.length){
   const user = JSON.parse(sessionStorage.getItem('user'));
-  const url = 'http://192.168.45.45:40000/comment';
+  const url = 'http://192.168.45.139:40000/comment';
   console.log(this.props.match.params.id);
   console.log(this.state);
   axios.post(url, {

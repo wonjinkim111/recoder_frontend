@@ -53,7 +53,7 @@ class RoomItem extends React.Component {
 
     clickOpen = (e) => {
         this.setState({ open: true })
-        const url = `http://192.168.45.45:32513/users/mentor/${e.currentTarget.value}`;
+        const url = `http://192.168.45.139:32513/users/mentor/${e.currentTarget.value}`;
         axios.get(url)
             .then(response => {
                 console.log(response);
