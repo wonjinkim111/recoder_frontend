@@ -79,7 +79,7 @@ class MentorRoom extends React.Component {
     // const getUrl = document.location.href.split("?");
     // const roomId = getUrl[1].split("=");
     const roomId = this.props.match.params.id;
-    const url = `http://192.168.45.12:32246/room/${roomId}`;
+    const url = `http://192.168.45.47:32246/room/${roomId}`;
     axios.get(url)
       .then(response => {
         console.log(response)
@@ -153,7 +153,7 @@ class MentorRoom extends React.Component {
     form.append('file', this.state.file);
     form.append('roomMax', this.state.roomMax);
 
-    const url = `http://192.168.45.12:32246/room/`;
+    const url = `http://192.168.45.47:32246/room/`;
     axios.put(url, form, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -174,7 +174,7 @@ class MentorRoom extends React.Component {
   //삭제하기
   handleDelete = (e) => {
     //const roomId = 35;
-    const url = `http://192.168.45.12:32246/room/${this.state.roomId}`;
+    const url = `http://192.168.45.47:32246/room/${this.state.roomId}`;
 
     axios.delete(url)
       .then(response => {
