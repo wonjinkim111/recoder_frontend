@@ -88,7 +88,7 @@ export default function SignUp(props){
     if(!valid)console.error("invalid");
 
     else{
-      const url = 'http://192.168.45.139:32513/users';
+      const url = 'http://192.168.45.12:32513/users';
       axios.post(url, {
         name: values.name,
         email: values.email,
