@@ -47,7 +47,7 @@ class MenteeItem extends React.Component{
         form.append('menteeId', this.props.mentee.menteeId);
         form.append('roomId', this.props.mentee.roomId);
 
-        const url='http://192.168.1.20:32513/users/mentor'
+        const url='http://192.168.0.3:32513/users/mentor'
         axios.delete(url, {data:form})
             .then(response=>{
                 console.log(response)
