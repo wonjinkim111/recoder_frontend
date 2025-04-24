@@ -88,7 +88,7 @@ export default function SignUp(props){
     if(!valid)console.error("invalid");
 
     else{
-      const url = 'http://192.168.0.40.nip.io/users';
+      const url = 'http://recoder.com/users';
       axios.post(url, {
         name: values.name,
         email: values.email,
