@@ -68,7 +68,7 @@ class App extends Component {
     //   }
     // }
     const userData = JSON.parse(sessionStorage.getItem('user'));
-    const url = `http://192.168.0.40:32513/users/${userData.id}`;
+    const url = `http://192.168.0.40.nip.io/users/${userData.id}`;
     axios.get(url)
       .then(response => {
         console.log(response)
