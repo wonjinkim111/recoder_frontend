@@ -58,9 +58,9 @@ class MenteeList extends React.Component{
         //const roomId = getUrl[1].split("=");
         //console.log(getUrl);
         //console.log(roomId);
-       //const url = `http://recoder.com/users/mentor/mentees/19`;
+       //const url = `http://recoder.com:31413/users/mentor/mentees/19`;
        //console.log(this.props.match.params);
-       const url = `http://recoder.com/users/mentor/mentees/${this.props.match.params.id}`;
+       const url = `http://recoder.com:31413/users/mentor/mentees/${this.props.match.params.id}`;
         axios.get(url)
             .then(response=>{
                 console.log(response);
