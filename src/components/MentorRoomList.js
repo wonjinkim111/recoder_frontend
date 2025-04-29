@@ -84,7 +84,7 @@ export default function MentorRoomList(props) {
   useEffect(() => {
     const user = JSON.parse(sessionStorage.getItem('user'));
     console.log(user);
-    const url = `http://192.168.0.40:32246/room/mentor/${user.mentorid}`;
+    const url = `http://recoder.com:31413/room/mentor/${user.mentorid}`;
     axios.get(url)
     .then(response =>{console.log(response)
         setMentorRoom(response.data)
