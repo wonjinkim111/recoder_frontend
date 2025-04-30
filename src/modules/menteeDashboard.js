@@ -24,21 +24,39 @@ const useStyles = makeStyles((theme) => ({
 export default function MentorDashBoard(props){
   const [user, setUser] = React.useState([]);
 
-  useEffect(() => {
-    const userData = JSON.parse(sessionStorage.getItem('user'));
-    const url = `http://recoder.com:31413/users/${userData.id}`;
-    axios.get(url)
-    .then(response =>{
-      console.log(response);
-      setUser(response.data)
-    }) 
-      .catch(error => {
-        // alert("error")
-        console.log(error);
-      })
+//  useEffect(() => {
+//    const userData = JSON.parse(sessionStorage.getItem('user'));
+//    const url = `http://recoder.com:31413/users/${userData.id}`;
+//    axios.get(url)
+//    .then(response =>{
+//      console.log(response);
+//      setUser(response.data)
+//    }) 
+//      .catch(error => {
+//        // alert("error")
+//        console.log(error);
+//      })
 
 
-  }, []);
+//  }, []);
+
+useEffect(() => {
+  const userData = JSON.parse(sessionStorage.getItem('user'));
+  const url = `http://recoder.com:31413/users/${userData.id}`;
+
+  axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${userData.token}`  // 여기에 토큰 추가!
+    }
+  })
+  .then(response => {
+    console.log(response);
+    setUser(response.data);
+  })
+  .catch(error => {
+    console.error("유저 정보 불러오기 실패:", error);
+  });
+}, []);
 
   const roomlistClick = () => {
     window.location.href='/menteedashboard/roomlist';
