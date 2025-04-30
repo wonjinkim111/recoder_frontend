@@ -82,15 +82,29 @@ export default function SignIn(props){
     // })
 
     //axios없을때 테스트용
-    const [test] = React.useState({
-      name: 'test',
-      id: 'test',
-      token: 'testtoken',
-      email: 'test@codeReview.com',
-      encryptedPassword: 'test1234',
-      gender: 0,
-      regDate: '2020-05-30 00:00:00'
+    //const [test] = React.useState({
+    //  name: 'test',
+    //  id: 'test',
+    //  token: 'testtoken',
+    //  email: 'test@codeReview.com',
+    //  encryptedPassword: 'test1234',
+    //  gender: 0,
+    //  regDate: '2020-05-30 00:00:00'
+//  })
+    .then(response => {
+      console.log(response.data); // 예: {userId: 5, token: "...", mentorId: 10, menteeId: 4}
+    
+      sessionStorage.setItem('user', JSON.stringify({
+        id: response.data.userId,
+        token: response.data.token,
+        mentorId: response.data.mentorId,
+        menteeId: response.data.menteeId
+      }));
+    
+      window.location.href = '/';  // 로그인 성공 시 홈으로 이동
     })
+    
+
 
     const handleChangeForm = e => {
       setValues({...values, [e.target.name]: e.target.value});
