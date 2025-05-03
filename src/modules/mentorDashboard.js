@@ -60,7 +60,10 @@ export default function MentorDashBoard(props){
       axios.get(url)
         .then(res => {
           console.log("Room list fetched:", res.data);
-          // 필요한 로직 처리
+          // 첫 번째 room id를 기본값으로 사용
+          if (res.data.length > 0) {
+            setRoomid(res.data[0].roomId);  // 이 부분 중요
+          }
         })
         .catch(err => {
           console.error("Room list fetch error:", err);
