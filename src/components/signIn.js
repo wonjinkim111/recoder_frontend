@@ -135,10 +135,10 @@ export default function SignIn(props){
        .then(response => {
         console.log(response.data);
         sessionStorage.setItem('user', JSON.stringify({
-          id: response.data.userId,
-          token: response.data.token,
-          mentorId: response.data.mentorId,
-          menteeId: response.data.menteeId
+          id: Array.isArray(response.data.userId) ? response.data.userId[0] : response.data.userId,
+          token: Array.isArray(response.data.token) ? response.data.token[0] : response.data.token,
+          mentorId: Array.isArray(response.data.mentorId) ? response.data.mentorId[0] : response.data.mentorId,
+          menteeId: Array.isArray(response.data.menteeId) ? response.data.menteeId[0] : response.data.menteeId
         }));
         window.location.href = '/';
         })
