@@ -28,28 +28,46 @@ export default function MentorDashBoard(props){
   const [user, setUser] = React.useState([]);
   const [roomid, setRoomid] = React.useState();
 
+  // useEffect(() => {
+  //   //console.log(props)
+  //   const getUrl = document.location.href.split("/");
+  //   //console.log(getUrl);
+  //   const len = getUrl.length;
+  //   setRoomid(getUrl[len-1]);
+  //   //const roomId = getUrl[1].split("=");
+
+  //   const userData = JSON.parse(sessionStorage.getItem('user'));
+  //   console.log(user);
+  //   const url = `http://recoder.com:31413/users/${userData.Id}`;
+  //   axios.get(url)
+  //   .then(response =>{
+  //     console.log(response);
+  //     setUser(response.data)
+  //   }) 
+  //     .catch(error => {
+  //       // alert("error")
+  //       console.log(error);
+  //     })
+
+
+  // }, []);
+
   useEffect(() => {
-    //console.log(props)
-    const getUrl = document.location.href.split("/");
-    //console.log(getUrl);
-    const len = getUrl.length;
-    setRoomid(getUrl[len-1]);
-    //const roomId = getUrl[1].split("=");
-
-    const userData = JSON.parse(sessionStorage.getItem('user'));
-    console.log(user);
-    const url = `http://recoder.com:31413/users/${userData.Id}`;
-    axios.get(url)
-    .then(response =>{
-      console.log(response);
-      setUser(response.data)
-    }) 
-      .catch(error => {
-        // alert("error")
-        console.log(error);
-      })
-
-
+    const userData = JSON.parse(sessionStorage.getItem("user"));
+  
+    if (userData && userData.mentorId) {
+      const url = `http://recoder.com:31413/room/mentor/${userData.mentorId}`;
+      axios.get(url)
+        .then(res => {
+          console.log("Room list fetched:", res.data);
+          // 필요한 로직 처리
+        })
+        .catch(err => {
+          console.error("Room list fetch error:", err);
+        });
+    } else {
+      console.error("mentorId is missing in sessionStorage");
+    }
   }, []);
 
   const menteelistClick = () => {

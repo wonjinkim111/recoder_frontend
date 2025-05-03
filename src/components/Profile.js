@@ -22,7 +22,7 @@ class Profile extends React.Component{
 
     componentDidMount(){
         const userData = JSON.parse(sessionStorage.getItem('user'));
-        const url = `http://recoder.com:31413/users/${userData.id}`;
+        const url = `http://recoder.com:31413/users/${userData.Id}`;
         axios.get(url)
          .then(response =>{console.log(response)
             this.setState({
