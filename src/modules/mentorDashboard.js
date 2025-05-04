@@ -74,14 +74,28 @@ export default function MentorDashBoard(props){
   }, []);
 
   const menteelistClick = () => {
-    window.location.href=`/mentordashboard/${roomid}`;
-  }
+    if (roomid) {
+      window.location.href = `/mentordashboard/${roomid}`;
+    } else {
+      alert("roomid가 아직 설정되지 않았습니다. 잠시 후 다시 시도해주세요.");
+    }
+  };
+
   const codelistClick = () => {
-    window.location.href=`/mentordashboard/reviewlist/${roomid}`;
-  }
+    if (roomid) {
+      window.location.href = `/mentordashboard/reviewlist/${roomid}`;
+  }  else {
+      alert("roomid가 아직 설정되지 않았습니다. 잠시 후 다시 시도해주세요.");
+    }
+  };
+
   const settingClick = () => {
-    window.location.href=`/mentordashboard/setting/${roomid}`;
-  }
+    if (roomid) {
+      window.location.href = `/mentordashboard/setting/${roomid}`;
+    } else {
+      alert("roomid가 아직 설정되지 않았습니다. 잠시 후 다시 시도해주세요.");
+    }
+  };
 
     const classes = useStyles();
     // console.log(props);
