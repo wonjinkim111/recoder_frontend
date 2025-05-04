@@ -31,17 +31,19 @@ export default function MentorLogin(props){
     const formSubmit = e => {
         e.preventDefault();
         if(mentee === "") return;
+        
         setMentee('')
         setOpen(false);
+    
     //axios에서 받아서 하기
     const userId = JSON.parse(sessionStorage.getItem('user'));
-    const url = `http://recoder.com:31413/users/mentee/${userId.id}`;
+    const url = `http://recoder.com:31413/users/mentee/${userData.id}`;
       axios.post(url, {
         menteeNickname : mentee
       })
       .then(response =>{
         let userData = JSON.parse(sessionStorage.getItem('user'));
-        sessionStorage.setItem('user', JSON.stringify({id:userData.id, token:userData.token, mentorid: userData.mentorid, menteeid: response.data.menteeId}))
+        sessionStorage.setItem('user', JSON.stringify({id:userData.id, token:userData.token, mentorId: userData.mentorId, menteeId: response.data.menteeId}))
           alert('추가되었습니다.');
           sessionStorage.setItem('state',JSON.stringify('mentee'));
           props.history.push({

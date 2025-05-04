@@ -48,7 +48,7 @@ export default function MentorLogin(props){
     //axios에서 받아서 하기
     const userId = JSON.parse(sessionStorage.getItem('user'));
     //const userId = 60;
-    const url = `http://recoder.com:31413/users/mentor/${userId.id}`;
+    const url = `http://recoder.com:31413/users/mentor/${userData.id}`;
       axios.post(url, {
         mentorNickname : mentor.mentorNickname,
         introduction : mentor.introduction
@@ -59,7 +59,7 @@ export default function MentorLogin(props){
           console.log(response.data);
           sessionStorage.setItem('state',JSON.stringify('mentor'));
           let userData = JSON.parse(sessionStorage.getItem('user'));
-        sessionStorage.setItem('user', JSON.stringify({id:userData.id, token:userData.token, mentorid: response.data.mentorId, menteeid: userData.menteeid}))
+        sessionStorage.setItem('user', JSON.stringify({id:userData.id, token:userData.token, mentorId: response.data.mentorId, menteeId: userData.menteeId}))
           props.history.push({
             pathname: '/mentor/roomlist'
           });
