@@ -12,6 +12,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import SettingsIcon from '@material-ui/icons/Settings';
 import axios from 'axios';
+import PeopleIcon from '@material-ui/icons/People';
+import ForumIcon from '@material-ui/icons/Forum';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
