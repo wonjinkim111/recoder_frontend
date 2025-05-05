@@ -36,7 +36,7 @@ export default function MentorLogin(props){
         setOpen(false);
     
     //axios에서 받아서 하기
-    const userId = JSON.parse(sessionStorage.getItem('user'));
+    const userData = JSON.parse(sessionStorage.getItem('user'));
     const url = `http://recoder.com:31413/users/mentee/${userData.id}`;
       axios.post(url, {
         menteeNickname : mentee
