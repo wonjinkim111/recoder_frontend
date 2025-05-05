@@ -21,99 +21,60 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function MentorDashBoard(props){
-  const [user, setUser] = React.useState([]);
-
-//  useEffect(() => {
-//    const userData = JSON.parse(sessionStorage.getItem('user'));
-//    const url = `http://recoder.com:31413/users/${userData.id}`;
-//    axios.get(url)
-//    .then(response =>{
-//      console.log(response);
-//      setUser(response.data)
-//    }) 
-//      .catch(error => {
-//        // alert("error")
-//        console.log(error);
-//      })
-
-
-//  }, []);
-
-useEffect(() => {
-  const userData = JSON.parse(sessionStorage.getItem('user'));
-  console.log("✅ session user:", userData);
-  const url = `http://recoder.com:31413/users/${userData.Id}`;
-
-  axios.get(url, {
-    headers: {
-      Authorization: `Bearer ${userData.token}`  // 여기에 토큰 추가!
-    }
-  })
-  .then(response => {
-    console.log(response);
-    setUser(response.data);
-  })
-  .catch(error => {
-    console.error("유저 정보 불러오기 실패:", error);
-  });
-}, []);
-
-  const roomlistClick = () => {
-    window.location.href='/menteedashboard/roomlist';
+  export default function MentorDashBoard(){
+    const [roomId, setRoomId] = React.useState(null);
+    const [loading, setLoading] = React.useState(true);
+    const [user, setUser] = React.useState({});
+  
+    useEffect(() => {
+      const rawUser = sessionStorage.getItem("user");
+      if (!rawUser) return;
+  
+      const userData = JSON.parse(rawUser);
+      setUser(userData);
+  
+      if (!userData.mentorId) {
+        console.error("mentorId가 없습니다.");
+        return;
+      }
+  
+      axios.get(`http://recoder.com:31413/room/mentor/${userData.mentorId}`)
+        .then(res => {
+          if (res.data.length > 0) {
+            setRoomId(res.data[0].roomId);
+          }
+        })
+        .catch(err => {
+          console.error("room list 에러:", err);
+        })
+        .finally(() => setLoading(false));
+    }, []);
+  
+    const handleNavigation = (path) => {
+      if (!roomId) return alert("roomId가 아직 설정되지 않았습니다.");
+      window.location.href = `${path}/${roomId}`;
+    };
+  
+    if (loading) return <div>로딩 중...</div>;
+  
+    return (
+      <List>
+        <ListItem>
+          <ListItemAvatar><Avatar /></ListItemAvatar>
+          <ListItemText primary={`${user.mentorNickname || "멘토님"}`} />
+        </ListItem>
+        <ListItem button onClick={() => handleNavigation("/mentordashboard")}>
+          <ListItemIcon><PeopleIcon /></ListItemIcon>
+          <ListItemText primary="Mentees" />
+        </ListItem>
+        <ListItem button onClick={() => handleNavigation("/mentordashboard/reviewlist")}>
+          <ListItemIcon><ForumIcon /></ListItemIcon>
+          <ListItemText primary="Code List" />
+        </ListItem>
+        <ListItem button onClick={() => handleNavigation("/mentordashboard/setting")}>
+          <ListItemIcon><SettingsIcon /></ListItemIcon>
+          <ListItemText primary="Settings" />
+        </ListItem>
+      </List>
+    );
   }
-  const participatingClick = () => {
-    window.location.href='/menteedashboard/reviewlist';
-  }
-
-    const classes = useStyles();
-    // console.log(props);
-    // console.log(props.user)
-    
-    return(
-    // <div className={classes.root}>
-    <List component="nav" style={{border:"1 solid black"}} subheader={
-        <ListSubheader component="div" id="nested-list-subheader">
-          Mentee DashBoard
-        </ListSubheader>}
-        className={classes.root}
-     >
-
-    <ListItem alignItems="center" style={{backgroundColor: 'gainsboro'}}>
-    <ListItemAvatar>
-        <Avatar />
-    </ListItemAvatar>
-    <ListItemText primary={`${user.menteeNickname} 님`}/>
-    {/* <ListItemText primary='000님'/> */}
-    </ListItem>
-
-    <ListItem button onClick={roomlistClick}>
-      <ListItemIcon>
-        <AccountBalanceIcon />
-      </ListItemIcon>
-      <ListItemText primary="Room List" />
-    </ListItem>
-
-    <ListItem button onClick={participatingClick}>
-      <ListItemIcon>
-        <RecentActorsIcon />
-      </ListItemIcon>
-      <ListItemText primary="Participating"/>
-    </ListItem>
-
-    <ListItem button>
-      <ListItemIcon>
-        <ThumbUpAltIcon />
-      </ListItemIcon>
-      <ListItemText primary="Reviews" />
-    </ListItem>
-
-    <ListItem button>
-      <ListItemIcon>
-        <SettingsIcon />
-      </ListItemIcon>
-      <ListItemText primary="Settings" />
-    </ListItem>
-  </List>
-    )
-}

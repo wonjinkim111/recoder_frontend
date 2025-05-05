@@ -17,103 +17,60 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MentorLogin(props){
-    const classes = useStyles();
-
-    const [open, setOpen]=React.useState(false);
-    const [mentor, setMentor] = React.useState({
-        mentorNickname : '',
-        introduction: ''
-    })
-    const [user, setUser] = React.useState({
-        id:'',
-        token:'',
-        mentorid:'',
-        menteeid:''
-    })
-
-    const clickOpen = () => {
-        setOpen(true);
-    }
-    const clickClose = () => {
-        setOpen(false);
-    }
-    const formSubmit = e => {
-        e.preventDefault();
-        if(mentor.mentorNickname === "" || mentor.introduction === "") return;
-        setMentor({
-            mentorNickname: '',
-            introduction: ''
-        })
-        setOpen(false);
-    //axios에서 받아서 하기
-    const userData = JSON.parse(sessionStorage.getItem('user'));
-    //const userId = 60;
-    const url = `http://recoder.com:31413/users/mentor/${userData.id}`;
-      axios.post(url, {
-        mentorNickname : mentor.mentorNickname,
-        introduction : mentor.introduction
-      })
-      .then(response =>{
-          //console.log(response.headers);
-          alert('추가되었습니다.');
-          console.log(response.data);
-          sessionStorage.setItem('state',JSON.stringify('mentor'));
-          let userData = JSON.parse(sessionStorage.getItem('user'));
-        sessionStorage.setItem('user', JSON.stringify({id:userData.id, token:userData.token, mentorId: response.data.mentorId, menteeId: userData.menteeId}))
-          props.history.push({
-            pathname: '/mentor/roomlist'
-          });
-      }
-        ) 
-        .catch(error => {
-            console.log(error);
-          alert("error")
-        })
-    //응답받아서 정상이면 멘토추가되었으니 페이지 변경하기
-
-    }
-    
+    const [open, setOpen] = React.useState(false);
+    const [mentor, setMentor] = React.useState({ mentorNickname: '', introduction: '' });
+  
+    const clickOpen = () => setOpen(true);
+    const clickClose = () => setOpen(false);
+  
     const handleChangeForm = e => {
-        setMentor({...mentor, [e.target.name]: e.target.value});
-      }
-
-
-    return(
-        <Container >
-            <Typography component="div" style={{borderRadius: '40px', border: '2px solid purple', margin: '10vh', backgroundColor: 'lavender', padding:'20vh'}} >
-             <Button style={{position:"relative", left: "36%",}}variant="contained" color="secondary" onClick={clickOpen}>멘토생성하려면 클릭!</Button>
-             <Dialog open={open} onClose={clickClose}>
-                <DialogTitle>멘토 추가</DialogTitle>
-                <DialogContent>
-                <TextField 
-                    label="닉네임" 
-                    margin="normal" 
-                    fullWidth 
-                    autoFocus 
-                    name="mentorNickname" 
-                    value={mentor.mentorNickname} 
-                    error={mentor.mentorNickname === ""} 
-                    helperText={mentor.mentorNickname === "" ? '닉네임을 입력해주세요!' : ' '} 
-                    onChange={handleChangeForm}/>
-                <TextField 
-                    label="멘토 정보" 
-                    margin="normal" 
-                    fullWidth 
-                    multiline 
-                    rows={3} 
-                    variant="outlined" 
-                    name="introduction" 
-                    value={mentor.introduction}
-                    error={mentor.introduction === ""} 
-                    helperText={mentor.introduction === "" ? '정보를 입력해주세요' : ' '} 
-                    onChange={handleChangeForm}/>
-                </DialogContent>
-                <DialogActions>
-                    <Button variant="contained" color="primary" onClick={formSubmit}>추가</Button>
-                    <Button variant="outlined" color="primary" onClick={clickClose}>닫기</Button>
-                </DialogActions>
-             </Dialog>
-            </Typography>
-        </Container>
-    )
+      setMentor({ ...mentor, [e.target.name]: e.target.value });
+    };
+  
+    const formSubmit = e => {
+      e.preventDefault();
+      if (!mentor.mentorNickname || !mentor.introduction) return;
+  
+      const rawUser = sessionStorage.getItem("user");
+      if (!rawUser) return alert("로그인이 필요합니다.");
+  
+      const userData = JSON.parse(rawUser);
+      if (!userData.id) return alert("user id가 없습니다.");
+  
+      axios.post(`http://recoder.com:31413/users/mentor/${userData.id}`, {
+        mentorNickname: mentor.mentorNickname,
+        introduction: mentor.introduction
+      }).then(response => {
+        sessionStorage.setItem("state", JSON.stringify("mentor"));
+        sessionStorage.setItem("user", JSON.stringify({
+          ...userData,
+          mentorId: response.data.mentorId
+        }));
+        props.history.push("/mentor/roomlist");
+      }).catch(() => {
+        alert("멘토 등록 중 오류가 발생했습니다.");
+      });
+  
+      setOpen(false);
+      setMentor({ mentorNickname: '', introduction: '' });
+    };
+  
+    return (
+      <Container>
+        <Typography>
+          <Button onClick={clickOpen}>멘토생성하려면 클릭!</Button>
+          <Dialog open={open} onClose={clickClose}>
+            <DialogTitle>멘토 추가</DialogTitle>
+            <DialogContent>
+              <TextField label="닉네임" name="mentorNickname" fullWidth value={mentor.mentorNickname} onChange={handleChangeForm} />
+              <TextField label="멘토 정보" name="introduction" multiline rows={3} fullWidth value={mentor.introduction} onChange={handleChangeForm} />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={formSubmit}>추가</Button>
+              <Button onClick={clickClose}>닫기</Button>
+            </DialogActions>
+          </Dialog>
+        </Typography>
+      </Container>
+    );
 }
