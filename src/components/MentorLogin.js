@@ -43,8 +43,10 @@ export default function MentorLogin(props){
       }).then(response => {
         sessionStorage.setItem("state", JSON.stringify("mentor"));
         sessionStorage.setItem("user", JSON.stringify({
-          ...userData,
-          mentorId: response.data.mentorId
+          id: userData.id,
+          token: userData.token,
+          mentorId: response.data.mentorId,   // 
+          menteeId: userData.menteeId    
         }));
         props.history.push("/mentor/roomlist");
       }).catch(() => {

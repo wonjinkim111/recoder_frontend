@@ -10,13 +10,14 @@ import TableCell from '@material-ui/core/TableCell';
 import {withStyles} from '@material-ui/core/styles';
 import MenteeItem from './MenteeItem';
 
+
 const useStyles = theme => ({
     root:{
         display:'flex',
         flexWrap:'wrap',
         justifyContent: 'space-around',
         overflow: 'scroll',
-        backgroundColor: theme.palette.common.Paper
+        backgroundColor: theme.palette.common.paper
     },
     head: {
         backgroundColor: theme.palette.common.black

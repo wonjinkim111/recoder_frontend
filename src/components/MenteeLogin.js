@@ -40,7 +40,9 @@ export default function MenteeLogin(props){
     }).then(response => {
       sessionStorage.setItem("state", JSON.stringify("mentee"));
       sessionStorage.setItem("user", JSON.stringify({
-        ...userData,
+        id: userData.id,
+        token: userData.token,
+        mentorId: userData.mentorId,   // ← 기존 mentorId 유지
         menteeId: response.data.menteeId
       }));
       props.history.push("/menteedashboard/roomlist");

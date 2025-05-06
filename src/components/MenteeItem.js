@@ -43,7 +43,7 @@ class MenteeItem extends React.Component{
       };
 
     menteeDelete = () => {
-        let form = new FormData();
+        const form = new FormData();
         form.append('menteeId', this.props.mentee.menteeId);
         form.append('roomId', this.props.mentee.roomId);
 
@@ -52,9 +52,14 @@ class MenteeItem extends React.Component{
             .then(response=>{
                 console.log(response)
                 this.handleClose();
-            })
-            .catch(error => alert('오류발생'))
-        window.location.reload();
+                if (this.props.onDelete) {
+                    this.props.onDelete(this.props.mentee.menteeId);  // 부모에게 알림
+                  }
+                })
+                .catch(error => {
+                  alert('오류 발생');
+                  this.handleClose();
+                });
     }
 
     componentDidMount(){
