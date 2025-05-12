@@ -57,7 +57,11 @@ export default function MentorDashBoard(props){
   
     if (userData && userData.mentorId) {
       const url = `http://recoder.com:31413/room/mentor/${userData.mentorId}`;
-      axios.get(url)
+        axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${userData.token}`  // 여기에 토큰 추가!
+          }
+        })
         .then(res => {
           console.log("Room list fetched:", res.data);
           // 첫 번째 room id를 기본값으로 사용
