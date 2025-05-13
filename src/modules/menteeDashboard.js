@@ -29,33 +29,33 @@ const useStyles = makeStyles((theme) => ({
     const [loading, setLoading] = React.useState(true);
     const [user, setUser] = React.useState({});
   
-    useEffect(() => {
-      const rawUser = sessionStorage.getItem("user");
-      if (!rawUser) return;
-  
-      const userData = JSON.parse(rawUser);
-      setUser(userData);
-  
-      if (!userData.mentorId) {
-        console.error("mentorId가 없습니다.");
-        return;
+  useEffect(() => {
+    const rawUser = sessionStorage.getItem("user");
+    if (!rawUser) return;
+
+    const userData = JSON.parse(rawUser);
+    setUser(userData);
+
+    if (!userData.mentorId) {
+      console.error("mentorId가 없습니다.");
+      return;
+    }
+
+    axios.get(`http://recoder.com:31413/room/mentor/${userData.mentorId}`, {
+      headers: {
+        Authorization: `Bearer ${userData.token}`
       }
-  
-      axios.get(`http://recoder.com:31413/room/mentor/${userData.mentorId}`)
-          headers: {
-            Authorization: `Bearer ${userData.token}`  // 여기에 토큰 추가!
-          }
-        })
-        .then(res => {
-          if (res.data.length > 0) {
-            setRoomId(res.data[0].roomId);
-          }
-        })
-        .catch(err => {
-          console.error("room list 에러:", err);
-        })
-        .finally(() => setLoading(false));
-    }, []);
+    })
+    .then(res => {
+    if (res.data.length > 0) {
+      setRoomId(res.data[0].roomId);
+    }
+  })
+    .catch(err => {
+    console.error("room list 에러:", err);
+  })
+  .finally(() => setLoading(false));
+}, []);
   
     const handleNavigation = (path) => {
       if (!roomId) return alert("roomId가 아직 설정되지 않았습니다.");
