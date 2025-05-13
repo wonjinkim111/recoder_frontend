@@ -42,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
       }
   
       axios.get(`http://recoder.com:31413/room/mentor/${userData.mentorId}`)
-        axios.get(url, {
           headers: {
             Authorization: `Bearer ${userData.token}`  // 여기에 토큰 추가!
           }
