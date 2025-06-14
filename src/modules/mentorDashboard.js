@@ -28,78 +28,38 @@ export default function MentorDashBoard(props){
   const [user, setUser] = React.useState([]);
   const [roomid, setRoomid] = React.useState();
 
-  // useEffect(() => {
-  //   //console.log(props)
-  //   const getUrl = document.location.href.split("/");
-  //   //console.log(getUrl);
-  //   const len = getUrl.length;
-  //   setRoomid(getUrl[len-1]);
-  //   //const roomId = getUrl[1].split("=");
-
-  //   const userData = JSON.parse(sessionStorage.getItem('user'));
-  //   console.log(user);
-  //   const url = `http://recoder.com:31413/users/${userData.Id}`;
-  //   axios.get(url)
-  //   .then(response =>{
-  //     console.log(response);
-  //     setUser(response.data)
-  //   }) 
-  //     .catch(error => {
-  //       // alert("error")
-  //       console.log(error);
-  //     })
-
-
-  // }, []);
-
   useEffect(() => {
-    const userData = JSON.parse(sessionStorage.getItem("user"));
-  
-    if (userData && userData.mentorId) {
-      const url = `http://recoder.com:31413/room/mentor/${userData.mentorId}`;
-        axios.get(url, {
-          headers: {
-            Authorization: `Bearer ${userData.token}`  // 여기에 토큰 추가!
-          }
-        })
-        .then(res => {
-          console.log("Room list fetched:", res.data);
-          // 첫 번째 room id를 기본값으로 사용
-          if (res.data.length > 0) {
-            setRoomid(res.data[0].roomId);  // 이 부분 중요
-          }
-        })
-        .catch(err => {
-          console.error("Room list fetch error:", err);
-        });
-    } else {
-      console.error("mentorId is missing in sessionStorage");
-    }
+    //console.log(props)
+    const getUrl = document.location.href.split("/");
+    //console.log(getUrl);
+    const len = getUrl.length;
+    setRoomid(getUrl[len-1]);
+    //const roomId = getUrl[1].split("=");
+
+    const userData = JSON.parse(sessionStorage.getItem('user'));
+    const url = `http://192.168.1.10:10000/users/${userData.id}`;
+    axios.get(url)
+    .then(response =>{
+      console.log(response);
+      setUser(response.data)
+    }) 
+      .catch(error => {
+        // alert("error")
+        console.log(error);
+      })
+
+
   }, []);
 
   const menteelistClick = () => {
-    if (roomid) {
-      window.location.href = `/mentordashboard/${roomid}`;
-    } else {
-      alert("roomid가 아직 설정되지 않았습니다. 잠시 후 다시 시도해주세요.");
-    }
-  };
-
+    window.location.href=`/mentordashboard/${roomid}`;
+  }
   const codelistClick = () => {
-    if (roomid) {
-      window.location.href = `/mentordashboard/reviewlist/${roomid}`;
-  }  else {
-      alert("roomid가 아직 설정되지 않았습니다. 잠시 후 다시 시도해주세요.");
-    }
-  };
-
+    window.location.href=`/mentordashboard/reviewlist/${roomid}`;
+  }
   const settingClick = () => {
-    if (roomid) {
-      window.location.href = `/mentordashboard/setting/${roomid}`;
-    } else {
-      alert("roomid가 아직 설정되지 않았습니다. 잠시 후 다시 시도해주세요.");
-    }
-  };
+    window.location.href=`/mentordashboard/setting/${roomid}`;
+  }
 
     const classes = useStyles();
     // console.log(props);

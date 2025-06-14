@@ -21,7 +21,7 @@ export default class Comment extends Component {
     
      componentDidMount = () => {
     //     const userData = JSON.parse(sessionStorage.getItem('user'));
-    //     const url = `http://recoder.com:31413/users/${userData.id}`;
+    //     const url = `http://192.168.1.10:10000/users/${userData.id}`;
     //     axios.get(url)
     //      .then(response =>{console.log(response)
     //         this.setState({

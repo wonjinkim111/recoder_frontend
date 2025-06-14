@@ -27,7 +27,7 @@ export default function MentorDashBoard(props){
 
 //  useEffect(() => {
 //    const userData = JSON.parse(sessionStorage.getItem('user'));
-//    const url = `http://recoder.com:31413/users/${userData.id}`;
+//    const url = `http://192.168.1.10:10000/users/${userData.id}`;
 //   axios.get(url)
 //    .then(response =>{
 //      console.log(response);
@@ -43,7 +43,7 @@ export default function MentorDashBoard(props){
 
 useEffect(() => {
   const userData = JSON.parse(sessionStorage.getItem('user'));
-  const url = `http://recoder.com:31413/users/${userData.Id}`;
+  const url = `http://192.168.1.10:10000/users/${userData.Id}`;
 
   axios.get(url, {
     headers: {
