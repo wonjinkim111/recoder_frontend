@@ -37,7 +37,7 @@ export default function MentorLogin(props){
       const userData = JSON.parse(rawUser);
       if (!userData.id) return alert("user id가 없습니다.");
   
-      axios.post(`http://192.168.1.10:10000/users/mentor/${userData.id}`, {
+      axios.post(`http://192.168.1.10:32513/users/mentor/${userData.id}`, {
         mentorNickname: mentor.mentorNickname,
         introduction: mentor.introduction
       }).then(response => {

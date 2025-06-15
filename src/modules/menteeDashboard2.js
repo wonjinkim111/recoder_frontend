@@ -43,7 +43,7 @@ export default function MentorDashBoard(props){
 
 useEffect(() => {
   const userData = JSON.parse(sessionStorage.getItem('user'));
-  const url = `http://192.168.1.10:10000/users/${userData.Id}`;
+  const url = `http://192.168.1.10:32513/users/${userData.Id}`;
 
   axios.get(url, {
     headers: {
