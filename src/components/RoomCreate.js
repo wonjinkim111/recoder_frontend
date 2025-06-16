@@ -164,7 +164,7 @@ handleSubmit=(e)=>{
   form.append('roomMax',this.state.roomMax);
   //form.append('roomLanguage',0);
   
-    const url = `http://192.168.1.10:32246${user.mentorId}`;
+    const url = `http://192.168.1.10:32246/room/${user.mentorId}`;
     axios.post(url, form,{
       headers: {
         'Content-Type': 'multipart/form-data'}
