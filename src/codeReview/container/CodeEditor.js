@@ -142,16 +142,16 @@ class CodeEditor extends React.Component {
       else
         this.setState({ mentorCode: this.editor.getValue() });
     }
-    // const user = JSON.parse(sessionStorage.getItem('user'));
-    // const token = user.token;
-    // var config = {
-    //   headers: {
-    //     'Authorization' : "Bearer "+ token,
-    //     "Content-Type": "application/json",
-    //     'Accept': '*/*'
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    const token = user.token;
+    var config = {
+      headers: {
+        'Authorization' : "Bearer "+ token,
+        "Content-Type": "application/json",
+        'Accept': '*/*'
 
-    //   }
-    // }
+      }
+    }
     const url = `http://192.168.0.40:40000/codereview/compile2`
     axios.get(url)
       .then(function (response) {

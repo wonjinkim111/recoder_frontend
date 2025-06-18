@@ -57,16 +57,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    //     const user = JSON.parse(sessionStorage.getItem('user'));
-    // const token = user.token;
-    // var config = {
-    //   headers: {
-    //     'Authorization' : "Bearer "+ "111111111111111111111",
-    //     'Content-Type': 'application/x-www-form-urlencoded',
-    //     'Accept': '*/*'
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    const token = user.token;
+    var config = {
+      headers: {
+        'Authorization' : "Bearer "+ "111111111111111111111",
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': '*/*'
 
-    //   }
-    // }
+      }
+    }
     const userData = JSON.parse(sessionStorage.getItem('user'));
     const url = `http://192.168.1.10:32513/users/${userData.id}`;
     axios.get(url)
