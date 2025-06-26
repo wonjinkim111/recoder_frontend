@@ -26,18 +26,28 @@ const useStyles = makeStyles((theme) => ({
 export default function MentorDashBoard(props){
   const [user, setUser] = React.useState([]);
 
-  useEffect(() => {
-    const userData = JSON.parse(sessionStorage.getItem('user'));
-    const url = `http://192.168.45.133:10000/users/${userData.id}`;
-    axios.get(url)
-    .then(response =>{
-      console.log(response);
-      setUser(response.data)
-    }) 
-      .catch(error => {
-        // alert("error")
-        console.log(error);
-      })
+useEffect(() => {
+  const raw = sessionStorage.getItem('userData');
+  if (!raw) {
+    console.error("로그인 정보가 없습니다.");
+    return;
+  }
+
+  const userData = JSON.parse(raw);
+  if (!userData.id) {
+    console.error("userId가 없습니다.", userData);
+    return;
+  }
+
+  const url = `http://192.168.45.241:10000/users/${userData.id}`;
+  axios.get(url)
+    .then(response => {
+      console.log("유저 정보 가져오기 성공:", response.data);
+      setUser(response.data);
+    })
+    .catch(error => {
+      console.error("유저 정보 가져오기 실패:", error);
+    });
 
 
   }, []);

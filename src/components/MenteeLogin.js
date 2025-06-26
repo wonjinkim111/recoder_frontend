@@ -35,7 +35,7 @@ export default function MenteeLogin(props){
     const userData = JSON.parse(rawUser);
     if (!userData.id) return alert("user id가 없습니다.");
 
-    axios.post(`http://192.168.45.133:10000/users/mentee/${userData.id}`, {
+    axios.post(`http://192.168.45.241:10000/users/mentee/${userData.id}`, {
       menteeNickname: mentee
     }).then(response => {
       sessionStorage.setItem("state", JSON.stringify("mentee"));
