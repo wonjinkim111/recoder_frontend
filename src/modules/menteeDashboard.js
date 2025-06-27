@@ -39,7 +39,7 @@ useEffect(() => {
     return;
   }
 
-  const url = `http://192.168.45.241:10000/users/${userData.id}`;
+  const url = `http://192.168.45.207:10000/users/${userData.id}`;
   axios.get(url)
     .then(response => {
       console.log("유저 정보 가져오기 성공:", response.data);
