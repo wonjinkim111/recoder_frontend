@@ -26,31 +26,45 @@ const useStyles = makeStyles((theme) => ({
 export default function MentorDashBoard(props){
   const [user, setUser] = React.useState([]);
 
-useEffect(() => {
-  const raw = sessionStorage.getItem('userData');
-  if (!raw) {
-    console.error("로그인 정보가 없습니다.");
+  // useEffect(() => {
+  //   const userData = JSON.parse(sessionStorage.getItem('user'));
+  //   const url = `http://192.168.45.7845.207:10000/users/${userData.id}`;
+  //   axios.get(url)
+  //   .then(response =>{
+  //     console.log(response);
+  //     setUser(response.data)
+  //   }) 
+  //     .catch(error => {
+  //       // alert("error")
+  //       console.log(error);
+  //     })
+
+
+  // }, []);
+
+  useEffect(() => {
+  const userDataRaw = sessionStorage.getItem('user');
+  if (!userDataRaw) {
+    console.error("❌ sessionStorage에 user 항목이 없습니다.");
     return;
   }
-
-  const userData = JSON.parse(raw);
+  const userData = JSON.parse(userDataRaw);
   if (!userData.id) {
-    console.error("userId가 없습니다.", userData);
+    console.error("❌ userData.id 값이 없습니다. 로그인부터 확인하세요.");
     return;
   }
+  console.log("✅ userData", userData);
 
-  const url = `http://192.168.45.207:10000/users/${userData.id}`;
+  const url = `http://192.168.45.78:10000/users/${userData.id}`;
   axios.get(url)
     .then(response => {
-      console.log("유저 정보 가져오기 성공:", response.data);
+      console.log("✅ API 응답:", response.data);
       setUser(response.data);
     })
     .catch(error => {
-      console.error("유저 정보 가져오기 실패:", error);
+      console.error("❌ 유저 정보 불러오기 실패:", error);
     });
-
-
-  }, []);
+}, []);
 
   const roomlistClick = () => {
     window.location.href='/menteedashboard/roomlist';

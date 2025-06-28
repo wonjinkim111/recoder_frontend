@@ -90,7 +90,7 @@ export default function SignIn(props){
       encryptedPassword: 'test1234',
       gender: 0,
       regDate: '2020-05-30 00:00:00'
-  })
+    })
 
     const handleChangeForm = e => {
       setValues({...values, [e.target.name]: e.target.value});
@@ -121,26 +121,35 @@ export default function SignIn(props){
     else{
     
       //id, token, mentorid, menteeid 받아옴
-      const url = 'http://192.168.45.207:10000/users/login';
+      const url = 'http://192.168.45.78:10000/users/login';
       axios.post(url, {
         email: values.email,
         encryptedPassword: values.encryptedPassword
       })
-       //.then(response =>{console.log(response)
-       // sessionStorage.setItem('user', JSON.stringify({id:response.headers.userid,token: response.headers.token, mentorid: response.headers.mentorid, menteeid: response.headers.menteeid}))
-       // window.location.href='/';})
-       // .catch(error => {
-       //   alert("틀렸습니다.")
-       //   setValues({email:'', encryptedPassword:''});
-       .then(response => {
-        console.log(response.data);
+       .then(response =>{
+        console.log("로그인 API 응답 전체:", response)
+        const userId = response.headers.userid;
+        const token = response.headers.token;
+        const mentorId = response.headers.mentorid;
+        const menteeId = response.headers.menteeid;
+
+        console.log("파싱된 userId:", userId);
+        console.log("파싱된 token:", token);
+        console.log("파싱된 mentorId:", mentorId);
+        console.log("파싱된 menteeId:", menteeId);
+
         sessionStorage.setItem('user', JSON.stringify({
-          id: Array.isArray(response.data.userId) ? response.data.userId[0] : response.data.userId,
-          token: Array.isArray(response.data.token) ? response.data.token[0] : response.data.token,
-          mentorId: Array.isArray(response.data.mentorId) ? response.data.mentorId[0] : response.data.mentorId,
-          menteeId: Array.isArray(response.data.menteeId) ? response.data.menteeId[0] : response.data.menteeId
-        }));
-        window.location.href = '/';
+          id: userId,
+          token: token,
+          mentorid: mentorId,
+          menteeid: menteeId
+        }))
+        console.log("sessionStorage 저장 직후:", JSON.parse(sessionStorage.getItem("user")));
+        
+        window.location.href='/';})
+        .catch(error => {
+          alert("틀렸습니다.")
+          setValues({email:'', encryptedPassword:''});
         })
       
     }

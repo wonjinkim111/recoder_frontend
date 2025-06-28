@@ -25,38 +25,44 @@ const useStyles = makeStyles((theme) => ({
 export default function MentorDashBoard(props){
   const [user, setUser] = React.useState([]);
 
-//  useEffect(() => {
-//    const userData = JSON.parse(sessionStorage.getItem('user'));
-//    const url = `http://192.168.45.207:10000/users/${userData.id}`;
-//   axios.get(url)
-//    .then(response =>{
-//      console.log(response);
-//      setUser(response.data)
-//   }) 
-//      .catch(error => {
-//        // alert("error")
-//        console.log(error);
-//      })
+  // useEffect(() => {
+  //   const userData = JSON.parse(sessionStorage.getItem('user'));
+  //   const url = `http://192.168.45.7845.207:10000/users/${userData.id}`;
+  //   axios.get(url)
+  //   .then(response =>{
+  //     console.log(response);
+  //     setUser(response.data)
+  //   }) 
+  //     .catch(error => {
+  //       // alert("error")
+  //       console.log(error);
+  //     })
 
 
-//  }, []);
+  // }, []);
 
-useEffect(() => {
-  const userData = JSON.parse(sessionStorage.getItem('user'));
-  const url = `http://192.168.45.207:10000/users/${userData.Id}`;
+  useEffect(() => {
+  const userDataRaw = sessionStorage.getItem('user');
+  if (!userDataRaw) {
+    console.error("❌ sessionStorage에 user 항목이 없습니다.");
+    return;
+  }
+  const userData = JSON.parse(userDataRaw);
+  if (!userData.id) {
+    console.error("❌ userData.id 값이 없습니다. 로그인부터 확인하세요.");
+    return;
+  }
+  console.log("✅ userData", userData);
 
-  axios.get(url, {
-    headers: {
-      Authorization: `Bearer ${userData.token}`  // 여기에 토큰 추가!
-    }
-  })
-  .then(response => {
-    console.log(response);
-    setUser(response.data);
-  })
-  .catch(error => {
-    console.error("유저 정보 불러오기 실패:", error);
-  });
+  const url = `http://192.168.45.78:10000/users/${userData.id}`;
+  axios.get(url)
+    .then(response => {
+      console.log("✅ API 응답:", response.data);
+      setUser(response.data);
+    })
+    .catch(error => {
+      console.error("❌ 유저 정보 불러오기 실패:", error);
+    });
 }, []);
 
   const roomlistClick = () => {
