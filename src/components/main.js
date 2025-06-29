@@ -65,47 +65,36 @@ export default function Main(props) {
     }
      
         return(
-            <ProductHeroLayout backgroundClassName={classes.background}>               
-                <img style={{ display: 'none' }} src={Background} alt="mainpage" />
-                <Typography color="inherit" align="center" variant="h2" marked="center" className={classes.h2}>
-                    누구나 멘토가 될 수 있다!
-                </Typography>
-                <span><h2>_____</h2></span>
-                <div>
-                    <Button                    
-                    color="secondary"
-                    variant="contained"
-                    size="large"
-                    className={classes.button}
-                    onClick={handleonClick}>
-                    <Link
-                    className={classes.rightLink}
-                    component={RouterLink} 
-                    // to={`${url}`}
-                    underline="none">
-                    Mentor
-                </Link>
-                </Button>
-                <Button
-                // style={{backgroundColor:'#4C0099'}}
-                    color="secondary"
-                    variant="contained"
-                    size="large"
-                    className={classes.button}
-                    onClick={handleonClick2}>
-                <Link 
-                    className={classes.rightLink}
-                    component={RouterLink} 
-                    //to= '/roomlist'
-                    underline="none">
-                    Mentee
-                </Link>
-                </Button>
-                </div>
-                <Typography variant="body2" color="inherit" className={classes.more} align="center">
-                    멘토 또는 멘티로 로그인 하세요. <br/><br/>
-                    MENTEE를 누르면 현재 방 리스트를 볼 수 있습니다.
-                </Typography>               
-            </ProductHeroLayout>
+    <ProductHeroLayout backgroundClassName={classes.background}>
+      <img style={{ display: 'none' }} src={Background} alt="mainpage" />
+      <Typography color="inherit" align="center" variant="h2" marked="center" className={classes.h2}>
+        누구나 멘토가 될 수 있다!
+      </Typography>
+      <span><h2>_____</h2></span>
+      <div>
+        <Button
+          color="secondary"
+          variant="contained"
+          size="large"
+          className={classes.button}
+          onClick={handleonClick}
+        >
+          <span className={classes.rightLink}>Mentor</span>
+        </Button>
+        <Button
+          color="secondary"
+          variant="contained"
+          size="large"
+          className={classes.button}
+          onClick={handleonClick2}
+        >
+          <span className={classes.rightLink}>Mentee</span>
+        </Button>
+      </div>
+      <Typography variant="body2" color="inherit" className={classes.more} align="center">
+        멘토 또는 멘티로 로그인 하세요. <br /><br />
+        MENTEE를 누르면 현재 방 리스트를 볼 수 있습니다.
+      </Typography>
+    </ProductHeroLayout>
         )
 }

@@ -82,17 +82,23 @@ export default function MentorRoomList(props) {
   }
 
   useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem('user'));
-    console.log(user);
-    const url = `http://192.168.45.78:20000/room/mentor/${user.mentorId}`;
-    axios.get(url)
-    .then(response =>{console.log(response)
+  const user = JSON.parse(sessionStorage.getItem('user'));
+  console.log("✅ MentorRoomList userData", user);
+
+  if (!user || !user.mentorid) {
+    console.error("❌ user.mentorid 값이 없습니다. 로그인부터 확인하세요.");
+    return; // 더 이상 axios 실행하지 않음
+  }
+
+  const url = `http://192.168.45.40:20000/room/mentor/${user.mentorid}`;
+  axios.get(url)
+    .then(response =>{
+        console.log(response)
         setMentorRoom(response.data)
     }) 
-      .catch(error => {
-        // alert("error")
-        console.log(error);
-      })
+    .catch(error => {
+      console.log(error);
+    })
 
 
   }, []);

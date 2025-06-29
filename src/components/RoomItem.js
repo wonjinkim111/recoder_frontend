@@ -52,12 +52,21 @@ class RoomItem extends React.Component {
     }
 
     clickOpen = (e) => {
-        this.setState({ open: true })
-        const url = `http://192.168.45.78:10000/users/mentor/${e.currentTarget.value}`;
-        axios.get(url)
-            .then(response => {
-                console.log(response);
-                this.setState({ user: response.data })
+  const mentorId = e.currentTarget.value;
+  console.log("mentorId 전달값:", mentorId);  // 이게 undefined가 나오면 value 전달 문제!
+  if (!mentorId) {
+    alert("mentorId가 없습니다. 데이터를 확인하세요.");
+    return;
+  }
+  const url = `http://192.168.45.40:10000/users/mentor/${mentorId}`;
+  axios.get(url)
+    .then(response => {
+      console.log(response);
+      this.setState({ user: response.data, open: true });
+    })
+    .catch(err => {
+      console.error(err);
+      alert("멘토 정보를 불러오지 못했습니다.");
             })
     }
     clickClose = () => {
@@ -72,14 +81,16 @@ class RoomItem extends React.Component {
                 {console.log(this.props.room.roomPicture)}
                 {/* <input type="file" accept="image/*" file={this.props.room.roomPicture} onChange={this.handleFileInput}/> */}
                 <img id="test" width="100%" height="140px" src={this.props.room.roomPicture} />
-                <CardActionArea >
+                <CardActionArea onClick={this.clickOpen}>
                     {/* <CardMedia
                     className={classes.media}
                     image = {require('../images/room.jpg')}
                     // image = {require(this.props.room.picture)}
                     title="room image" /> */}
 
-                    <Button size="large" color="primary" onClick={this.clickOpen}>{this.props.room.mentorNickname}</Button>
+                    <Typography variant="h6" style={{padding: '10px', color: 'blue', textAlign: 'center'}}>
+                        {this.props.room.mentorNickname}
+                    </Typography>
                     <Dialog open={this.state.open} onClose={this.clickClose} classes={{ paper: classes.dialogPaper }}>
                         <DialogTitle id="customized-dialog-title" style={{ backgroundColor: "lightblue" }}>
                             <div>

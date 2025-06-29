@@ -143,46 +143,35 @@ handleChange = (e) => {
 handleSubmit=(e)=>{
   e.preventDefault();
   
-  // console.log("roomName: "+this.state.roomName)
-  // console.log("roomInfo: "+this.state.roomInfo)
-  // console.log("roomIsPrivate: "+this.state.roomIsPrivate)
-  // console.log("roomMax: "+this.state.roomMax)
-  // console.log("file: "+this.state.file)
-
-  // const valid = this.blockNull;
-  // if(!valid){
-  //   console.error("not permit null")
-  // }
-
-  // else{
   const user = JSON.parse(sessionStorage.getItem('user'));
+  console.log("✅ RoomCreate userData", user);
+
+  if (!user || !user.mentorid) {
+    console.error("❌ user.mentorid 값이 없습니다. 로그인부터 확인하세요.");
+    alert("로그인 이후 이용 가능합니다.");
+    return;
+  }
+
   let form = new FormData();
   form.append('roomName', this.state.roomName);
   form.append('roomInfo', this.state.roomInfo);
   form.append('roomIsPrivate', this.state.roomIsPrivate);
   form.append('file',this.state.file);
   form.append('roomMax',this.state.roomMax);
-  //form.append('roomLanguage',0);
-  
-    const url = `http://192.168.45.78:20000/room/${user.mentorId}`;
-    axios.post(url, form,{
-      headers: {
-        'Content-Type': 'multipart/form-data'}
-      })
-      // roomName: this.state.roomName,
-      // roomInfo: this.state.roomInfo,
-      // roomIsPrivate: this.state.roomIsPrivate,
-      // roomPicture:this.state.file,
-      // roomMax: this.state.roomMax 
-     .then(response =>{
-       console.log(response.headers)
-        alert('추가되었습니다.');
+  form.append('mentorId', user.mentorid); // ✅ mentorId 추가
+
+  const url = `http://192.168.45.40:20000/room/${user.mentorid}`;
+  axios.post(url, form,{
+      headers: { 'Content-Type': 'multipart/form-data' }
+  })
+  .then(response =>{
+      console.log(response.headers)
+      alert('추가되었습니다.');
       window.location.href=`/mentor/roomlist`;
-    }
-      ) 
-      .catch(error => {
-        console.log(error);
-        alert("다시 시도해 주십시오")
+  })
+  .catch(error => {
+      console.log(error);
+      alert("다시 시도해 주십시오")
       //   setValues({roomName:'', roomInfo:''});
       })
   // }
