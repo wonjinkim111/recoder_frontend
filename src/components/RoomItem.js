@@ -51,89 +51,106 @@ class RoomItem extends React.Component {
         }
     }
 
-    clickOpen = (e) => {
-  const mentorId = e.currentTarget.value;
-  console.log("mentorId 전달값:", mentorId);  // 이게 undefined가 나오면 value 전달 문제!
-  if (!mentorId) {
-    alert("mentorId가 없습니다. 데이터를 확인하세요.");
-    return;
-  }
-  const url = `http://192.168.45.40:10000/users/mentor/${mentorId}`;
-  axios.get(url)
-    .then(response => {
-      console.log(response);
-      this.setState({ user: response.data, open: true });
-    })
-    .catch(err => {
-      console.error(err);
-      alert("멘토 정보를 불러오지 못했습니다.");
-            })
-    }
-    clickClose = () => {
-        this.setState({ open: false })
+   clickOpen = (e) => {
+    const mentorId = e.currentTarget.value;
+    console.log("✅ mentorId 전달값:", mentorId);
+
+    if (!mentorId) {
+      console.error("❌ mentorId가 없습니다. 데이터를 확인하세요");
+      return;
     }
 
+    const url = `http://192.168.45.78:10000/users/mentor/${mentorId}`;
+    axios.get(url)
+      .then(response => {
+        console.log("✅ mentor 상세정보:", response.data);
+        this.setState({ user: response.data, open: true });
+      })
+      .catch(error => {
+        console.error("❌ mentor 정보 불러오기 실패:", error);
+      });
+  };
 
-    render() {
-        const { classes } = this.props;
-        return (
-            <Card className={classes.root}>
-                {console.log(this.props.room.roomPicture)}
-                {/* <input type="file" accept="image/*" file={this.props.room.roomPicture} onChange={this.handleFileInput}/> */}
-                <img id="test" width="100%" height="140px" src={this.props.room.roomPicture} />
-                <CardActionArea onClick={this.clickOpen}>
-                    {/* <CardMedia
-                    className={classes.media}
-                    image = {require('../images/room.jpg')}
-                    // image = {require(this.props.room.picture)}
-                    title="room image" /> */}
+  clickClose = () => {
+    this.setState({ open: false });
+  };
 
-                    <Typography variant="h6" style={{padding: '10px', color: 'blue', textAlign: 'center'}}>
-                        {this.props.room.mentorNickname}
-                    </Typography>
-                    <Dialog open={this.state.open} onClose={this.clickClose} classes={{ paper: classes.dialogPaper }}>
-                        <DialogTitle id="customized-dialog-title" style={{ backgroundColor: "lightblue" }}>
-                            <div>
-                                <Avatar className={classes.large} style={{ float: 'left', marginRight: '1vw', }} />
-                            </div>
-                            <div>
-                                {this.props.room.mentorNickname}님
-                    <div style={{ float: 'down' }}>
-                                    <StarIcon />
-                                    <StarIcon />
-                                    <StarIcon />
-                                    <StarIcon />
-                                    <StarHalfIcon />
-                                </div>
-                            </div>
-                        </DialogTitle>
-                        <DialogContent dividers>
-                            <Typography variant="body2" component="p">
-                                멘토 소개 : {this.state.user.introduction}
-                            </Typography>
-                            <Typography variant="body2" component="p">
-                                가입 날짜 : {this.state.user.regDate}
-                            </Typography>
-                        </DialogContent>
-                        <DialogContent dividers>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                {this.props.room.roomInfo}
-                            </Typography>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button autoFocus onClick={this.clickClose} color="primary" style={{ float: 'left' }}>
-                                확인
-                    </Button>
-                            <ReviewReq roomid={this.props.room.roomId} mentorid={this.props.room.mentorId} />
-                        </DialogActions>
-                    </Dialog>
-                    <CardContent>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            {this.props.room.roomName}
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-            </Card>
+  render() {
+    const { classes } = this.props;
+    const { room } = this.props;
+
+    console.log("✅ room.roomPicture:", room.roomPicture);
+
+    return (
+      <Card className={classes.root}>
+        <img
+          width="100%"
+          height="140px"
+          src={room.roomPicture || "/default-room.jpg"}
+          alt={room.roomName}
+        />
+        <CardActionArea>
+          <Button
+            size="large"
+            color="primary"
+            onClick={this.clickOpen}
+            value={room.mentorId} // mentorId를 버튼에 전달
+          >
+            {room.mentorNickname}
+          </Button>
+          <Dialog
+            open={this.state.open}
+            onClose={this.clickClose}
+            classes={{ paper: classes.dialogPaper }}
+          >
+            <DialogTitle style={{ backgroundColor: "lightblue" }}>
+              <div>
+                <Avatar
+                  className={classes.large}
+                  style={{ float: 'left', marginRight: '1vw' }}
+                />
+              </div>
+              <div>
+                {room.mentorNickname}님
+                <div>
+                  <StarIcon />
+                  <StarIcon />
+                  <StarIcon />
+                  <StarIcon />
+                  <StarHalfIcon />
+                </div>
+              </div>
+            </DialogTitle>
+            <DialogContent dividers>
+              <Typography variant="body2">
+                멘토 소개: {this.state.user.introduction}
+              </Typography>
+              <Typography variant="body2">
+                가입 날짜: {this.state.user.regDate}
+              </Typography>
+            </DialogContent>
+            <DialogContent dividers>
+              <Typography variant="body2" color="textSecondary">
+                {room.roomInfo}
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.clickClose} color="primary">
+                확인
+              </Button>
+              <ReviewReq
+                roomid={room.roomId}
+                mentorid={room.mentorId}
+              />
+            </DialogActions>
+          </Dialog>
+          <CardContent>
+            <Typography variant="body2" color="textSecondary">
+              {room.roomName}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
         )
     }
 }

@@ -64,26 +64,32 @@ export default function CommentItem(props) {
     const getUrl = document.location.href.split("/");
     const len = getUrl.length;
     
-    console.log(props.comment_cmtId)
-    console.log(text)
-    console.log(props.nickname)
-    const url = 'http://192.168.45.40:40000/comment/reply';
-    axios.post(url, {
-      cmtId: props.comment_cmtId,
-      replyContent: text,
-      nickname: props.nickname,
-    })
-      .then(response => {
-        console.log(response.data)
-
-        window.location.href = `/review/${getUrl[len - 1]}`
+  axios.get(`http://192.168.45.235:40000/comment/${props.comment_cmtId}`)
+    .then(response => {
+      if (response.data && response.data.exists) {
+        // 존재한다면 reply insert
+        axios.post('http://192.168.45.235:40000/comment/reply', {
+          cmtId: props.comment_cmtId,
+          replyContent: text,
+          nickname: props.nickname,
+        })
+        .then(response => {
+          console.log(response.data)
+          window.location.href = `/review/${getUrl[len - 1]}`
+        })
+        .catch(error => {
+          alert("다시 시도해 주십시오 (insert 오류)")
+        });
+      } else {
+        // 존재하지 않으면
+        alert("존재하지 않는 댓글입니다. 새로고침 후 다시 시도해주세요.");
       }
-      )
-      .catch(error => {
-        alert("다시 시도해 주십시오")
-      })
-
-  }
+    })
+    .catch(error => {
+      console.error(error);
+      alert("댓글 존재 여부를 확인할 수 없습니다.");
+    });
+};
 
   const handleModal3Close = () => {
     setRealOpen(false)
@@ -102,7 +108,7 @@ export default function CommentItem(props) {
     console.log(comment_cmtId)
     const form = new FormData();
     form.append('cmtId', comment_cmtId);
-    const url = `http://192.168.45.40:40000/comment?cmtId=${comment_cmtId}`;
+    const url = `http://192.168.45.235:40000/comment?cmtId=${comment_cmtId}`;
     axios.delete(url)
       .then(response => {
         console.log(response.data)

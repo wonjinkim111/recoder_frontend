@@ -93,9 +93,10 @@ class RoomList extends React.Component{
     }
     
     componentDidMount(){
-        const url = 'http://192.168.45.40:20000/room';
+        const url = 'http://192.168.45.235:20000/room';
         axios.get(url)
-         .then(response =>{console.log(response)
+         .then(response =>{
+            console.log("rooms response data:", response.data)
             this.setState({
                 loading: false,
                 rooms : response.data,
@@ -133,6 +134,7 @@ handleChangeSearch = e =>{
     render(){
         const {classes} = this.props;
             const roomItems = this.state.rooms2.map(r => {
+            console.log("✅ RoomItem map r:", r);
             return (
                 <Grid item key={r.roomId}>
                 <RoomItem room={r} />
