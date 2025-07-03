@@ -90,7 +90,7 @@ export default function MentorRoomList(props) {
     return; // 더 이상 axios 실행하지 않음
   }
 
-  const url = `http://192.168.45.235:20000/room/mentor/${user.mentorid}`;
+  const url = `http://192.168.45.76:20000/room/mentor/${user.mentorid}`;
   axios.get(url)
     .then(response =>{
         console.log(response)

@@ -51,25 +51,33 @@ class RoomItem extends React.Component {
         }
     }
 
-   clickOpen = (e) => {
-    const mentorId = e.currentTarget.value;
-    console.log("✅ mentorId 전달값:", mentorId);
+clickOpen = () => {
+    console.log("✅ room.roomPicture:", this.props.room.roomPicture);
+    console.log("✅ mentorId:", this.props.room.mentorId);
 
+    const mentorId = this.props.room.mentorId;
+
+    // 💡 mentorId null/undefined 방어
     if (!mentorId) {
-      console.error("❌ mentorId가 없습니다. 데이터를 확인하세요");
-      return;
+        console.warn("❌ mentorId is null or undefined. Mentor 정보 요청을 건너뜁니다.");
+        alert("멘토 정보가 없습니다. 데이터를 확인해주세요.");
+        return;
     }
 
-    const url = `http://192.168.45.78:10000/users/mentor/${mentorId}`;
-    axios.get(url)
-      .then(response => {
-        console.log("✅ mentor 상세정보:", response.data);
-        this.setState({ user: response.data, open: true });
-      })
-      .catch(error => {
-        console.error("❌ mentor 정보 불러오기 실패:", error);
-      });
-  };
+    // mentor 정보 가져오기
+    axios.get(`http://192.168.45.76:10000/users/mentor/${mentorId}`)
+        .then(response => {
+            console.log("✅ mentor 정보:", response.data);
+            // mentor 정보로 모달이나 상태 업데이트 로직 추가 가능
+        })
+        .catch(error => {
+            console.error("❌ mentor 정보 불러오기 실패:", error);
+            alert("멘토 정보를 불러오는데 실패했습니다.");
+        });
+
+    // 나머지 clickOpen 동작 (예: 모달 열기)
+    this.setState({ open: true });
+}
 
   clickClose = () => {
     this.setState({ open: false });

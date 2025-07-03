@@ -160,7 +160,7 @@ handleSubmit=(e)=>{
   form.append('roomMax',this.state.roomMax);
   form.append('mentorId', user.mentorid); // ✅ mentorId 추가
 
-  const url = `http://192.168.45.235:20000/room/${user.mentorid}`;
+  const url = `http://192.168.45.76:20000/room/${user.mentorid}`;
   axios.post(url, form,{
       headers: { 'Content-Type': 'multipart/form-data' }
   })
