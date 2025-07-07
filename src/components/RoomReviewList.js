@@ -83,7 +83,7 @@ export default function RoomReviewList(props) {
     //const roomid = document.location.href.split("?");
     //console.log(props.match.params.id);
     console.log(props.match.params.id);
-    const url = `http://192.168.45.207:30000/codereview/list/${props.match.params.id}`;
+    const url = `http://192.168.45.7145.207:30000/codereview/list/${props.match.params.id}`;
     axios.get(url)
     .then(response =>{console.log(response)
         setreviewList(response.data);
