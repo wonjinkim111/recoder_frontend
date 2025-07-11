@@ -163,7 +163,7 @@ handleSubmit=(e)=>{
 
   else{   
   const user = JSON.parse(sessionStorage.getItem('user'));
-    const url = 'http://192.168.45.135:31920/codereview/file';
+    const url = 'http://192.168.45.51:31920/codereview/file';
     let form = new FormData();
     form.append('roomId', this.props.roomid);
     form.append('mentorId', this.props.mentorid);
