@@ -64,11 +64,11 @@ export default function CommentItem(props) {
     const getUrl = document.location.href.split("/");
     const len = getUrl.length;
     
-  axios.get(`http://192.168.45.79:30103/comment/${props.comment_cmtId}`)
+  axios.get(`http://192.168.45.43:30103/comment/${props.comment_cmtId}`)
     .then(response => {
       if (response.data && response.data.exists) {
         // 존재한다면 reply insert
-        axios.post('http://192.168.45.79:30103/comment/reply', {
+        axios.post('http://192.168.45.43:30103/comment/reply', {
           cmtId: props.comment_cmtId,
           replyContent: text,
           nickname: props.nickname,
@@ -108,7 +108,7 @@ export default function CommentItem(props) {
     console.log(comment_cmtId)
     const form = new FormData();
     form.append('cmtId', comment_cmtId);
-    const url = `http://192.168.45.79:30103/comment?cmtId=${comment_cmtId}`;
+    const url = `http://192.168.45.43:30103/comment?cmtId=${comment_cmtId}`;
     axios.delete(url)
       .then(response => {
         console.log(response.data)

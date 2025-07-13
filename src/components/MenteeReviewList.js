@@ -62,7 +62,7 @@ export default function MenteeReviewList() {
 //   useEffect(() => {
 
 //     const user = JSON.parse(sessionStorage.getItem('user'));
-//     const url = `http://192.168.45.7945.207:10000/recoder/room/mentor/${user.mentorid}`;
+//     const url = `http://192.168.45.4345.207:10000/recoder/room/mentor/${user.mentorid}`;
 //     axios.get(url)
 //     .then(response =>{console.log(response)
 //         this.setState({
