@@ -65,7 +65,7 @@ clickOpen = () => {
     }
 
     // mentor 정보 가져오기
-    axios.get(`http://192.168.45.14945.207:10000/users/mentor/${mentorId}`)
+    axios.get(`http://192.168.45.20045.207:10000/users/mentor/${mentorId}`)
         .then(response => {
             console.log("✅ mentor 정보:", response.data);
             // mentor 정보로 모달이나 상태 업데이트 로직 추가 가능

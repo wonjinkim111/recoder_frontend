@@ -68,7 +68,7 @@ class App extends Component {
       }
     }
     const userData = JSON.parse(sessionStorage.getItem('user'));
-    const url = `http://192.168.45.149:32513/users/${userData.id}`;
+    const url = `http://192.168.45.200:32513/users/${userData.id}`;
     axios.get(url)
       .then(response => {
         console.log(response)
@@ -82,7 +82,7 @@ class App extends Component {
         console.log(error);
       })
 
-    const url1 = `http://192.168.45.149:31920/codereview/${this.props.match.params.id}`;
+    const url1 = `http://192.168.45.200:31920/codereview/${this.props.match.params.id}`;
     axios.get(url1)
       .then(response => {
         this.setState({ reviewReq: response.data })
@@ -93,7 +93,7 @@ class App extends Component {
         console.log(error);
       })
 
-    const url2 = `http://192.168.45.149:30103/comment/${this.props.match.params.id}`;
+    const url2 = `http://192.168.45.200:30103/comment/${this.props.match.params.id}`;
     axios.get(url2)
       .then(response => {
         console.log("여기는 코멘트 가져오기")
@@ -185,7 +185,7 @@ class App extends Component {
 
     if (this.state.text.length) {
       const user = JSON.parse(sessionStorage.getItem('user'));
-      const url = 'http://192.168.45.149:30103/comment';
+      const url = 'http://192.168.45.200:30103/comment';
       console.log(this.props.match.params.id);
 
 
@@ -228,7 +228,7 @@ class App extends Component {
     const getUrl = document.location.href.split("/");
     const len = getUrl.length;
     console.log(getUrl[len - 1]);
-    const url = `http://192.168.45.149:31920/codereview/compilewindow/${getUrl[len - 1]}`
+    const url = `http://192.168.45.200:31920/codereview/compilewindow/${getUrl[len - 1]}`
     axios.get(url)
       .then(response => {
         console.log(response);
