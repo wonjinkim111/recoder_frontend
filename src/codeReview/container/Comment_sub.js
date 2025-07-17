@@ -60,7 +60,7 @@ class Comment_sub extends Component {
     const len = getUrl.length;
 
     const user_nickname = sessionStorage.getItem('user.nickname')
-    const url = 'http://192.168.45.200:30103/comment/reply';
+    const url = 'http://192.168.45.182:30103/comment/reply';
     axios.post(url, {
       cmtId: comment_cmtId,
       replyContent: this.state.text,
@@ -99,7 +99,7 @@ class Comment_sub extends Component {
     console.log(comment_cmtId)
     const form = new FormData();
     form.append('cmtId', comment_cmtId);
-    const url = `http://192.168.45.200:30103/comment?cmtId=${comment_cmtId}`;
+    const url = `http://192.168.45.182:30103/comment?cmtId=${comment_cmtId}`;
     axios.delete(url)
       .then(response => {
         console.log(response.data)
