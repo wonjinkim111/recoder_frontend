@@ -57,7 +57,7 @@ class MenteeReviewList2 extends React.Component{
     
     componentDidMount(){
       const user = JSON.parse(sessionStorage.getItem('user'));
-      const url = `http://192.168.45.182:31920/codereview/mentee/${user.menteeid}`;
+      const url = `http://192.168.1.20:31920/codereview/mentee/${user.menteeid}`;
         axios.get(url)
          .then(response =>{console.log(response)
             this.setState({

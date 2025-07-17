@@ -27,7 +27,7 @@ export default function MentorDashBoard(props){
 
   // useEffect(() => {
   //   const userData = JSON.parse(sessionStorage.getItem('user'));
-  //   const url = `http://192.168.45.18245.207:10000/users/${userData.id}`;
+  //   const url = `http://192.168.1.2045.207:10000/users/${userData.id}`;
   //   axios.get(url)
   //   .then(response =>{
   //     console.log(response);
@@ -54,7 +54,7 @@ export default function MentorDashBoard(props){
   }
   console.log("✅ userData", userData);
 
-  const url = `http://192.168.45.182:32513/users/${userData.id}`;
+  const url = `http://192.168.1.20:32513/users/${userData.id}`;
   axios.get(url)
     .then(response => {
       console.log("✅ API 응답:", response.data);
