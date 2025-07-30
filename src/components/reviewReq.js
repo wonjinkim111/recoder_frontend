@@ -363,7 +363,7 @@ return (
         </Dropzone>
         <div>
           <strong>File:</strong>
-          <ul>{this.fileName}
+          <ul>{this.state.fileName}
           </ul>
         </div>
         <div style={{ color: "red", fontSize: "12px" }}>
