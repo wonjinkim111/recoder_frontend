@@ -152,7 +152,7 @@ class CodeEditor extends React.Component {
 
       }
     }
-    const url = `http://192.168.1.20:30103/codereview/compile2`
+    const url = `http://192.168.1.20:31920/codereview/compile2`
     axios.get(url)
       .then(function (response) {
         //console.log(response);
